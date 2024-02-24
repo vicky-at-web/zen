@@ -1,0 +1,148 @@
+<div class="d-block d-sm-block d-md-block d-lg-block d-xl-none d-xxl-none mb-5 sticky-top">
+  <nav class="navbar navbar-sm shadow-sm p-0" style="background-color: rgba(255, 255, 255, 0);">
+    <div class="container-fluid py-0">
+      <a class="navbar-brand ms-4 mt-3" href="#">
+        <p style="font-family: 'DM Serif Display', serif;" class="mt-2">Z&nbsp;&nbsp;E&nbsp;&nbsp;N</p>
+      </a>
+      <ul class="navbar-nav ml-auto d-flex flex-row">
+        <li class="nav-item  mx-2" id="navitem">
+          <a href="/register" class="nav-link  mt-1">Register</a>
+        </li>
+        <li class="nav-item mx-2" id="navitem">
+          <a href="/customer/login" class="nav-link mx-2 mt-1">Login</a>
+        </li>
+        <li class="nav-item mx-4" id="navitem">
+          <a class="nav-link mt-1" data-bs-toggle="modal" data-bs-target="#myModal">Logout </a>
+        </li>
+        <button class="navbar-toggler mt-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#canvas"
+          aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </ul>
+
+
+
+      <div class="offcanvas offcanvas-end bg-secondary text-light" data-bs-scroll="true" tabindex="-1" id="canvas"
+        aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas-header" style="background-color: rgba(0,0,0,0.1);">
+          <h5 class="offcanvas-title" id="offcanvasNavbarLabel" style="font-family: 'DM Serif Display', serif;">
+            Z&nbsp;&nbsp;E&nbsp;&nbsp;N</h5>
+          <button type="button" class="navbar-toggler" data-bs-dismiss="offcanvas" aria-label="Close">
+            <span class="toggler-icon top-bar"></span>
+            <span class="toggler-icon middle-bar"></span>
+            <span class="toggler-icon bottom-bar"></span>
+          </button>
+
+        </div>
+        <div class="offcanvas-body bg-secondary" id="navbarTogglerDemo03">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li class="nav-item">
+              <a class="nav-link active  text-light" aria-current="page" href="/products">All Products</a>
+            </li>
+
+            <li class="nav-item text-light">
+              <a class="nav-link text-light " href="/sellers">View All Sellers</a>
+            </li>
+
+            <li class="nav-item text-light">
+              <a class="nav-link text-light" href="/sellers/new">Join as Seller</a>
+            </li>
+
+            <li class="nav-item text-light">
+              <a class="nav-link text-light" href="/home">Home page</a>
+            </li>
+            <li class="nav-item text-light">
+              <a class="nav-link" href="/products/customer/favourites">Favourites</a>
+            </li>
+          </ul>
+
+
+        </div>
+      </div>
+    </div>
+  </nav>
+
+</div>
+
+<div class="d-xl-block  d-sm-none d-none sticky-top">
+  <nav class="navbar shadow-sm  p-0 " style="background-color: rgba(255, 255, 255, 0);">
+    <div class="d-flex flex-row">
+
+      <a class="navbar-brand ms-4 mt-3" href="#" style="background-color: rgba(255, 255, 255, 0);">
+
+        <p style="font-family: 'DM Serif Display', serif;" class="mt-2 ms-4"
+          style="background-color: rgba(255, 255, 255, 0);">
+          Z&nbsp;&nbsp;E&nbsp;&nbsp;N</p>
+      </a>
+      <ul class="navbar-nav ms-5 mt-1 justify-content-start d-flex flex-row align-items-center">
+        <li class="nav-item mx-4" id="navitem">
+          <a class="nav-link" aria-disabled="true" href="/home">Home</a>
+        </li>
+        <li class="nav-item mx-4" id="navitem">
+          <a class="nav-link" href="/customer/products" aria-current="page">All Products</a>
+        </li>
+
+        <li class="nav-item mx-4 " id="navitem">
+          <a class="nav-link" href="/seller/sellers">All Sellers</a>
+        </li>
+
+        <li class="nav-item mx-4" id="navitem">
+          <a class="nav-link" href="/products/customer/favourites">Favourites</a>
+        </li>
+
+      </ul>
+    </div>
+    <div class="navbar-nav ml-auto d-flex flex-row">
+  
+      
+      <%  if(seller) {%>
+        <li class="nav-item mx-4" id="navitem">
+          <a class="nav-link mt-1" data-bs-toggle="modal" data-bs-target="#myModal" style="cursor: pointer">Logout
+          </a>
+        <% } else {%>
+          <li class="nav-item mx-4" id="navitem">
+            <a href="/seller/auth/register" class="nav-link  mt-1">Register</a>
+          </li>
+          <li class="nav-item mx-4" id="navitem">
+            <a href="/seller/auth/login" class="nav-link  mt-1">Login</a>
+          </li>
+          <% } %>
+
+      </li>
+    </div>
+    </ul>
+  </nav>
+</div>
+
+</nav>
+<div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+
+
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <p>Are you sure to logout Zen?</p>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nope</button>
+        <a type="button" href="/seller/auth/logout" class="btn btn-primary">Yes</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<script>
+  const btn = document.querySelector('#trans');
+  const search = document.querySelector('.hide1')
+  btn.addEventListener('mouseover', function () {
+    search.setAttribute('class', 'show')
+  })
+</script>

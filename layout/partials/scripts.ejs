@@ -1,0 +1,57 @@
+<script>
+    // Look for .hamburger
+    var hamburger = document.querySelector(".hamburger");
+    // On click
+    hamburger.addEventListener("click", function () {
+        // Toggle class "is-active"
+        hamburger.classList.toggle("is-active");
+        // Do something else, like open/close menu
+    });
+</script>
+
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (() => {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll('.formvalid')
+
+        // Loop over them and prevent submission
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+
+                form.classList.add('was-validated')
+            }, false)
+        })
+    })()
+</script>
+<script>
+
+    function showToast(productName) {
+        // Create a new toast element
+        var toast = new bootstrap.Toast(document.getElementById('productToast'));
+
+        const button = document.createElement('a');
+        button.setAttribute('class', 'btn btn-sm btn-primary m-2');
+        button.setAttribute('href', '/products/cart')
+        button.innerText = "View cart"
+
+        // Set the toast message dynamically
+        document.getElementById('toastMessage').innerText = `Hurray! ${productName} is added to your cart `;
+        document.getElementById('toastMessage').appendChild(button);
+
+
+        // Show the toast
+        toast.show();
+    }
+
+
+    $('#myModal').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus')
+    })
+</script>

@@ -1,0 +1,427 @@
+<% layout('../layout/boilerplate') %>
+
+    <style>
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .accordion {
+            --bs-accordion-active-bg: white;
+        }
+
+        #showReplies {
+            --active: white;
+        }
+
+        .rbutton {
+            position: relative;
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            background-color: #ff0000;
+            transition: all 0.2s ease;
+            font-size: 15px;
+            height: auto;
+        }
+
+        .rbutton:active {
+            transform: scale(0.96);
+        }
+
+        .rbutton:before,
+        .rbutton:after {
+            position: absolute;
+            content: "";
+            width: 150%;
+            left: 50%;
+            height: 100%;
+            transform: translateX(-50%);
+            z-index: -1000;
+            background-repeat: no-repeat;
+        }
+
+        .rbutton:hover:before {
+            top: -70%;
+            background-image: radial-gradient(circle, #ff0000 20%, transparent 20%),
+                radial-gradient(circle, transparent 20%, #ff0000 20%, transparent 30%),
+                radial-gradient(circle, #ff0000 20%, transparent 20%),
+                radial-gradient(circle, #ff0000 20%, transparent 20%),
+                radial-gradient(circle, transparent 10%, #ff0000 15%, transparent 20%),
+                radial-gradient(circle, #ff0000 20%, transparent 20%),
+                radial-gradient(circle, #ff0000 20%, transparent 20%),
+                radial-gradient(circle, #ff0000 20%, transparent 20%),
+                radial-gradient(circle, #ff0000 20%, transparent 20%);
+            background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%, 10% 10%, 18% 18%;
+            background-position: 50% 120%;
+            animation: redtopBubbles 0.6s ease;
+        }
+
+
+
+
+
+
+        @keyframes redtopBubbles {
+            0% {
+                background-position: 5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%,
+                    40% 90%, 55% 90%, 70% 90%;
+            }
+
+            50% {
+                background-position: 0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%,
+                    50% 50%, 65% 20%, 90% 30%;
+            }
+
+            100% {
+                background-position: 0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%,
+                    50% 40%, 65% 10%, 90% 20%;
+                background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+            }
+        }
+
+
+        .rbutton:hover::after {
+            bottom: -70%;
+            background-image: radial-gradient(circle, #ff0000 20%, transparent 20%),
+                radial-gradient(circle, #ff0000 20%, transparent 20%),
+                radial-gradient(circle, transparent 10%, #ff0000 15%, transparent 20%),
+                radial-gradient(circle, #ff0000 20%, transparent 20%),
+                radial-gradient(circle, #ff0000 20%, transparent 20%),
+                radial-gradient(circle, #ff0000 20%, transparent 20%),
+                radial-gradient(circle, #ff0000 20%, transparent 20%);
+            background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 20% 20%, 18% 18%;
+            background-position: 50% 0%;
+            animation: redbottomBubbles 0.6s ease;
+        }
+
+
+        @keyframes redbottomBubbles {
+            0% {
+                background-position: 10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%,
+                    70% -10%, 70% 0%;
+            }
+
+            50% {
+                background-position: 0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%, 95% 60%,
+                    105% 0%;
+            }
+
+            100% {
+                background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%, 95% 70%,
+                    110% 10%;
+                background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+            }
+        }
+
+        .button {
+            position: relative;
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            background-color: #e87da7;
+            transition: all 0.2s ease;
+        }
+
+        .button:active {
+            transform: scale(0.96);
+        }
+
+        .button:before,
+        .button:after {
+            position: absolute;
+            content: "";
+            width: 150%;
+            left: 50%;
+            height: 100%;
+            transform: translateX(-50%);
+            z-index: -1000;
+            background-repeat: no-repeat;
+        }
+
+        .button:hover:before {
+            top: -70%;
+            background-image: radial-gradient(circle, #e87da7 20%, transparent 20%),
+                radial-gradient(circle, transparent 20%, #e87da7 20%, transparent 30%),
+                radial-gradient(circle, #e87da7 20%, transparent 20%),
+                radial-gradient(circle, #e87da7 20%, transparent 20%),
+                radial-gradient(circle, transparent 10%, #e87da7 15%, transparent 20%),
+                radial-gradient(circle, #e87da7 20%, transparent 20%),
+                radial-gradient(circle, #e87da7 20%, transparent 20%),
+                radial-gradient(circle, #e87da7 20%, transparent 20%),
+                radial-gradient(circle, #e87da7 20%, transparent 20%);
+            background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%,
+                10% 10%, 18% 18%;
+            background-position: 50% 120%;
+            animation: greentopBubbles 0.6s ease;
+        }
+
+
+        @keyframes greentopBubbles {
+            0% {
+                background-position: 5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%,
+                    40% 90%, 55% 90%, 70% 90%;
+            }
+
+            50% {
+                background-position: 0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%,
+                    50% 50%, 65% 20%, 90% 30%;
+            }
+
+            100% {
+                background-position: 0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%,
+                    50% 40%, 65% 10%, 90% 20%;
+                background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+            }
+        }
+
+        .button:hover::after {
+            bottom: -70%;
+            background-image: radial-gradient(circle, #e87da7 20%, transparent 20%),
+                radial-gradient(circle, #e87da7 20%, transparent 20%),
+                radial-gradient(circle, transparent 10%, #e87da7 15%, transparent 20%),
+                radial-gradient(circle, #e87da7 20%, transparent 20%),
+                radial-gradient(circle, #e87da7 20%, transparent 20%),
+                radial-gradient(circle, #e87da7 20%, transparent 20%),
+                radial-gradient(circle, #e87da7 20%, transparent 20%);
+            background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 20% 20%, 18% 18%;
+            background-position: 50% 0%;
+            animation: greenbottomBubbles 0.6s ease;
+        }
+
+        @keyframes greenbottomBubbles {
+            0% {
+                background-position: 10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%,
+                    70% -10%, 70% 0%;
+            }
+
+            50% {
+                background-position: 0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%, 95% 60%,
+                    105% 0%;
+            }
+
+            100% {
+                background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%, 95% 70%,
+                    110% 10%;
+                background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+            }
+        }
+    </style>
+    <div class="container-fluid ">
+        <div class="row mt-3 p-4">
+            <div class="col-md-6  mt-4 ">
+                <div class="container mb-4">
+                    <div id="carouselExampleFade" class="carousel slide carousel-fade">
+                        <div class="carousel-inner d-flex justify-content-center">
+                            <center>
+    
+                                <div class="carousel-item active">
+                                    <img src=" <%= product.imageUrl[0] %>" class="img-fluid" width="500" height="500"
+                                        alt="...">
+                                </div>
+                                <% for(let i = 1; i<product.imageUrl.length; i++) {%>
+                                    <div class="carousel-item">
+                                        <img src="<%= product.imageUrl[i] %>" class="img-fluid" width="500" height="500"
+                                            alt="...">
+                                    </div>
+                                    <% } %>
+    
+                         
+    
+                            <% if(product.imageUrl.length>1){ %>
+                                <button class="carousel-control-prev" style="color: black;" type="button"
+                                    data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black"
+                                        class="bi bi-caret-left-fill" viewBox="0 0 16 16">
+                                        <path
+                                            d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
+                                    </svg>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade"
+                                    data-bs-slide="next">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black"
+                                        class="bi bi-play-fill" viewBox="0 0 16 16">
+                                        <path
+                                            d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393" />
+                                    </svg>
+                                </button>
+                                <% } %>
+                        </div>
+                    </center>
+                    </div>
+                </div>
+                <center>
+                    <div class="card text-muted d-flex flex-row justify-content-around" style="width: fit-content;">
+                        <form action="#">
+                            <button class="btn btn-warning rounded btn-sm  py-2 px-3 m-2">Add To Cart</button>
+                        </form>
+                        <form action="/products/<%= product.id %>/buynow">
+                            <button class="btn btn-primary rounded py-2 px-3 btn-sm ms-2 my-2 me-1">Buy Now</button>
+                        </form>
+                    </div>
+                    <br>
+                </center>
+                <br>
+                <div class="card ">
+                    <div class="card-body p-2">
+                        <div class="d-flex flex-column align-items-start m-0">
+                            <h5 class="ms-3 p-1">
+                                Ask Any Queries globally!
+                            </h5>
+                        </div>
+                        <form action='/customer/products/<%= product.id %>/queries' method="post" class=" d-flex p-1">
+                            <input type="text" class="form-control p-2 m-0 " id="query" name="query[question]">
+                            <button class="btn btn-sm btn-success px-3 py-1 ms-2">Post</button>
+                        </form>
+                    </div>
+                </div>
+                <br>
+                <% if(product.queries.length> 0) {%>
+                    <div class="accordion accordion-flush" id="accordionFlushExample">
+
+                        <div class="card">
+                            <div class="card-body">
+                                <button class="accordion-button collapsed shadow-none p-0" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false"
+                                    aria-controls="flush-collapseOne">
+                                    Our Customers Frequently Asks!
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="flush-collapseOne" class="accordion-collapse collapse"
+                            aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <% for(let query of product.queries) { %>
+                                            <div class="card mb-3">
+                                                <div class="card-body position-relative p-0">
+                                                    <h6 class="p-2 px-4">
+                                                        <%= query.question %> ?
+                                                            <button class="btn btn-default p-2" type="button"
+                                                                id="showReplies" data-bs-toggle="collapse"
+                                                                data-bs-target="#collapse<%= query.id %>"
+                                                                aria-expanded="false"
+                                                                aria-controls="collapse<%= query.id %>">
+                                                                View Replies
+                                                            </button>
+                                                            <form action='/customer/products/<%= product.id %>/<%= query.id %>/queries?_method=DELETE'
+                                                                method="post" class=" position-absolute pe-2 pt-2  top-0 end-0">
+                                                                <button class="btn btn-sm rounded p-2 btn-outline-danger mt-1">Delete</button>
+                                                            </form>
+                                                    </h6>
+                                                    <div class="ms-5 mb-2 collapse " id="collapse<%= query.id %>">
+                                                        <% if(query.answers.length> 0) {%>
+                                                            <% for(let replies of query.answers) {%>
+                                                                <div class="d-flex flex-column">
+                                                                    <ul class="ms-5">
+                                                                        <li>
+                                                                            <%= replies.answer %>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                                <% } %>
+                                                                    <% } %>
+                                                    </div>
+
+                                                    <form
+                                                        action='/customer/products/<%= product.id %>/queries/<%= query.id %>'
+                                                        method="post" class=" d-flex p-2">
+                                                        <input type="text" class="form-control p-2 m-0 " id="query"
+                                                            name="query[answer]">
+                                                        <button
+                                                            class="btn btn-sm btn-success px-3 py-1 ms-2">Post</button>
+                                                    </form>
+
+                                                </div>
+
+                                            </div>
+                                            <% } %>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+            </div>
+            <div class="col-md-6 mt-3">
+                <div class="card">
+                    <div class="card-body">
+                        <center>
+                            <h5 class="card-title">
+                                <%= product.name%>
+                            </h5>
+                        </center>
+                    </div>
+                    <ul class="list-group list-group">
+                        <% if(product.reviews.length> 0) {%>
+                            <li class="list-group-item ">
+                                Rating: <b>
+                                    <%= parseFloat(product.rating*100 / 100).toFixed(1) %>
+                                </b> based on <%= product.reviews.length %> reviews
+                            </li>
+                            <% } %>
+                                <li class="list-group-item ">
+                                    Price: &nbsp;&#8377;<%= product.price%>
+                                </li>
+                                <li class="list-group-item ">
+                                    <%= product.description%>
+                                </li>
+                    </ul>
+                </div>
+                <br>
+                <div class="card">
+                    <div class="card-body">
+                        <h2>
+                            Leave a Review
+                        </h2>
+                        <form action="/customer/products/<%=product.id %>/reviews" method="post" class="form-valid"
+                            novalidate>
+                            <div class="mb-3">
+                                <label class="form-label" for="rating">Rate:</label>
+                                <input type="range" min="1" max="5" name="review[rating]" required class="form-range">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="body">Review:</label>
+                                <textarea class="form-control" name="review[body]" required cols="30"
+                                    rows="3"></textarea>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please give a title!
+                                </div>
+                                <button class="btn btn-success mt-3">Submit</button>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <% for(let review of product.reviews) {%>
+                    <div class="card mt-3">
+                        <div class="card-body  position-relative">
+                            <h6 class="ms-2"><b>Rating:&nbsp;&nbsp;&nbsp;</b>
+                                <%= review.rating %>
+                            </h6>
+                            <h6 class="ms-2"><b>Review:&nbsp;&nbsp;&nbsp; </b>
+                                <%= review.body %>
+                            </h6>
+                            <form action='/customer/products/<%= product.id %>/reviews/<%= review.id %>?_method=DELETE'
+                                method="post" class=" position-absolute pe-3 pt-3  top-0 end-0">
+                                <button class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+
+                        </div>
+                    </div>
+                    <% } %>
+            </div>
+        </div>
+    </div>

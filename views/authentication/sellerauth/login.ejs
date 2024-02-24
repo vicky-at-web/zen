@@ -1,0 +1,43 @@
+<% layout('../layout/boilerplate')%>
+
+<div class="container">
+    <h1>seller Login form</h1>
+    <br>
+    <div class="row">
+        <div class="col-md-6 col-sm-9 offset-md-3">
+            <form action="/seller/auth/login" method="POST" class="mb-3 formvalid" novalidate>
+                <div class="form-floating">
+
+                    <input class="form-control" required autocomplete="off" type="text"  name="username"
+                        placeholder="jjj" required>
+                    <label for="username">Username </label>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please give a usename!
+                    </div>
+                </div>
+                <br>
+                <div class="form-floating">
+
+                    <input class="form-control" required autocomplete="off" type="password" 
+                        placeholder="jjj" name="password" required>
+                    <label for="username">Password </label>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please give a password!
+                    </div>
+                </div>
+                <br>
+              
+                <button class="btn btn-success"> Login
+                </button>
+
+            </form>
+        </div>
+    </div>
+</div>
+

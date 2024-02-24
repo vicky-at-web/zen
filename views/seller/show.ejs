@@ -1,0 +1,333 @@
+<% layout('../layout/boilerplate') %>
+    <br><br>
+    <div class="d-lg-block d-md-block d-none">
+        <div class="row">
+            <div class="col-md-6">
+                <center>
+                    <div class="card mb-3 ">
+                        <div>
+                            <img src="<%= seller.imageUrl %>" class="card-img-top" alt="">
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item ">
+                                <h4 class="card-title ">
+                                    <center>
+                                        <h4><b>Owner: &nbsp;</b>
+                                            <%= seller.name %>
+                                        </h4>
+                                    </center>
+                                </h4>
+                            </li>
+                            <% if(seller.rating> 0) {%>
+                                <li class="list-group-item ">
+                                    <h5><b>Rating: &nbsp;</b>
+                                        <%= seller.rating %>
+                                    </h5>
+                                </li>
+                                <% } %>
+                                    <li class="list-group-item ">
+                                        <h5><b>Mobile: &nbsp;</b>
+                                            <%= seller.contact %>
+                                        </h5>
+                                    </li>
+                                    <li class="list-group-item ">
+                                        <h6><b>Email: &nbsp;</b>
+                                            <%= seller.email %>
+                                        </h6>
+                                    </li>
+                                    <li class="list-group-item text-muted">
+                                        <%= seller.address%>
+                                    </li>
+
+                        </ul>
+                        <div class="card-footer text-muted">
+                            Number of Products: &nbsp; <%= seller.products.length %>
+                        </div>
+                    </div>
+                </center>
+                <br><br>
+                <div>
+                    <h2>
+                        Leave a Review
+                    </h2>
+                    <form action="/sellers/<%=seller.id %>/sreviews" method="post" class="form-valid" novalidate>
+                        <div class="mb-3">
+                            <label class="form-label" for="rating">Rate:</label>
+                            <input type="range" min="1" max="5" name="sreview[rating]" required class="form-range">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="body">Review:</label>
+                            <textarea class="form-control" name="sreview[body]" required cols="30" rows="3"></textarea>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please give a title!
+                            </div>
+                            <button class="btn btn-success mt-3">Submit</button>
+
+                        </div>
+                    </form>
+
+                    <% for(let sreview of seller.sreviews) {%>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h3><b>Rating:</b>
+                                    <%= sreview.rating %>
+                                </h3>
+                                <p><b>Review: </b>
+                                    <%= sreview.body %>
+                                </p>
+                                <form action='/sellers/<%= seller.id %>/sreviews/<%= sreview.id %>?_method=DELETE'
+                                    method="post">
+                                    <button class="btn btn-sm btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                        <% } %>
+                </div>
+            </div>
+
+            </center>
+
+
+            <div class="col-md-6">
+
+                <% for(let product of seller.products) { %>
+                    <div class="card mb-3">
+                        <div class="row g-0">
+                            <div class="col-4 d-flex align-items-center flex-column justify-content-center ">
+                                <img class="img-fluid" src="<%= product.imageUrl[0] %>" alt="">
+                                <center>
+                                    <h5 class="card-title mt-1">
+                                        <%= product.name %>
+                                    </h5>
+                                </center>
+                            </div>
+                            <div class="col-8">
+
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <div class="accordion accordion-flush m-0" id="accordionFlush<%= product.id %>">
+
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header">
+                                                    <button class="accordion-button collapsed shadow-none" type="button"
+                                                        data-bs-toggle="collapse"
+                                                        data-bs-target="#flush-collapse<%= product.id %>"
+                                                        aria-expanded="false"
+                                                        aria-controls="flush-collapse<%= product.id %>">
+                                                        Description
+                                                    </button>
+                                                </h2>
+                                                <div id="flush-collapse<%= product.id %>"
+                                                    class="accordion-collapse collapse"
+                                                    data-bs-parent="#accordionFlush<%= product.id %>">
+                                                    <div class="accordion-body">
+                                                        <%= product.description %>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <p class="m-2 ms-3"><b>Price:</b> &nbsp; <%= product.price %>
+                                        </p>
+                                    </li>
+                                    <li class="list-group-item d-flex">
+                                        <a class="btn btn-primary p-2 m-2" href="/products/<%= product.id %>">View
+                                            Product</a>
+                                    </li>
+
+                                </ul>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <% } %>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="d-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none">
+        <div class="row">
+            <div class="col-md-6">
+                <center>
+
+                    <div class="card mb-3 ">
+                        <div>
+                            <img src="<%= seller.imageUrl %>" class="card-img-top" alt="">
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item ">
+                                <h4 class="card-title ">
+                                    <center>
+                                        <h4><b>Owner: &nbsp;</b>
+                                            <%= seller.name %>
+                                        </h4>
+                                    </center>
+                                </h4>
+                            </li>
+                            <% if(seller.rating> 0) {%>
+                                <li class="list-group-item">
+                                    <h5><b>Rating: &nbsp;</b>
+                                        <%= seller.rating %>&nbsp; <small>based on <%= seller.sreviews.length %> reviews</small>
+                                        </h5> 
+
+                                </li>
+                                <% } %>
+                                    <li class="list-group-item ">
+                                        <h5><b>Mobile: &nbsp;</b>
+                                            <%= seller.contact %>
+                                        </h5>
+
+                                    </li>
+
+                                    <li class="list-group-item ">
+                                        <h6><b>Email: &nbsp;</b>
+                                            <%= seller.email %>
+                                        </h6>
+
+                                    </li>
+
+
+                                    <li class="list-group-item text-muted">
+                                        <%= seller.address%>
+                                    </li>
+
+                        </ul>
+
+
+
+
+                        <div class="card-footer text-muted">
+                            Number of Products: &nbsp; <%= seller.products.length %>
+                        </div>
+                    </div>
+
+
+                </center>
+                <br><br>
+                <div>
+                    <h2>
+                        Leave a Review
+                    </h2>
+                    <form action="/sellers/<%=seller.id %>/sreviews" method="post" class="form-valid" novalidate>
+                        <div class="mb-3">
+                            <label class="form-label" for="rating">Rate:</label>
+                            <input type="range" min="1" max="5" name="sreview[rating]" required class="form-range">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="body">Review:</label>
+                            <textarea class="form-control" name="sreview[body]" required cols="30" rows="3"></textarea>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please give a title!
+                            </div>
+                            <button class="btn btn-success mt-3">Submit</button>
+
+                        </div>
+                    </form>
+
+                    <% for(let sreview of seller.sreviews) {%>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h3><b>Rating:</b>
+                                    <%= sreview.rating %>
+                                </h3>
+                                <p><b>Review: </b>
+                                    <%= sreview.body %>
+                                </p>
+                                <form action='/sellers/<%= seller.id %>/sreviews/<%= sreview.id %>?_method=DELETE'
+                                    method="post">
+                                    <button class="btn btn-sm btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                        <% } %>
+                </div>
+
+                <div class="accordion p-0 mb-3 " id="accordionExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button shadow-none" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                View Products!
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show shadow"
+                            data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+
+                                <% for(let product of seller.products) { %>
+                                    <div class="card mb-3">
+                                        <div class="row g-0">
+                                            <div
+                                                class="col-4 d-flex align-items-center flex-column justify-content-center ">
+                                                <img class="img-fluid" src="<%= product.imageUrl[0] %>" alt="">
+                                                <center>
+                                                    <h5 class="card-title mt-1">
+                                                        <%= product.name %>
+                                                    </h5>
+                                                </center>
+                                            </div>
+                                            <div class="col-8">
+
+                                                <ul class="list-group list-group-flush">
+                                                    <li class="list-group-item">
+                                                        <div class="accordion accordion-flush m-0"
+                                                            id="accordionFlush<%= product.id %>">
+
+                                                            <div class="accordion-item">
+                                                                <h2 class="accordion-header">
+                                                                    <button
+                                                                        class="accordion-button collapsed shadow-none"
+                                                                        type="button" data-bs-toggle="collapse"
+                                                                        data-bs-target="#flush-collapse<%= product.id %>"
+                                                                        aria-expanded="false"
+                                                                        aria-controls="flush-collapse<%= product.id %>">
+                                                                        Description
+                                                                    </button>
+                                                                </h2>
+                                                                <div id="flush-collapse<%= product.id %>"
+                                                                    class="accordion-collapse collapse"
+                                                                    data-bs-parent="#accordionFlush<%= product.id %>">
+                                                                    <div class="accordion-body">
+                                                                        <%= product.description %>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        <p class="m-2 ms-3"><b>Price:</b> &nbsp; <%= product.price %>
+                                                        </p>
+                                                    </li>
+                                                    <li class="list-group-item d-flex">
+                                                        <a class="btn btn-primary p-2 m-2"
+                                                            href="/products/<%= product.id %>">View
+                                                            Product</a>
+                                                    </li>
+
+                                                </ul>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <% } %>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zen</title>
+    <!-- BOOTSTRAP CDNS -->
+    <link href="dist/hamburgers.css" rel="stylesheet">
+    <link rel="stylesheet" href="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+    <!-- FONT CONFIG -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon"
+        href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzOTUuNTIgMjQ3LjIiIGhlaWdodD0iMjQ3LjIiIHdpZHRoPSIzOTUuNTIiPjxnPjxzdmcvPjwvZz48Zz48c3ZnIHZpZXdCb3g9IjAgMCAzOTUuNTIgMjQ3LjIiIGhlaWdodD0iMjQ3LjIiIHdpZHRoPSIzOTUuNTIiPjxnIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLDEsNzUuNTQ0MzIsNzQuNjAxNDEwMzE1OTEwNDEpIj48c3ZnIHZpZXdCb3g9IjAgMCAyNDQuNDMxMzU5OTk5OTk5OTggOTcuOTk3MTc5MzY4MTc5MTgiIGhlaWdodD0iOTcuOTk3MTc5MzY4MTc5MTgiIHdpZHRoPSIyNDQuNDMxMzU5OTk5OTk5OTgiPjxnPjxzdmcgdmlld0JveD0iMCAwIDI0NC40MzEzNTk5OTk5OTk5OCA5Ny45OTcxNzkzNjgxNzkxOCIgaGVpZ2h0PSI5Ny45OTcxNzkzNjgxNzkxOCIgd2lkdGg9IjI0NC40MzEzNTk5OTk5OTk5OCI+PGc+PHN2ZyB2aWV3Qm94PSIwIDAgMjQ0LjQzMTM1OTk5OTk5OTk4IDk3Ljk5NzE3OTM2ODE3OTE4IiBoZWlnaHQ9Ijk3Ljk5NzE3OTM2ODE3OTE4IiB3aWR0aD0iMjQ0LjQzMTM1OTk5OTk5OTk4Ij48Zz48c3ZnIHZpZXdCb3g9IjAgMCAyNDQuNDMxMzU5OTk5OTk5OTggOTcuOTk3MTc5MzY4MTc5MTgiIGhlaWdodD0iOTcuOTk3MTc5MzY4MTc5MTgiIHdpZHRoPSIyNDQuNDMxMzU5OTk5OTk5OTgiPjxnIGlkPSJ0ZXh0YmxvY2t0cmFuc2Zvcm0iPjxzdmcgdmlld0JveD0iMCAwIDI0NC40MzEzNTk5OTk5OTk5OCA5Ny45OTcxNzkzNjgxNzkxOCIgaGVpZ2h0PSI5Ny45OTcxNzkzNjgxNzkxOCIgd2lkdGg9IjI0NC40MzEzNTk5OTk5OTk5OCIgaWQ9InRleHRibG9jayI+PGc+PHN2ZyB2aWV3Qm94PSIwIDAgMjQ0LjQzMTM1OTk5OTk5OTk4IDk3Ljk5NzE3OTM2ODE3OTE4IiBoZWlnaHQ9Ijk3Ljk5NzE3OTM2ODE3OTE4IiB3aWR0aD0iMjQ0LjQzMTM1OTk5OTk5OTk4Ij48ZyB0cmFuc2Zvcm09Im1hdHJpeCgxLDAsMCwxLDAsMCkiPjxzdmcgd2lkdGg9IjI0NC40MzEzNTk5OTk5OTk5OCIgdmlld0JveD0iMS44IC0zNC45IDg3LjA0IDM0LjkiIGhlaWdodD0iOTcuOTk3MTc5MzY4MTc5MTgiIGRhdGEtcGFsZXR0ZS1jb2xvcj0iIzAzMDMwMyI+PHBhdGggZD0iTTI3LjItMy43TDI3LjIgMCAxLjggMCAxLjgtMy44IDIxLjk1LTMxLjIgMi44NS0zMS4yIDIuODUtMzQuOSAyNi41LTM0LjkgMjYuNS0zMS4xIDYuMy0zLjcgMjcuMi0zLjdaTTU0Ljk1IDBMMzMuNjUgMCAzMy42NS0zNC45IDU0Ljk1LTM0LjkgNTQuOTUtMzEuMiAzNy44NS0zMS4yIDM3Ljg1LTE5LjUgNTMuOTUtMTkuNSA1My45NS0xNS44IDM3Ljg1LTE1LjggMzcuODUtMy43IDU0Ljk1LTMuNyA1NC45NSAwWk04NCAwTDcxLjI1LTIxLjMgNjcuMDUtMjkuMDUgNjYuOS0yOS4wNSA2Ni45IDAgNjIuOCAwIDYyLjgtMzQuOSA2Ny42NS0zNC45IDgwLjQtMTMuNiA4NC41OS01Ljg1IDg0Ljc1LTUuODUgODQuNzUtMzQuOSA4OC44NC0zNC45IDg4Ljg0IDAgODQgMFoiIG9wYWNpdHk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLDEsMCwwKSIgZmlsbD0iI2ZmZmZmZiIgY2xhc3M9IndvcmRtYXJrLXRleHQtMCIgZGF0YS1maWxsLXBhbGV0dGUtY29sb3I9InByaW1hcnkiIGlkPSJ0ZXh0LTAiLz48L3N2Zz48L2c+PC9zdmc+PC9nPjwvc3ZnPjwvZz48L3N2Zz48L2c+PGcvPjwvc3ZnPjwvZz48L3N2Zz48L2c+PC9zdmc+PC9nPjxnPjxwYXRoIGQ9Ik05OS4xMDIgNTEuNDY3QTEyMi4yMTYgMTIyLjIxNiAwIDAgMSAyOTYuNDE4IDUxLjQ2N0wyODcuNTgxIDUxLjQ2N0ExMTMuMzc4IDExMy4zNzggMCAwIDAgMTA3LjkzOSA1MS40NjdMOTkuMTAyIDUxLjQ2N005OS4xMDIgMTk1LjczM0ExMjIuMjE2IDEyMi4yMTYgMCAwIDAgMjk2LjQxOCAxOTUuNzMzTDI4Ny41ODEgMTk1LjczM0ExMTMuMzc4IDExMy4zNzggMCAwIDEgMTA3LjkzOSAxOTUuNzMzTDk5LjEwMiAxOTUuNzMzIiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9InRyYW5zcGFyZW50IiBkYXRhLWZpbGwtcGFsZXR0ZS1jb2xvcj0idGVydGlhcnkiLz48L2c+PC9zdmc+PC9nPjxkZWZzLz48L3N2Zz4=">
+    <!-- STYLINGS -->
+    <%- include('../layout/partials/navstyle') %>
+</head>
+<body class="100vh">
+    <!-- NAVBAR  -->
+    <%- include('../layout/partials/navbar') %>
+    <%- include('../layout/partials/flash') %>
+        <%- body -%>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<% layout('../layout/boilerplate') -%>
+    <div class="container">
+       
+       <div class="row">
+            <div class="col-6 offset-3">
+            <h1 class="text-center">Add Product</h1>
+         
+                <div class="card">
+                   
+                    <div class="card-body p-2">
+                        <form action="/seller/<%= seller.id %>/product/new" method="post" class="mb-3 p-0 formvalid"
+                            novalidate>
+                            <div>
+                                <label class="form-label" for="title">Product Name: </label>
+                                <input class="form-control" required autocomplete="off" type="text" id="title"
+                                    name="product[name]">
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please give a title!
+                                </div>
+                            </div>
+                            <br>
+                            <div>
+                                <label class="form-label" for="image">Image Url:</label>
+                                <input class="form-control mb-1" required autocomplete="off" type="text" id="image"
+                                    name="product[imageUrl]">
+                                <input class="form-control mb-1" required autocomplete="off" type="text" id="image"
+                                    name="product[imageUrl]">
+                                <input class="form-control" required autocomplete="off" type="text" id="image"
+                                    name="product[imageUrl]">
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please give a image!
+                                </div>
+                            </div>
+                            <br>
+                            <div>
+                                <label class="form-label" for="price">Price:</label>
+                                <div class="input-group mb-3">
+    
+                                    <span class="input-group-text">$</span>
+                                    <input type="text" name="product[price]" autocomplete="off" required
+                                        class="form-control" placeholder='0.00'>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+    
+                                    <div class="invalid-feedback">
+                                        Please give a price!
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div>
+                                <label class="form-label" for="category"
+                                    placeholder="Open this to select category">Category:</label>
+                                <select class="form-select" id='category' name="product[category]"
+                                    aria-label="Default select example">
+                                    <option value="Computers">Computers</option>
+                                    <option value="Mobiles">Mobiles</option>
+                                    <option value="Cameras">Cameras</option>
+                                    <option value="Men's">Men's</option>
+                                    <option value="Women's">Women's</option>
+                                    <option value="Kids'">Kids'</option>
+                                    <option value="Accessories">Accessories</option>
+                                    <option value="Decor">Decor</option>
+                                    <option value="Kitchen">Kitchen</option>
+                                    <option value="Bedding">Bedding</option>
+                                    <option value="Skincare">Skincare</option>
+                                    <option value="Haircare">Haircare</option>
+                                    <option value="Perfumes">Perfumes</option>
+                                    <option value="Books">Books</option>
+                                    <option value="Movies">Movies</option>
+                                    <option value="Music">Music</option>
+                                    <option value="Equipment">Equipment</option>
+                                    <option value="Activewear">Activewear</option>
+                                    <option value="Camping">Camping</option>
+                                    <option value="Kids' Toys">Kids' Toys</option>
+                                    <option value="Board Games">Board Games</option>
+                                    <option value="Video Games">Video Games</option>
+                                    <option value="Vitamins">Vitamins</option>
+                                    <option value="Fitness Equipment">Fitness Equipment</option>
+                                    <option value="Monitoring Devices">Monitoring Devices</option>
+                                    <option value="Car Accessories">Car Accessories</option>
+                                    <option value="Maintenance">Maintenance</option>
+                                    <option value="Motorcycle Gear">Motorcycle Gear</option>
+                                    <option value="Rings">Rings</option>
+                                    <option value="Watches">Watches</option>
+                                    <option value="Necklaces">Necklaces</option>
+                                    <option value="Stationery">Stationery</option>
+                                    <option value="Furniture">Furniture</option>
+                                    <option value="Electronics">Electronics</option>
+                                    <option value="Groceries">Groceries</option>
+                                    <option value="Snacks">Snacks</option>
+                                    <option value="Beverages">Beverages</option>
+                                    <option value="Pet Food">Pet Food</option>
+                                    <option value="Accessories">Accessories</option>
+                                    <option value="Care Products">Care Products</option>
+                                    <option value="Handmade">Handmade</option>
+                                    <option value="Customized">Customized</option>
+                                </select>
+                            </div>
+                            <br>
+    
+    
+    
+                            <div>
+                                <label class="form-label" for="des">Description:</label>
+                                <textarea name="product[description]" value="" autocomplete="off" required id="des"
+                                    cols="20" rows="3" class="form-control"></textarea>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Not important, but a few lines will look better!
+                                </div>
+                            </div>
+                            <br>
+                            <button class="btn btn-info">Add Product</button>
+                            <br><br>
+                            <a href="/products" class="">Back To All Products</a>
+                        </form>
+                    </div>
+            
+                </div>
+          
+          
+        </div>
+
+    </div>

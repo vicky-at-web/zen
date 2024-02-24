@@ -1,0 +1,43 @@
+<% layout('../layout/boilerplate') %>
+
+    <div class="container-fluid ">
+        <div class="d-flex row justify-content-center">
+            <% for(let seller of sellers) { %>
+                <div class="card m-3 shadow p-0" style="width: 18rem;">
+                    <img src="<%= seller.imageUrl %>" class="card-img-top" alt="">
+                    <div class="card-body p-0">
+                        <ul class="list-group list-group-flush">
+                            <center>
+                                <li class="list-group-item ">
+                                    <h5 class="card-title ">
+                                        <%= seller.username.toUpperCase() %>
+                                    </h5>
+                                </li>
+                                <li class="list-group-item text-muted d-flex justify-content-between">
+                                    <b>Contact Number:&nbsp;&nbsp;&nbsp;</b>
+                                    <%= seller.contact%>
+                                </li>
+                                <li class="list-group-item text-muted  ">
+                                    <b>Email Id: &nbsp;&nbsp;&nbsp;</b><br>
+                                    <%= seller.email%>
+                                </li>
+                                <li class="list-group-item text-muted  ">
+                                    <%= seller.address%>
+                                </li>
+                                <li class="list-group-item text-muted ">
+                                    <a href="/seller/<%= seller.id %>" class="btn btn-info">View Seller</a>
+                                </li>
+                                <li class="list-group-item card-footer text-muted   d-flex justify-content-between">
+                                    <div class="p-0"> Number of Products: &nbsp; </div><span>
+                                        <%= seller.products.length %>
+                                    </span>
+                                </li>
+                            </center>
+                        </ul>
+                        
+                    </div>
+                </div>
+                <% } %>
+        </div>
+    </div>
+    </div>

@@ -1,0 +1,47 @@
+module.exports.features = [
+    'Premium',
+    'Luxury',
+    'Eco-Friendly',
+    'Innovative',
+    'Compact',
+    'Sleek',
+    'Robust',
+    'Advanced',
+    'High-Performance',
+    'Durable',
+    'Efficient',
+    'Versatile',
+    'Stylish',
+    'Smart',
+    'Elegant',
+    'Comfortable',
+    'Modern',
+    'Chic',
+    'Practical',
+    'Unique'
+];
+
+
+module.exports.types = [
+    'Phone',
+    'Laptop',
+    'Tablet',
+    'Camera',
+    'Smartwatch',
+    'Headphones',
+    'Speaker',
+    'Drone',
+    'Gaming Console',
+    'Router',
+    'Monitor',
+    'Keyboard',
+    'Mouse',
+    'Printer',
+    'Projector',
+    'External Hard Drive',
+    'Fitness Tracker',
+    'Action Camera',
+    'E-reader',
+    'Virtual Reality Headset',
+    'Robot Vacuum'
+];

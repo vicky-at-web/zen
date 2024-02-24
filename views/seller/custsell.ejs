@@ -1,0 +1,106 @@
+<% layout('../layout/boilerplate') %>
+
+
+
+    <br><br>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <center>
+
+                <div class="card mb-3 ">
+                    <div>
+                        <img src="<%= seller.imageUrl %>" class="card-img-top" alt="">
+                    </div>
+                    <h5 class="card-title mx-3 mt-3">
+                        <%= seller.username.toUpperCase() %>
+                    </h5>
+                    <p class="card-text mx-3 mt-3"><b>CONTACT NUMBER:&nbsp;&nbsp;&nbsp;</b>
+                        <%= seller.contact%>
+                    </p>
+                    <p class="card-text mx-3 mt-3"><b>EMAIL: &nbsp;&nbsp;&nbsp;</b>
+                        <%= seller.email%>
+                    </p>
+
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item text-muted">
+                            <%= seller.address%>
+                        </li>
+
+                    </ul>
+
+                    <div class="card-body  ">
+                        <a class="card-link btn btn-info" href="/sellers/<%= seller.id%>/update">Edit
+                            Profile</a>
+                        <form class="d-inline" action="/sellers/<%= seller._id%>?_method=DELETE" method="POST">
+                            <button class="btn btn-danger mx-2 my-2">Delete Profile</button>
+                        </form>
+
+                        <a class="card-link btn btn-info" href="/seller/<%= seller.id %>/product/new">Add
+                            Product</a>
+
+                    </div>
+
+
+                    <div class="card-footer text-muted">
+                        Number of Products: &nbsp; <%= seller.products.length %>
+                    </div>
+                </div>
+
+
+            </center>
+            <br><br>
+        </div>
+
+        <div class="col-md-6 ">
+
+            <% for(let product of seller.products) { %>
+                <div class="card mb-3">
+                    <div class="row">
+                        <div class="col-4 d-flex align-items-center flex-column justify-content-center">
+                            <img class="img-fluid" src="<%= product.imageUrl[0] %>" width="500" height="500" alt="">
+                        </div>
+                        <div class="col-md-8">
+                            <h5 class="card-title mt-3 mx-2">
+                                <%= product.name.toUpperCase() %>
+                            </h5>
+                            <p class="card-text mx-2">
+                                <b style="letter-spacing: 0.5px;">Price: &nbsp;&nbsp;&#8377;</b>
+                                <%= product.price %>
+                            </p>
+                            <p class="card-text mx-2">
+                            <div class="accordion accordion-flush m-0" id="accordionFlush<%= product.id %>">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed shadow-none" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#flush-collapse<%= product.id %>"
+                                            aria-expanded="false" aria-controls="flush-collapse<%= product.id %>">
+                                            Description
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapse<%= product.id %>" class="accordion-collapse collapse"
+                                        data-bs-parent="#accordionFlush<%= product.id %>">
+                                        <div class="accordion-body">
+                                            <%= product.description %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </p>
+                            </p>
+                            <a class="btn btn-primary mb-3 ms-2" href="products/<%=product.id %>">View Product</a>
+
+                            <a class="card-link btn btn-info mb-3 mx-2" href="/products/<%=product.id%>/update">Edit</a>
+                            <form class="d-inline" action="/products/<%=product._id%>?_method=DELETE" method="POST">
+                                <button class="btn btn-danger mb-3 ">Delete</button>
+                            </form>
+                            <a class="btn btn-primary mb-3 mx-2" href="/products/<%=product.id %>">View Product</a>
+                        </div>
+
+                    </div>
+                </div>
+                <% } %>
+
+
+        </div>
+    </div>
