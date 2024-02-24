@@ -26,6 +26,12 @@ const customerSchema = new Schema({
     }
 })
 
+
+
+
+
+
+
 customerSchema.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model('Customer', customerSchema)
