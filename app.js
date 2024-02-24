@@ -19,6 +19,7 @@ const Customer = require('./models/customer')
 
 //EJS ENGINE CONNECTIONS
 
+
 app.engine('ejs', ejsMate)
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
