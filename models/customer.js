@@ -11,6 +11,7 @@ const customerSchema = new Schema({
     },
     role: {
         type: String,
+        default: 'customer'
     },
     cart: {
         type: Schema.Types.ObjectId,
@@ -22,7 +23,7 @@ const customerSchema = new Schema({
     },
     profilePic: {
         type: String,
-        default: 'https://i.stack.imgur.com/l60Hf.png',
+        default: 'https://cdn-icons-png.flaticon.com/512/1144/1144760.png',
     }
 })
 

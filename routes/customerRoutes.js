@@ -31,7 +31,26 @@ router.get('/products', catchAsync(async (req, res) => {
 
 router.get('/products/:id', catchAsync(async (req, res) => {
     const { id } = req.params;
-    const product = await Product.findById(id).populate('reviews').populate('queries');
+    const product = await Product.findById(id).populate('reviews').populate('queries').populate('seller').populate({
+        path: 'reviews',
+        populate: {
+            path: 'author',
+            model: 'Customer',
+        },
+    }).populate({
+        path: 'queries',
+        populate: {
+            path: 'author',
+            model: 'Customer'
+        }
+    }).populate({
+        path: 'queries',
+        populate: {
+            path: 'answers.author',
+            model: 'Customer'
+        }
+    });
+    console.log(product)
     let sum = 0;
     for (let review of product.reviews) {
         sum += parseInt(review.rating);
@@ -52,6 +71,7 @@ router.post('/products/:id/queries', catchAsync(async (req, res) => {
     const { id } = req.params;
     const product = await Product.findById(id);
     const question = new Question(req.body.query);
+    question.author = req.user._id;
     product.queries.push(question)
     await question.save();
     await product.save();
@@ -63,7 +83,7 @@ router.post('/products/:id/queries/:queryId', catchAsync(async (req, res) => {
     const { id, queryId } = req.params;
     const product = await Product.findById(id);
     const question = await Question.findById(queryId);
-    question.answers.push(req.body.query);
+    question.answers.push(req.body.query, {author: req.user._id});
     await question.save();
     await product.save();
     res.redirect(`/customer/products/${id}`);
@@ -83,6 +103,7 @@ router.post('/products/:id/reviews', validateReview, catchAsync(async (req, res)
     const { id } = req.params
     const product = await Product.findById(id);
     const review = new Review(req.body.review);
+    review.author = req.user._id
     product.reviews.push(review);
     await review.save();
     await product.save();

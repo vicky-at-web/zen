@@ -46,8 +46,8 @@ router.post('/customer/auth/login',
     // Now we can use res.locals.returnTo to redirect the user after login
     (req, res) => {
 
-
-        req.flash('success', `Welcome back! `);
+        const { username } = req.body;
+        req.flash('success', `Welcome back! ${username}`);
         const redirectUrl = res.locals.returnTo || '/customer/products'; // update this line to use res.locals.returnTo now
         res.redirect(redirectUrl);
     });
@@ -94,7 +94,7 @@ router.get('/seller/auth/login', (req, res) => {
 })
 
 
-router.post('/seller/auth/login',  storeReturnTo, passport.authenticate('sellerLocal', { failureFlash: true, failureRedirect: '/seller/auth/login' }),
+router.post('/seller/auth/login', storeReturnTo, passport.authenticate('sellerLocal', { failureFlash: true, failureRedirect: '/seller/auth/login' }),
     (req, res) => {
         const { username } = req.body;
         req.flash('success', `Welcome back! ${username}`);

@@ -6,11 +6,19 @@ const questionSchema = new Schema({
         type: String,
         required: true
     },
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'Customer'
+    },
     answers: [{
         answer: {
             type: String,
             required: true
         },
+        author: {
+            type: Schema.Types.ObjectId,
+            ref: 'Customer'
+        }
     }]
 });
 

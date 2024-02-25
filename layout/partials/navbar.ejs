@@ -41,7 +41,7 @@
             </li>
 
             <li class="nav-item text-light">
-              <a class="nav-link text-light " href="/sellers">View All Sellers</a>
+              <a class="nav-link text-light " href="/seller/all/sellers">View All Sellers</a>
             </li>
 
             <li class="nav-item text-light">
@@ -83,7 +83,7 @@
         </li>
 
         <li class="nav-item mx-4 " id="navitem">
-          <a class="nav-link" href="/seller/sellers">All Sellers</a>
+          <a class="nav-link" href="/seller/all/sellers">All Sellers</a>
         </li>
 
         <li class="nav-item mx-4" id="navitem">
@@ -93,22 +93,40 @@
       </ul>
     </div>
     <div class="navbar-nav ml-auto d-flex flex-row">
+      <%  if(customer) {%>
+        <li class="nav-item mx-4" id="navitem">
+          <a class="nav-link mt-1" data-bs-toggle="modal" data-bs-target="#myModal2" style="cursor: pointer">CLogout
+          </a>
+        <% } else {%>
+          <li class="nav-item mx-4" id="navitem">
+            <a href="/customer/auth/register" class="nav-link  mt-1">CRegister</a>
+          </li>
+          <li class="nav-item mx-4" id="navitem">
+            <a href="/customer/auth/login" class="nav-link  mt-1">CLogin</a>
+          </li>
+          <% } %>
   
       
       <%  if(seller) {%>
         <li class="nav-item mx-4" id="navitem">
-          <a class="nav-link mt-1" data-bs-toggle="modal" data-bs-target="#myModal" style="cursor: pointer">Logout
+          <a class="nav-link mt-1" data-bs-toggle="modal" data-bs-target="#myModal" style="cursor: pointer">SLogout
           </a>
         <% } else {%>
           <li class="nav-item mx-4" id="navitem">
-            <a href="/seller/auth/register" class="nav-link  mt-1">Register</a>
+            <a href="/seller/auth/register" class="nav-link  mt-1">SRegister</a>
           </li>
           <li class="nav-item mx-4" id="navitem">
-            <a href="/seller/auth/login" class="nav-link  mt-1">Login</a>
+            <a href="/seller/auth/login" class="nav-link  mt-1">SLogin</a>
           </li>
           <% } %>
 
       </li>
+      <% if(currentUser){%>
+        <span class="mx-2 me-2">
+          <a href="/profile"> <img src="<%= currentUser.profilePic %>" style="border-radius: 50%; width: 50px; height: 50px"
+            class="img-thumbnail me-3" alt=""></a>
+        </span>
+        <% } %>
     </div>
     </ul>
   </nav>
@@ -132,6 +150,30 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nope</button>
         <a type="button" href="/seller/auth/logout" class="btn btn-primary">Yes</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true" id="myModal2">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+
+
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <p>Are you sure to logout Zen?</p>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nope</button>
+        <a type="button" href="/customer/auth/logout" class="btn btn-primary">Yes</a>
       </div>
 
     </div>
