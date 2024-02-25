@@ -1,17 +1,25 @@
 <% layout('../layout/boilerplate') %>
-    <div class="container-fluid ">
-        <div class="d-flex row justify-content-center">
+    <div class="container-fluid">
+        <div class="d-flex row justify-content-center ">
             <% for(let product of products) {%>
                 <div class="card m-3 shadow p-0" style="width: 18rem;">
                     <img src="<%= product.imageUrl[0] %>" class="card-img-top shadow" alt="...">
                     <div class="card-body p-0">
                         <ul class="list-group list-group-flush">
+                            <li class="list-group-item text-muted">
+                                <center>
+                                    <h5 class="card-title p-1">
+                                        <b>A <%= product.brand %> Product</b>
+                                    </h5>
+                                </center>
+                            </li>
                             <li class="list-group-item">
                                 <center>
                                     <h5 class="card-title p-1">
-                                        <%= product.name %>
+                                        <%= product.name %> <%= products.length %>
                                     </h5>
                                 </center>
+                            </li>
                             <li class="list-group-item d-flex justify-content-between">
                                 <div>
                                     <b>Price:</b>
@@ -23,14 +31,15 @@
                             <li class="list-group-item">
                                 <div class="mb-1"><b>Description:</b></div>
                                 <p class="card-text">
-                                    <%= product.description %>
+                                    <%= product.headers %>
                                 </p>
                             </li>
                             <li class="list-group-item">
                                 <a href="/customer/products/<%= product.id %>" class="btn btn-primary me-1">View
                                     Details!</a>
-                                <button type="button" class="btn btn-primary" onclick="showToast('<%= product.name%>', '<%= product.id %>')"
-                                    id="liveToastBtn">Add to
+                                <button type="button" class="btn btn-primary"
+                                    onclick="showToast('<%= product.name%>', '<%= product.id %>')" id="liveToastBtn">Add
+                                    to
                                     cart</button>
                                 <div class="toast-container position-fixed bottom-0 end-0 p-3">
                                     <div id="productToast" class="toast" role="alert" aria-live="assertive"
@@ -55,7 +64,9 @@
                 <% } %>
         </div>
     </div>
-<script>
+
+
+    <script>
         var count = 1;
         function showToast(productName, productId) {
             var toast = new bootstrap.Toast(document.getElementById('productToast'));
@@ -75,7 +86,4 @@
         $('#myModal').on('shown.bs.modal', function () {
             $('#myInput').trigger('focus')
         })
-</script>
-
-
-
+    </script>

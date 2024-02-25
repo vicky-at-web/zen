@@ -217,7 +217,6 @@
                     <div id="carouselExampleFade" class="carousel slide carousel-fade">
                         <div class="carousel-inner d-flex justify-content-center">
                             <center>
-
                                 <div class="carousel-item active">
                                     <img src=" <%= product.imageUrl[0] %>" class="img-fluid" width="500" height="500"
                                         alt="...">
@@ -228,28 +227,41 @@
                                             alt="...">
                                     </div>
                                     <% } %>
-
-
-
-                                        <% if(product.imageUrl.length>1){ %>
-                                            <button class="carousel-control-prev" style="color: black;" type="button"
-                                                data-bs-target="#carouselExampleFade" data-bs-slide="prev">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                    fill="black" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
-                                                    <path
-                                                        d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
-                                                </svg>
-                                            </button>
-                                            <button class="carousel-control-next" type="button"
-                                                data-bs-target="#carouselExampleFade" data-bs-slide="next">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                    fill="black" class="bi bi-play-fill" viewBox="0 0 16 16">
-                                                    <path
-                                                        d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393" />
-                                                </svg>
-                                            </button>
-                                            <% } %>
+                                       
+                                        
                         </div>
+                        </center>
+                        <br><br>
+                        <center>
+                            <div class="d-flex justify-content-center container">
+                                <% if(product.imageUrl.length>1){ %>
+                                <button style="color: black; background-color: white;  border: 0px" type="button"
+                                data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    fill="black" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
+                                    <path
+                                        d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
+                                </svg>
+                            </button>
+                            <% } %>
+                               <div class="mx-4">
+                                <% for(let i=1; i<product.imageUrl.length; i++) {%>
+                                    <img src="<%= product.imageUrl[i] %>" class="img-fluid img-thumbnail m-1"
+                                        width="100" height="100" alt="...">
+
+                                    <% } %>
+                               </div>
+                                    <% if(product.imageUrl.length>1){ %>
+                                    <button  type="button" style="background-color: white;  border: 0px"
+                                    data-bs-target="#carouselExampleFade" data-bs-slide="next">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        fill="black" class="bi bi-play-fill" viewBox="0 0 16 16">
+                                        <path
+                                            d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393" />
+                                    </svg>
+                                </button>
+                                <% } %>
+                            </div>
                         </center>
                     </div>
                 </div>
@@ -390,11 +402,7 @@
                                 <li class="list-group-item ">
                                     <%= product.description%>
                                 </li>
-                                <li class="list-group-item ">
-                                    <b>Sold by</b> <a href="/seller/<%= product.seller.id %>">
-                                        <%= product.seller.username %>
-                                    </a>
-                                </li>
+                             
                     </ul>
                 </div>
                 <br>
@@ -440,8 +448,9 @@
                                     <% }else{ %>
                                         <h4>
                                             <span>
-                                                <img src="<%= review.author.profilePic %>" 
-                                                    style="border-radius: 50%; width: 50px; height: 50px;" class="img-thumbnail" alt="">
+                                                <img src="<%= review.author.profilePic %>"
+                                                    style="border-radius: 50%; width: 50px; height: 50px;"
+                                                    class="img-thumbnail" alt="">
                                             </span>
                                             <%= review.author.username %>
                                         </h4>
@@ -457,11 +466,12 @@
                             <% if(currentUser && review.author.equals(currentUser.id)) {%>
 
 
-                                <form action='/customer/products/<%= product.id %>/reviews/<%= review.id %>?_method=DELETE'
+                                <form
+                                    action='/customer/products/<%= product.id %>/reviews/<%= review.id %>?_method=DELETE'
                                     method="post" class=" position-absolute pe-3 pt-3  top-0 end-0">
                                     <button class="btn btn-sm btn-danger">Delete</button>
                                 </form>
-    
+
                                 <% } %>
                         </div>
 

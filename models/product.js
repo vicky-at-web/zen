@@ -36,6 +36,12 @@ const productSchema = new Schema({
     seller:{
         type: Schema.Types.ObjectId,
         ref: 'Seller'
+    },
+    brand:{
+        type: String,
+    },
+    headers:{
+        type: String,
     }
 })
 

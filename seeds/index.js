@@ -22,11 +22,13 @@ const seedDb = async () => {
         const product = new Product({
             name: `${sample(features)} ${sample(types)}`,
             imageUrl: ['https://source.unsplash.com/collection/483251','https://source.unsplash.com/collection/483251','https://source.unsplash.com/collection/483251','https://source.unsplash.com/collection/483251',],
-            description: 'Lorem ispum dolor sir amet consectetr apidi skdhfkhd ahdhfhd  ahaha  dhehe agdbckeb dhdhd a fheifbe ',
+            description: 'Lorem ispum dolor sir amet consectetr apidi skdhfkhd ahdhfhd  ahaha  dhehe agdbckeb dhdhd a fheifbe Lorem ispum dolor sir amet consectetr apidi skdhfkhd ahdhfhd  ahaha  dhehe agdbckeb dhdhd a fheifbeLorem ispum dolor sir amet consectetr apidi skdhfkhd ahdhfhd  ahaha  dhehe agdbckeb dhdhd a fheifbeLorem ispum dolor sir amet consectetr apidi skdhfkhd ahdhfhd  ahaha  dhehe agdbckeb dhdhd a fheifbeLorem ispum dolor sir amet consectetr apidi skdhfkhd ahdhfhd  ahaha  dhehe agdbckeb dhdhd a fheifbeLorem ispum dolor sir amet consectetr apidi skdhfkhd ahdhfhd  ahaha  dhehe agdbckeb dhdhd a fheifbe',
             price: `${price}`,
             category: `${category}`,
             rating: 0,
-            seller: '65d9bb44dd244049d8901961'
+            seller: '65d9bb44dd244049d8901961',
+            brand: 'Zen Recommends',
+            headers: 'Lorem ispum dolor sir amet consectetr apidi skdhfkhd ahdhfhd  ahaha  dhehe agdbckeb dhdhd a fheifbe'
             
         });
         await product.save();
