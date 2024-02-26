@@ -2,6 +2,7 @@
     <div class="container-fluid">
         <div class="d-flex row justify-content-center ">
             <% for(let product of products) {%>
+               
                 <div class="card m-3 shadow p-0" style="width: 18rem;">
                     <img src="<%= product.imageUrl[0] %>" class="card-img-top shadow" alt="...">
                     <div class="card-body p-0">
@@ -63,6 +64,7 @@
                         </ul>
                     </div>
                 </div>
+            
                 <% } %>
         </div>
     </div>

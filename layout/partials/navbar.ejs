@@ -86,13 +86,15 @@
           <a class="nav-link" href="/seller/all/sellers">All Sellers</a>
         </li>
 
-        <li class="nav-item mx-4" id="navitem">
-          <a class="nav-link" href="/products/customer/favourites">Favourites</a>
-        </li>
+        <% if(customer) {%>
+          <li class="nav-item mx-4" id="navitem">
+            <a class="nav-link" href="/customer/<%= currentUser._id %>/products/favourites">Favourites</a>
+          </li>
+          <% } %>
 
       </ul>
     </div>
-    <div class="navbar-nav ml-auto d-flex flex-row">
+    <div class="navbar-nav ml-auto d-flex flex-row align-items-center">
       <%  if(customer) {%>
         <li class="nav-item mx-4" id="navitem">
           <a class="nav-link mt-2" data-bs-toggle="modal" data-bs-target="#myModal2" style="cursor: pointer">CLogout
@@ -108,11 +110,15 @@
 
       </li>
       <% if(currentUser){%>
-        <span class="mx-2  d-flex justify-content-center flex-column">
+       <div class=" my-1 d-flex flex-column justify-content-center">
           <a href="/customer/profile/<%= currentUser._id %>/view"> <img src="<%= currentUser.profilePic %>" width="60px" height="60px"
-            style="border-radius: 100%;" class="me-3" alt=""></a>
-           <!-- <h5> <span class="badge text-bg-secondary me-2">Customer</span></h5> -->
-        </span>
+            style="border-radius: 100%;" class="me-3" class="m-1" alt=""></a>
+            <span class="badge text-bg-secondary me-4 p-1 mt-1 ">Customer</span>
+       
+       </div>
+         
+            
+        
         <% } %>
     </div>
     </ul>

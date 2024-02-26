@@ -6,6 +6,8 @@ const { reviewSchema } = require('../schemas/schema');
 const expErr = require('../utils/expressErr');
 const Question = require('../models/question')
 const Customer = require('../models/customer')
+const categories = ['Computers', 'Mobiles', 'Cameras', 'Men"s', 'Women"s', 'Kids', 'Accessories', 'Decor', 'Kitchen', 'Bedding', 'Skincare', 'Haircare', 'Perfumes', 'Books', 'Movies', 'Music', 'Equipment', 'Activewear', 'Camping', 'Kids Toys', 'Board Games', 'Video Games', 'Vitamins', 'Fitness Equipment', 'Monitoring Devices', 'Car Accessories', 'Maintenance', 'Motorcycle Gear', 'Rings', 'Watches', 'Necklaces', 'Stationery', 'Furniture', 'Electronics', 'Groceries', ' Snacks', 'Beverages', 'Pet Food', 'Accessories', 'Care products', 'Handmade', 'Customized']
+const image = 'https://source.unsplash.com/collection/483251';
 
 const router = express.Router();
 
@@ -26,7 +28,7 @@ const validateReview = (req, res, next) => {
 
 
 router.get('/home', (req, res) => {
-    res.render('../views/customer/home')
+    res.render('../views/customer/home', { categories, image })
 })
 
 router.get('/products', catchAsync(async (req, res) => {
@@ -47,6 +49,25 @@ router.get('/profile/:id/view', catchAsync(async (req, res) => {
     const customer = await Customer.findById(id)
     res.render('../views/customer/profile.ejs', { customer })
 }))
+
+router.post('/:id/products/favourite/:productId', catchAsync(async (req, res) => {
+    const { id, productId } = req.params;
+    const customer = await Customer.findById(id);
+    const product = await Product.findById(productId);
+    customer.favourites.push(product);
+    await customer.save();
+    console.log(customer);
+    req.flash('success', "Great choice! You've added the product to your favorites");
+    res.redirect(`/customer/products/${product.id}`)
+}))
+
+
+router.get('/:id/products/favourites', catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const customer = await Customer.findById(id).populate('favourites');
+    res.render('../views/customer/favourites', { customer })
+}))
+
 
 router.get('/products/:id', catchAsync(async (req, res) => {
     const { id } = req.params;

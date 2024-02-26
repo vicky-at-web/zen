@@ -1,0 +1,68 @@
+<% layout('../layout/boilerplate') %>
+    <style>
+        .card:hover {
+            transform: translate3d(0, -.200rem, 0);
+            transition: 1ms;
+        }
+    </style>
+    <br>
+    <div class="row">
+        <center>
+            <h1>Your Favourites</h1>
+        </center>
+
+
+
+            <!-- ///actual products -->
+
+            <div class="row d-flex justify-content-center">
+              
+                <% for(let product of customer.favourites) { %>
+                    <div class="card m-3 shadow p-0" style="width: 18rem;">
+                        <img src="<%= product.imageUrl[0] %>" class="card-img-top shadow" alt="...">
+                        <div class="card-body p-0">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item text-muted">
+                                    <center>
+                                        <h6 class="card-title p-1">
+                                            <b>A <%= product.brand %> Product</b>
+                                        </h6>
+                                    </center>
+                                </li>
+                                <li class="list-group-item">
+                                    <center>
+                                        <h5 class="card-title p-1">
+                                            <%= product.name %>  
+                                                                      
+                                        </h5>
+                                       
+                                    </center>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <div>
+                                        <b>Price:</b>
+                                    </div>
+                                    <div>
+                                        &#8377; <%= product.price %>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="mb-1"><b>Description:</b></div>
+                                    <p class="card-text">
+                                        <%= product.headers %>
+                                    </p>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-start">
+                                    <a href="/customer/products/<%= product.id %>" class="btn btn-primary me-1">View
+                                        Details!</a>
+                                   
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <% } %>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>

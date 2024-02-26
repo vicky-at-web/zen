@@ -1,19 +1,83 @@
 <% layout('../layout/boilerplate') %>
 
-<br><br><br>
-<div class="container">
-    <center>
-        ARE YOU A CUSTOMER?
-   <br>
-        <br>
-        <a href="/customer/auth/register" class="btn btn-outline-success btn-sm">Click here!</a>
-   </center>
-</div> <br>
-<div class="container">
-    <center>
-        ARE YOU A SELLER?
-   <br>
-        <br>
-        <a href="/seller/auth/register" class="btn btn-outline-success btn-sm">Click here!</a>
-   </center>
-</div>
+
+
+     <div class="container">
+
+          <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+               <div class="carousel-inner">
+                    <div class="carousel-item active" data-bs-interval="4000">
+                         <div class="card mb-3">
+                              <img src="..." class="card-img-top" alt="...">
+                              <div class="card-body">
+                                   <h5 class="card-title">Card title1</h5>
+                                   <p class="card-text">This is a wider card with supporting text below as a natural
+                                        lead-in to additional content. This content is a little bit longer.</p>
+                                   <p class="card-text"><small class="text-body-secondary">Last updated 3 mins
+                                             ago</small></p>
+                              </div>
+                         </div>
+                    </div>
+                    <div class="carousel-item" data-bs-interval="4000">
+                         <div class="card mb-3">
+                              <img src="..." class="card-img-top" alt="...">
+                              <div class="card-body">
+                                   <h5 class="card-title">Card title2</h5>
+                                   <p class="card-text">This is a wider card with supporting text below as a natural
+                                        lead-in to additional content. This content is a little bit longer.</p>
+                                   <p class="card-text"><small class="text-body-secondary">Last updated 3 mins
+                                             ago</small></p>
+                              </div>
+                         </div>
+                    </div>
+                    <div class="carousel-item" data-bs-interval="4000">
+                         <div class="card mb-3">
+                              <img src="..." class="card-img-top" alt="...">
+                              <div class="card-body">
+                                   <h5 class="card-title">Card title3</h5>
+                                   <p class="card-text">This is a wider card with supporting text below as a natural
+                                        lead-in to additional content. This content is a little bit longer.</p>
+                                   <p class="card-text"><small class="text-body-secondary">Last updated 3 mins
+                                             ago</small></p>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+          </div>
+ 
+                    <div class="card-group ">
+                         <% for(let category of categories) {%>
+                              <div class="d-flex flex-column align-items-center">
+                                   <div class="card shadow p-0" style="width: 18rem;">
+                                        <img src="<%= image %>" class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                             <h5 class="card-title">
+                                                  <%= category %>
+                                             </h5>
+     
+                                        </div>
+                                   </div>
+                              </div>
+                              <% } %>
+                         </div>
+              
+                    </div>
+     
+
+
+          <br><br>
+          <center>
+               ARE YOU A CUSTOMER?
+               <br>
+               <br>
+               <a href="/customer/auth/register" class="btn btn-outline-success btn-sm">Click here!</a>
+          </center>
+     </div> <br>
+     <div class="container">
+          <center>
+               ARE YOU A SELLER?
+               <br>
+               <br>
+               <a href="/seller/auth/register" class="btn btn-outline-success btn-sm">Click here!</a>
+          </center>
+     </div>
