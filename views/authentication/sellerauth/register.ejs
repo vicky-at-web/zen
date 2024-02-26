@@ -1,10 +1,10 @@
 <% layout('../layout/boilerplate')%>
 <br><br>
-    <h1> seller Register form</h1>
+   <center> <h1>SELLER REGISTER FORM</h1></center>
     <br>
-    
     <div class="row">
-        <div class="col-md-6 col-sm-9 offset-md-3">
+        <div class="card col-md-6 col-sm-9 offset-md-3">
+           <div class="card-body">
             <form action="/seller/auth/register" method="post" class="mb-3 formvalid" novalidate>
                 <div class="form-floating">
                     
@@ -19,8 +19,7 @@
                     </div>
                 </div>
                 <br>
-                <div class="form-floating">
-                    
+                <div class="form-floating">                   
                     <input class="form-control" required autocomplete="off" type="text" id="title" name="seller[email]" placeholder="jjj">
                     <label  for="email">Email </label>
                     <div class="valid-feedback">
@@ -32,7 +31,6 @@
                 </div>
                 <br>
                 <div class="form-floating">
-                    
                     <input class="form-control" required autocomplete="off" type="password" id="location" placeholder="jjj"
                         name="seller[password]" required>
                         <label  for="location">Password </label>
@@ -43,13 +41,11 @@
                         Please give a password!
                     </div>
                 </div>
-                <br>
-                
-            
-               
-                <button class="btn btn-success">Register</button>
-                
+                <br>         
+                <button class="btn btn-success">Register</button>           
             </form>
+            <a href="/seller/auth/login" style="text-decoration: none;">Already have an account?</a>
+           </div>
         </div>
     </div>
 

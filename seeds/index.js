@@ -26,7 +26,6 @@ const seedDb = async () => {
             price: `${price}`,
             category: `${category}`,
             rating: 0,
-            seller: '65d9bb44dd244049d8901961',
             brand: 'Zen Recommends',
             headers: 'Lorem ispum dolor sir amet consectetr apidi skdhfkhd ahdhfhd  ahaha  dhehe agdbckeb dhdhd a fheifbe'
             

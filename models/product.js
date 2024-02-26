@@ -33,10 +33,7 @@ const productSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Question'
     }],
-    seller:{
-        type: Schema.Types.ObjectId,
-        ref: 'Seller'
-    },
+    
     brand:{
         type: String,
     },

@@ -5,6 +5,7 @@ const catchAsync = require('../utils/catchasync');
 const { reviewSchema } = require('../schemas/schema');
 const expErr = require('../utils/expressErr');
 const Question = require('../models/question')
+const Customer = require('../models/customer')
 
 const router = express.Router();
 
@@ -23,15 +24,33 @@ const validateReview = (req, res, next) => {
 
 /// MIDDLEWARES END
 
+
+router.get('/home', (req, res) => {
+    res.render('../views/customer/home')
+})
+
 router.get('/products', catchAsync(async (req, res) => {
     const products = await Product.find();
     res.render('../views/customer/index.ejs', { products })
 
 }))
 
+router.put('/profile/:id/update', catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const customer = await Customer.findByIdAndUpdate(id, { ...req.body });
+    res.redirect(`/customer/products`)
+}))
+
+
+router.get('/profile/:id/view', catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const customer = await Customer.findById(id)
+    res.render('../views/customer/profile.ejs', { customer })
+}))
+
 router.get('/products/:id', catchAsync(async (req, res) => {
     const { id } = req.params;
-    const product = await Product.findById(id).populate('reviews').populate('queries').populate('seller').populate({
+    const product = await Product.findById(id).populate('reviews').populate('queries').populate({
         path: 'reviews',
         populate: {
             path: 'author',
@@ -83,7 +102,7 @@ router.post('/products/:id/queries/:queryId', catchAsync(async (req, res) => {
     const { id, queryId } = req.params;
     const product = await Product.findById(id);
     const question = await Question.findById(queryId);
-    question.answers.push(req.body.query, {author: req.user._id});
+    question.answers.push(req.body.query, { author: req.user._id });
     await question.save();
     await product.save();
     res.redirect(`/customer/products/${id}`);

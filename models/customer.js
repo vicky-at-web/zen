@@ -23,7 +23,7 @@ const customerSchema = new Schema({
     },
     profilePic: {
         type: String,
-        default: 'https://cdn-icons-png.flaticon.com/512/1144/1144760.png',
+        default: 'https://i.pinimg.com/736x/0d/64/98/0d64989794b1a4c9d89bff571d3d5842.jpg',
     }
 })
 

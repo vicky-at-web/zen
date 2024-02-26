@@ -67,19 +67,18 @@ passport.serializeUser(function(user, done) {
 ///ADDING GLOBAL VARIABLES
 
 app.use((req, res, next) => {
-    console.log(req.session)
+    console.log(req.session) 
+    res.locals.currentUser = req.user;
     if (req.user && req.user.role) {
         // Set a local variable indicating if the user is a customer
         res.locals.customer = req.user.role === 'customer';
         res.locals.seller = req.user.role === 'seller';
-        console.log(req.user)
     }
     else {
         // If user is not authenticated or role is not defined, set customer to false
         res.locals.customer = false;
         res.locals.seller = false;
     }
-    res.locals.currentUser = req.user
     res.locals.success = req.flash('success')
     res.locals.error = req.flash('error')
     res.locals.info = req.flash('info')

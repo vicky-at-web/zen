@@ -76,7 +76,7 @@
       </a>
       <ul class="navbar-nav ms-5 mt-1 justify-content-start d-flex flex-row align-items-center">
         <li class="nav-item mx-4" id="navitem">
-          <a class="nav-link" aria-disabled="true" href="/home">Home</a>
+          <a class="nav-link" aria-disabled="true" href="/customer/home">Home</a>
         </li>
         <li class="nav-item mx-4" id="navitem">
           <a class="nav-link" href="/customer/products" aria-current="page">All Products</a>
@@ -95,36 +95,23 @@
     <div class="navbar-nav ml-auto d-flex flex-row">
       <%  if(customer) {%>
         <li class="nav-item mx-4" id="navitem">
-          <a class="nav-link mt-1" data-bs-toggle="modal" data-bs-target="#myModal2" style="cursor: pointer">CLogout
+          <a class="nav-link mt-2" data-bs-toggle="modal" data-bs-target="#myModal2" style="cursor: pointer">CLogout
           </a>
-        <% } else {%>
-          <li class="nav-item mx-4" id="navitem">
-            <a href="/customer/auth/register" class="nav-link  mt-1">CRegister</a>
-          </li>
-          <li class="nav-item mx-4" id="navitem">
-            <a href="/customer/auth/login" class="nav-link  mt-1">CLogin</a>
-          </li>
-          <% } %>
-  
+       
+  <% } %>
       
       <%  if(seller) {%>
         <li class="nav-item mx-4" id="navitem">
           <a class="nav-link mt-1" data-bs-toggle="modal" data-bs-target="#myModal" style="cursor: pointer">SLogout
           </a>
-        <% } else {%>
-          <li class="nav-item mx-4" id="navitem">
-            <a href="/seller/auth/register" class="nav-link  mt-1">SRegister</a>
-          </li>
-          <li class="nav-item mx-4" id="navitem">
-            <a href="/seller/auth/login" class="nav-link  mt-1">SLogin</a>
-          </li>
-          <% } %>
+     <% } %>
 
       </li>
       <% if(currentUser){%>
-        <span class="mx-2 me-2">
-          <a href="/profile"> <img src="<%= currentUser.profilePic %>" style="border-radius: 50%; width: 50px; height: 50px"
-            class="img-thumbnail me-3" alt=""></a>
+        <span class="mx-2  d-flex justify-content-center flex-column">
+          <a href="/customer/profile/<%= currentUser._id %>/view"> <img src="<%= currentUser.profilePic %>" width="60px" height="60px"
+            style="border-radius: 100%;" class="me-3" alt=""></a>
+           <!-- <h5> <span class="badge text-bg-secondary me-2">Customer</span></h5> -->
         </span>
         <% } %>
     </div>

@@ -1,0 +1,11 @@
+<% layout('../layout/boilerplate') %>
+
+<center>
+<h1>profile page </h1>
+</center>
+
+<form action="/customer/profile/<%= currentUser._id %>/update?_method=PUT" method="POST" >
+    <label for="text">Profile Picture:</label>
+    <input type="text"  name="profilePic">
+<button type="submit">Submit</button>
+</form>

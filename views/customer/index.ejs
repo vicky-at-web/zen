@@ -8,16 +8,18 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item text-muted">
                                 <center>
-                                    <h5 class="card-title p-1">
+                                    <h6 class="card-title p-1">
                                         <b>A <%= product.brand %> Product</b>
-                                    </h5>
+                                    </h6>
                                 </center>
                             </li>
                             <li class="list-group-item">
                                 <center>
                                     <h5 class="card-title p-1">
-                                        <%= product.name %> <%= products.length %>
+                                        <%= product.name %>  
+                                                                  
                                     </h5>
+                                   
                                 </center>
                             </li>
                             <li class="list-group-item d-flex justify-content-between">
@@ -34,7 +36,7 @@
                                     <%= product.headers %>
                                 </p>
                             </li>
-                            <li class="list-group-item">
+                            <li class="list-group-item d-flex justify-content-around">
                                 <a href="/customer/products/<%= product.id %>" class="btn btn-primary me-1">View
                                     Details!</a>
                                 <button type="button" class="btn btn-primary"
