@@ -63,7 +63,16 @@
   </nav>
 
 </div>
-
+<div class="collapse" id="navbarToggleExternalContent" >
+  <div class="shadow-sm p-4">
+    <form class="container-fluid" action="/customer/products/search?page=1">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search Anything!"  list="datalistOptions" name="productName">
+        
+      </div>
+    </form>
+  </div>
+</div>
 <div class="d-xl-block  d-sm-none d-none sticky-top">
   <nav class="navbar shadow-sm  p-0 " style="background-color: rgba(255, 255, 255, 0);">
     <div class="d-flex flex-row">
@@ -79,11 +88,14 @@
           <a class="nav-link" aria-disabled="true" href="/customer/home">Home</a>
         </li>
         <li class="nav-item mx-4" id="navitem">
-          <a class="nav-link" href="/customer/products" aria-current="page">All Products</a>
+          <a class="nav-link" href="/customer/products?page=1" aria-current="page">All Products</a>
         </li>
 
         <li class="nav-item mx-4 " id="navitem">
           <a class="nav-link" href="/seller/all/sellers">All Sellers</a>
+        </li>
+        <li class="nav-item mx-4 " id="navitem">
+          <a class="nav-link" style="cursor: pointer;"  data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">Search Products</a>
         </li>
 
         <% if(customer) {%>
@@ -172,6 +184,10 @@
     </div>
   </div>
 </div>
+
+
+
+
 
 
 <script>

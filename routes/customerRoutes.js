@@ -8,7 +8,7 @@ const Question = require('../models/question')
 const Customer = require('../models/customer')
 const categories = ['Computers', 'Mobiles', 'Cameras', 'Men"s', 'Women"s', 'Kids', 'Accessories', 'Decor', 'Kitchen', 'Bedding', 'Skincare', 'Haircare', 'Perfumes', 'Books', 'Movies', 'Music', 'Equipment', 'Activewear', 'Camping', 'Kids Toys', 'Board Games', 'Video Games', 'Vitamins', 'Fitness Equipment', 'Monitoring Devices', 'Car Accessories', 'Maintenance', 'Motorcycle Gear', 'Rings', 'Watches', 'Necklaces', 'Stationery', 'Furniture', 'Electronics', 'Groceries', ' Snacks', 'Beverages', 'Pet Food', 'Accessories', 'Care products', 'Handmade', 'Customized']
 const image = 'https://source.unsplash.com/collection/483251';
-
+const ITEMS_PER_PAGE = 20;
 const router = express.Router();
 
 
@@ -32,10 +32,33 @@ router.get('/home', (req, res) => {
 })
 
 router.get('/products', catchAsync(async (req, res) => {
-    const products = await Product.find();
-    res.render('../views/customer/index.ejs', { products })
-
+    const { page, productName } = req.query || 1;
+    const skip = (page - 1) * ITEMS_PER_PAGE;
+    const products = await Product.find().skip(skip).limit(ITEMS_PER_PAGE);
+    const totalProducts = await Product.countDocuments();
+    const totalPages = Math.ceil(totalProducts / ITEMS_PER_PAGE);
+    console.log(totalPages)
+    res.render('../views/customer/index.ejs', { products, currentPage: page, totalPages, productName });
 }))
+
+
+
+router.get('/products/search', catchAsync(async (req, res) => {
+    let { productName, page=1 } = req.query;
+    const skip = (page - 1) * ITEMS_PER_PAGE;
+    const search1 = productName.replace(/[^\w\s]/g, '');
+    const searchName1 = search1.toLowerCase().split(' ');
+    const searchName2 = searchName1.join('');
+    const products = await Product.find({ searchTerm: { $regex: searchName2 } }).skip(skip).limit(ITEMS_PER_PAGE);
+    const totalProducts = await Product.countDocuments({ searchTerm: { $regex: searchName2 } });
+    const totalPages = Math.ceil( totalProducts / ITEMS_PER_PAGE);
+    console.log(totalPages, totalProducts, page)
+    console.log(typeof(totalPages))
+    res.render('./customer/index', { products, currentPage: page, totalPages, productName });
+}))
+
+
+
 
 router.put('/profile/:id/update', catchAsync(async (req, res) => {
     const { id } = req.params;

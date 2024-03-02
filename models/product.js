@@ -14,6 +14,9 @@ const productSchema = new Schema({
     description: {
         type: String,
     },
+    searchTerm: [{
+        type: String,
+    }],
     price: {
         type: Number
     },
@@ -29,15 +32,15 @@ const productSchema = new Schema({
         type: String,
         default: 0
     },
-    queries:[{
+    queries: [{
         type: Schema.Types.ObjectId,
         ref: 'Question'
     }],
-    
-    brand:{
+
+    brand: {
         type: String,
     },
-    headers:{
+    headers: {
         type: String,
     }
 })

@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="d-flex row justify-content-center ">
             <% for(let product of products) {%>
-               
+
                 <div class="card m-3 shadow p-0" style="width: 18rem;">
                     <img src="<%= product.imageUrl[0] %>" class="card-img-top shadow" alt="...">
                     <div class="card-body p-0">
@@ -17,10 +17,9 @@
                             <li class="list-group-item">
                                 <center>
                                     <h5 class="card-title p-1">
-                                        <%= product.name %>  
-                                                                  
+                                        <%= product.name %>
                                     </h5>
-                                   
+
                                 </center>
                             </li>
                             <li class="list-group-item d-flex justify-content-between">
@@ -64,9 +63,52 @@
                         </ul>
                     </div>
                 </div>
-            
+
                 <% } %>
         </div>
+        <nav aria-label="Page navigation example">
+            <% if(products.length > 0) {%>
+                <ul class="pagination justify-content-center d-flex">
+
+                    <% if(currentPage === '1' ) {%>
+                        <li class="page-item disabled">
+                            <a class="page-link" href="/customer/products/search?page=<%= currentPage - 1 %>&productName=<%= productName %>">&#8592;</a>
+                        </li>
+                        <% } else { %>
+                            <li class="page-item ">
+                                <a class="page-link" href="/customer/products/search?page=<%= currentPage - 1  %>&productName=<%= productName %>">&#8592;</a>
+                            </li>
+                            <% } %>
+                                <% const startPage=Math.max(1, currentPage - 3); %>
+                                    <% const endPage=Math.min(totalPages, startPage + 6); %>
+                                        <% for (let page=startPage; page <=endPage; page++) { %>
+                                         
+                                            <% if(currentPage == page) {%>
+                                                <li class="page-item active shadow"><a class="page-link"
+                                                    href="/customer/products/search?page=<%= page %>&productName=<%= productName %>">
+                                                    <%= page %>
+                                                </a></li>
+                                                <% } else {%>
+                                                    <li class="page-item"><a class="page-link"
+                                                        href="/customer/products/search?page=<%= page %>&productName=<%= productName %>">
+                                                        <%= page %>
+                                                    </a></li>
+                                                <% } %>
+                                            
+                                            <% } %>
+                                            <% if(currentPage === totalPages.toString() ) {%>
+                                                <li class="page-item disabled">
+                                                    <a class="page-link" href="/customer/products/search?page=<%= parseInt(currentPage) + 1  %>&productName=<%= productName %>">&#8594;</a>
+                                                </li>
+                                                <% } else { %>
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="/customer/products/search?page=<%= parseInt(currentPage) + 1  %>&productName=<%= productName %>">&#8594;</a>
+                                                    </li>   
+                                                    <% } %>  
+                 
+                            </ul>
+                <% } %>
+        </nav>
     </div>
 
 

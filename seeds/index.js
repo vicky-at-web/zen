@@ -16,25 +16,32 @@ const sample = array => array[Math.floor(Math.random() * array.length)];
 
 const seedDb = async () => {
     await Product.deleteMany({});
-    for (let i = 0; i <= 50; i++) {
-        for(let category of categories){
+    for (let i = 0; i <= 2000; i++) {
+        const productName = `${sample(features)} ${sample(types)}`;
+        const sanitizedProductName = productName.replace(/[^\w\s]/g, '');
+        const searchName1 = sanitizedProductName.toLowerCase().split(' ');
+        const searchName2 = searchName1.join(''); // Join without any separator
         const price = Math.floor(Math.random() * 10000);
+        const category = sample(categories);
         const product = new Product({
-            name: `${sample(features)} ${sample(types)}`,
-            imageUrl: ['https://source.unsplash.com/collection/483251','https://source.unsplash.com/collection/483251','https://source.unsplash.com/collection/483251','https://source.unsplash.com/collection/483251',],
-            description: 'Lorem ispum dolor sir amet consectetr apidi skdhfkhd ahdhfhd  ahaha  dhehe agdbckeb dhdhd a fheifbe Lorem ispum dolor sir amet consectetr apidi skdhfkhd ahdhfhd  ahaha  dhehe agdbckeb dhdhd a fheifbeLorem ispum dolor sir amet consectetr apidi skdhfkhd ahdhfhd  ahaha  dhehe agdbckeb dhdhd a fheifbeLorem ispum dolor sir amet consectetr apidi skdhfkhd ahdhfhd  ahaha  dhehe agdbckeb dhdhd a fheifbeLorem ispum dolor sir amet consectetr apidi skdhfkhd ahdhfhd  ahaha  dhehe agdbckeb dhdhd a fheifbeLorem ispum dolor sir amet consectetr apidi skdhfkhd ahdhfhd  ahaha  dhehe agdbckeb dhdhd a fheifbe',
-            price: `${price}`,
-            category: `${category}`,
+            name: productName,
+            searchTerm: searchName2, // Storing search terms as a string
+            imageUrl: ['https://source.unsplash.com/collection/483251', 'https://source.unsplash.com/collection/483251', 'https://source.unsplash.com/collection/483251', 'https://source.unsplash.com/collection/483251'],
+            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
+            price: price,
+            category: category,
             rating: 0,
             brand: 'Zen Recommends',
-            headers: 'Lorem ispum dolor sir amet consectetr apidi skdhfkhd ahdhfhd  ahaha  dhehe agdbckeb dhdhd a fheifbe'
-            
+            headers: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...'
         });
         await product.save();
     }
+};
 
-}}
 
 seedDb().then(() => {
     mongoose.connection.close();
 });
+
+
+
