@@ -2,6 +2,7 @@ const express = require('express');
 const Product = require('../models/product');
 const Review = require('../models/review');
 const catchAsync = require('../utils/catchasync');
+const isLoggedIn = require('../utils/isLoggedIn')
 const { reviewSchema } = require('../schemas/schema');
 const expErr = require('../utils/expressErr');
 const Question = require('../models/question')
@@ -59,7 +60,6 @@ router.get('/products/search', catchAsync(async (req, res) => {
 
 
 
-
 router.put('/profile/:id/update', catchAsync(async (req, res) => {
     const { id } = req.params;
     const customer = await Customer.findByIdAndUpdate(id, { ...req.body });
@@ -85,14 +85,14 @@ router.post('/:id/products/favourite/:productId', catchAsync(async (req, res) =>
 }))
 
 
-router.get('/:id/products/favourites', catchAsync(async (req, res) => {
+router.get('/:id/products/favourites',isLoggedIn, catchAsync(async (req, res) => {
     const { id } = req.params;
     const customer = await Customer.findById(id).populate('favourites');
     res.render('../views/customer/favourites', { customer })
 }))
 
 
-router.get('/products/:id', catchAsync(async (req, res) => {
+router.get('/products/:id', isLoggedIn, catchAsync(async (req, res) => {
     const { id } = req.params;
     const product = await Product.findById(id).populate('reviews').populate('queries').populate({
         path: 'reviews',

@@ -1,5 +1,6 @@
 <% layout('../layout/boilerplate') %>
     <div class="container-fluid">
+       <div class="d-lg-block d-none">
         <div class="d-flex row justify-content-center ">
             <% for(let product of products) {%>
 
@@ -22,7 +23,7 @@
 
                                 </center>
                             </li>
-                            <li class="list-group-item d-flex justify-content-between">
+                            <li class="list-group-item d-flex justify-content-between ">
                                 <div>
                                     <b>Price:</b>
                                 </div>
@@ -30,16 +31,21 @@
                                     &#8377; <%= product.price %>
                                 </div>
                             </li>
-                            <li class="list-group-item">
+                            <li class="list-group-item d-flex flex-column h-100">
                                 <div class="mb-1"><b>Description:</b></div>
                                 <p class="card-text">
                                     <%= product.headers %>
                                 </p>
                             </li>
                             <li class="list-group-item d-flex justify-content-around">
-                                <a href="/customer/products/<%= product.id %>" class="btn btn-primary me-1">View
-                                    Details!</a>
-                                <button type="button" class="btn btn-primary"
+                                <% if(customer) {%>
+                                    <a href="/customer/products/<%= product.id %>" class="btn btn-primary me-1 p-2 w-100 mt-auto rounded-2">View
+                                        Details!</a>
+                                    <% }else{ %>
+                                        <a href="/customer/products/id" class="btn btn-primary me-1 p-2 w-100 mt-auto  rounded-2">View
+                                            Details!</a>
+                                        <% } %>
+                                <button type="button" class="btn btn-primary w-100 p-2  mt-auto  rounded-2"
                                     onclick="showToast('<%= product.name%>', '<%= product.id %>')" id="liveToastBtn">Add
                                     to
                                     cart</button>
@@ -66,6 +72,77 @@
 
                 <% } %>
         </div>
+       </div>
+       <div class="d-block d-sm-block d-md-block d-lg-none d-xl-none d-xxl-none">
+        <% for(let product of products) { %>
+
+
+            <div class="card mb-3">
+                <div class="row g-0">
+                    <div class="col-5 d-flex align-items-center flex-column justify-content-center ">
+                        <img class="img-fluid" src="<%= product.imageUrl[0] %>" alt="">
+                    </div>
+                    <div class="col-7">
+                        <ul class="list-group list-group-flush p-1">
+                            <li class="list-group-item">
+                               <div class="p-1">
+                               <center> <h6 class="">
+                                <%= product.name %>
+                            </h6></center>
+                               </div>
+                            </li>
+                            <li class="list-group-item">
+                               <div class="p-1 d-flex justify-content-between">
+                                <strong>Price:</strong><div><%= product.price %></div>
+                               </div>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Description:</b><br>
+                                <%= product.headers %>
+                                </li>
+                            <li class="list-group-item d-flex ">
+                          
+                                <% if(customer) {%>
+                                    <a href="/customer/products/<%= product.id %>" class="btn btn-sm btn-primary p-2 me-1 w-100 ">View
+                                        Details!</a>
+                                    <% }else{ %>
+                                        <a href="/customer/products/id" class="btn btn-sm btn-primary w-100 p-2 me-1 ">View
+                                            Details!</a>
+                                        <% } %>
+                                <button type="button" class="btn btn-sm btn-primary w-100 p-2 mt-auto "
+                                    onclick="showToast('<%= product.name%>', '<%= product.id %>')" id="liveToastBtn">Add
+                                    to
+                                    cart</button>
+                                <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                                    <div id="productToast" class="toast" role="alert" aria-live="assertive"
+                                        aria-atomic="true">
+                                        <div class="toast-header">
+                                            <strong class="me-auto">
+                                                <p style="font-family: 'DM Serif Display', serif;" class="m-2 mt-3">
+                                                    Z&nbsp;&nbsp;E&nbsp;&nbsp;N</p>
+                                            </strong>
+                                            <small>11 mins ago</small>
+                                            <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="toast-body" id="toastMessage">
+                                        </div>
+                                    </div>
+                                </div>
+                               </div>
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+               
+            </div>
+
+
+
+            <% } %>
+    </div>
         <nav aria-label="Page navigation example">
             <% if(products.length > 0) {%>
                 <ul class="pagination justify-content-center d-flex">
