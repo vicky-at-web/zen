@@ -74,13 +74,13 @@
   </div>
 </div>
 <div class="d-xl-block  d-sm-none d-none sticky-top">
-  <nav class="navbar shadow-sm  p-0 " style="background-color: rgba(255, 255, 255, 0);">
+  <nav class="navbar shadow-sm  p-0 " style="background-color: rgba(255, 255, 255, 0.75)">
     <div class="d-flex flex-row">
 
-      <a class="navbar-brand ms-4 mt-3" href="#" style="background-color: rgba(255, 255, 255, 0);">
+      <a class="navbar-brand ms-4 mt-3" href="#" style="background-color: rgba(255, 255, 255, 0.75)"">
 
         <p style="font-family: 'DM Serif Display', serif;" class="mt-2 ms-4"
-          style="background-color: rgba(255, 255, 255, 0);">
+          style="background-color: rgba(255, 255, 255, 0.75)">
           Z&nbsp;&nbsp;E&nbsp;&nbsp;N</p>
       </a>
       <ul class="navbar-nav ms-5 mt-1 justify-content-start d-flex flex-row align-items-center">
@@ -101,12 +101,7 @@
           <li class="nav-item mx-4" id="navitem">
             <a class="nav-link" href="/customer/<%= currentUser._id %>/products/favourites">Favourites</a>
           </li>
-          <% }else{ %>
-            <li class="nav-item mx-4" id="navitem">
-              <a class="nav-link" href="/customer/id/products/favourites">Favourites</a>
-            </li>
-            <% } %>
-      </ul>
+          <% } %>
     </div>
     <div class="navbar-nav ml-auto d-flex flex-row align-items-center">
       <%  if(customer) {%>
@@ -127,7 +122,7 @@
        <div class=" my-1 d-flex flex-column justify-content-center">
           <a href="/customer/profile/<%= currentUser._id %>/view"> <img src="<%= currentUser.profilePic %>" width="60px" height="60px"
             style="border-radius: 100%;" class="me-3" class="m-1" alt=""></a>
-            <span class="badge text-bg-secondary me-4 p-1 mt-1 ">Customer</span>
+           
        
        </div>
          

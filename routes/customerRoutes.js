@@ -45,16 +45,17 @@ router.get('/products', catchAsync(async (req, res) => {
 
 
 router.get('/products/search', catchAsync(async (req, res) => {
-    let { productName, page=1 } = req.query;
+    let { productName, page = 1 } = req.query;
     const skip = (page - 1) * ITEMS_PER_PAGE;
     const search1 = productName.replace(/[^\w\s]/g, '');
     const searchName1 = search1.toLowerCase().split(' ');
     const searchName2 = searchName1.join('');
-    const products = await Product.find({ searchTerm: { $regex: searchName2 } }).skip(skip).limit(ITEMS_PER_PAGE);
+    const products = await Product.find({ searchTerm: { $regex: searchName2 } }).skip(skip).limit(ITEMS_PER_PAGE).sort({ name: 1 });
+
     const totalProducts = await Product.countDocuments({ searchTerm: { $regex: searchName2 } });
-    const totalPages = Math.ceil( totalProducts / ITEMS_PER_PAGE);
+    const totalPages = Math.ceil(totalProducts / ITEMS_PER_PAGE);
     console.log(totalPages, totalProducts, page)
-    console.log(typeof(totalPages))
+    console.log(typeof (totalPages))
     res.render('./customer/index', { products, currentPage: page, totalPages, productName });
 }))
 
@@ -85,7 +86,16 @@ router.post('/:id/products/favourite/:productId', catchAsync(async (req, res) =>
 }))
 
 
-router.get('/:id/products/favourites',isLoggedIn, catchAsync(async (req, res) => {
+router.delete('/:id/products/favourites/:productId', catchAsync(async (req, res) => {
+    const { id, productId } = req.params;
+    await Customer.findByIdAndUpdate(id, { $pull: { favourites: productId } });
+    console.log('Customer Id:', id, 'Product Id:', productId)
+    req.flash('error', 'Whoops! You deleted from your Favourites')
+    res.redirect(`/customer/products/${productId}`)
+}))
+
+
+router.get('/:id/products/favourites', isLoggedIn, catchAsync(async (req, res) => {
     const { id } = req.params;
     const customer = await Customer.findById(id).populate('favourites');
     res.render('../views/customer/favourites', { customer })
@@ -113,19 +123,39 @@ router.get('/products/:id', isLoggedIn, catchAsync(async (req, res) => {
             model: 'Customer'
         }
     });
-    console.log(product)
+
+
+
     let sum = 0;
     for (let review of product.reviews) {
         sum += parseInt(review.rating);
         product.rating = sum / product.reviews.length;
     }
-    res.render('../views/customer/show', { product })
+
+    console.log('product')
+    console.log(product)
+    const customerId = req.user._id;
+    const customer = await Customer.findById(customerId);
+    const favoriteProductIds = customer.favourites;
+    res.render('../views/customer/show', { product, favoriteProductIds })
 }))
 
-router.get('/:id/cart', catchAsync(async (req, res) => {
-    const { id } = req.params;
+router.post('/:customerId/:id/cart', catchAsync(async (req, res) => {
+    const { id, customerId } = req.params;
     const product = await Product.findById(id);
-    res.render('../views/customer/cart', { product })
+    const customer = await Customer.findById(customerId).populate('cart');
+    customer.cart.push(product);
+    await customer.save();
+    req.flash('success', 'Product added to the cart!')
+    console.log(customer.cart)
+   
+}))
+
+router.get('/:customerId/cart', catchAsync(async (req, res) => {
+    const { customerId } = req.params;
+    const customer = await Customer.findById(customerId).populate('cart');
+    res.send(customer.cart)
+
 }))
 
 ///QUERIES ROUTES START
