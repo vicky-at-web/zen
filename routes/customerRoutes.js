@@ -51,7 +51,6 @@ router.get('/products/search', catchAsync(async (req, res) => {
     const searchName1 = search1.toLowerCase().split(' ');
     const searchName2 = searchName1.join('');
     const products = await Product.find({ searchTerm: { $regex: searchName2 } }).skip(skip).limit(ITEMS_PER_PAGE).sort({ name: 1 });
-
     const totalProducts = await Product.countDocuments({ searchTerm: { $regex: searchName2 } });
     const totalPages = Math.ceil(totalProducts / ITEMS_PER_PAGE);
     console.log(totalPages, totalProducts, page)
@@ -144,17 +143,23 @@ router.post('/:customerId/:id/cart', catchAsync(async (req, res) => {
     const { id, customerId } = req.params;
     const product = await Product.findById(id);
     const customer = await Customer.findById(customerId).populate('cart');
-    customer.cart.push(product);
-    await customer.save();
-    req.flash('success', 'Product added to the cart!')
-    console.log(customer.cart)
-   
-}))
+    const isProductInCart = customer.cart.some(cartProduct => cartProduct.id === product.id);
+    if (isProductInCart) {
+        req.flash('error', 'Product already added to the cart!');
+    } else {
+        customer.cart.push(product);
+        await customer.save();
+        req.session.passport.user.cart = customer.cart;
+        req.flash('success', 'Product added to the cart!');
+    }
+    res.redirect('/customer/products?page=1');
+}));
+
 
 router.get('/:customerId/cart', catchAsync(async (req, res) => {
     const { customerId } = req.params;
     const customer = await Customer.findById(customerId).populate('cart');
-    res.send(customer.cart)
+    res.render('../views/customer/cart', { customer })
 
 }))
 
