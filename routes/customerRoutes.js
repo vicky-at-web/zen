@@ -145,7 +145,7 @@ router.post('/:customerId/:id/cart', catchAsync(async (req, res) => {
     const customer = await Customer.findById(customerId).populate('cart');
     const isProductInCart = customer.cart.some(cartProduct => cartProduct.id === product.id);
     if (isProductInCart) {
-        req.flash('error', 'Product already added to the cart!');
+        req.flash('error', ' Product already added to the cart!');
     } else {
         customer.cart.push(product);
         await customer.save();

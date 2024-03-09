@@ -1,22 +1,69 @@
 <% layout('../layout/boilerplate') %>
-<br><br>
-    <div class="container-fluid ">
-        <div class="d-flex row justify-content-center">
-            <% for(let product of customer.cart) {%>
-              <div class="card mb-3 p-0" style="max-width: 800px;">
-                <div class="row g-0">
-                  <div class="col-md-4">
-                    <img src="<%= product.imageUrl[0] %>" class="img-fluid p-0 rounded-start" alt="...">
-                  </div>
-                  <div class="col-md-8">
-                    <div class="card-body">
-                      <h5 class="card-title"><%= product.name %></h5>
-                      <p class="card-text"><%= product.description %></p>
-                      <p class="card-text"><small class="text-body-secondary"><%= product.price %></small></p>
-                    </div>
-                  </div>
-                </div>
+  <br><br>
+  <div class="container-fluid ">
+    <div class="d-flex row justify-content-center">
+      <% for(let product of customer.cart) {%>
+        <div class="card mb-3 p-0" style="max-width: 800px;">
+          <div class="row g-0">
+            <div class="col-md-4 d-flex justify-content-center align-items-center">
+              <img src="<%= product.imageUrl[0] %>" class="img-fluid p-0 rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <%= product.name %>
+                </h5>
+                <p class="card-text">
+                  <%= product.description %>
+                </p>
+                <p class="card-text"><small class="text-body-secondary">
+                    <%= product.price %>
+                  </small></p>
               </div>
-            <% } %>
+              <div class="card-footer">
+                <ul class="pagination pagination">
+                  <li class="page-item" aria-current="page">
+                    <a href="#" contenteditable="false" class="page-link disabled shadow-none" id="del"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16"> <path d = "M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" /> </svg> </a>
+                  </li>
+                  <li class="page-item"><a id="value" class="page-link  shadow-none" href="#">2</a></li>
+                  <li class="page-item"><a id="plus" class="page-link  shadow-none" href="#">+</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
+        <% } %>
     </div>
+  </div>
+
+
+  <script>
+   const del = document.querySelector('#del');
+    const value = document.querySelector('#value');
+    const plus = document.querySelector('#plus');
+    value.innerText = 1;
+
+    plus.addEventListener('click', function () {
+      value.innerText++;
+      if (parseInt(value.innerText)=== 1) {
+        del.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16"> <path d = "M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" /> </svg> ';
+        del.setAttribute('class', 'page-link disabled shadow-none');
+      } else {
+        del.innerHTML = '-';
+        del.setAttribute('class', 'page-link shadow-none');
+        del.setAttribute('contenteditable', 'false')
+      }
+    });
+
+    del.addEventListener('click', function () {
+      value.innerText--;
+      if (parseInt(value.innerText)=== 1) {
+        del.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16"> <path d = "M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" /> </svg> ';
+        del.setAttribute('class', 'page-link disabled shadow-none');
+      }else {
+        del.innerHTML = '-';
+        del.setAttribute('class', 'page-link shadow-none');
+        del.setAttribute('contenteditable', 'false')
+      }
+    });
+  </script>
