@@ -63,146 +63,164 @@
   </nav>
 
 </div>
-<div class="collapse" id="navbarToggleExternalContent" >
-  <div class="shadow-sm p-4">
-    <form class="container-fluid" action="/customer/products/search?page=1">
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search Anything!"  list="datalistOptions" name="productName">
-        
-      </div>
+<div class="offcanvas offcanvas-top text-light" data-bs-scroll="true" data-bs-backdrop="false"
+  style="background-color: rgba(255, 255, 255, 0); height: fit-content;" tabindex="-1" id="offcanvasTop"
+  aria-labelledby="offcanvasTopLabel">
+  <div class="offcanvas-header" style="background-color: rgba(0, 0, 0, 0.55)">
+    <h5 class="offcanvas-title" id="offcanvasTopLabel"><p style="font-family: 'DM Serif Display', serif;" class="mt-2 ms-4"
+      style="background-color: rgba(255, 255, 255, 0.75)">
+      Z&nbsp;&nbsp;E&nbsp;&nbsp;N</p></h5>
+    <button type="button" style="color: white" class="btn" data-bs-dismiss="offcanvas" aria-label="Close"><svg
+        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg"
+        viewBox="0 0 16 16">
+        <path
+          d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+      </svg></button>
+  </div>
+  <div class="offcanvas-body 100vh" style="background-color: rgba(0, 0, 0, 0.55)">
+    <form action="/customer/products/search?page=1">
+      
+        <input type="text" class="form-control" placeholder="Search Anything!" list="datalistOptions"
+          name="productName">
+
+   
     </form>
   </div>
 </div>
-<div class="d-xl-block  d-sm-none d-none sticky-top">
-  <nav class="navbar shadow-sm  p-0 " style="background-color: rgba(255, 255, 255, 0.75)">
-    <div class="d-flex flex-row">
+  <div class="d-xl-block  d-sm-none d-none sticky-top">
+    <nav class="navbar shadow-sm  p-0 " style="background-color: rgba(255, 255, 255, 0.75)">
+      <div class="d-flex flex-row">
 
-      <a class="navbar-brand ms-4 mt-3" href="#" style="background-color: rgba(255, 255, 255, 0.75)"">
+        <a class="navbar-brand ms-4 mt-3" href="#">
 
-        <p style="font-family: 'DM Serif Display', serif;" class="mt-2 ms-4"
-          style="background-color: rgba(255, 255, 255, 0.75)">
-          Z&nbsp;&nbsp;E&nbsp;&nbsp;N</p>
-      </a>
-      <ul class="navbar-nav ms-5 mt-1 justify-content-start d-flex flex-row align-items-center">
-        <li class="nav-item mx-4" id="navitem">
-          <a class="nav-link" aria-disabled="true" href="/customer/home">Home</a>
-        </li>
-        <li class="nav-item mx-4" id="navitem">
-          <a class="nav-link" href="/customer/products?page=1" aria-current="page">All Products</a>
-        </li>
-
-        <li class="nav-item mx-4 " id="navitem">
-          <a class="nav-link" href="/seller/all/sellers">All Sellers</a>
-        </li>
-        <li class="nav-item mx-4 " id="navitem">
-          <a class="nav-link" style="cursor: pointer;"  data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">Search Products</a>
-        </li>
-         <% if(currentUser) {%>
+          <p style="font-family: 'DM Serif Display', serif;" class="mt-2 ms-4"
+            style="background-color: rgba(255, 255, 255, 0.75)">
+            Z&nbsp;&nbsp;E&nbsp;&nbsp;N</p>
+        </a>
+        <ul class="navbar-nav ms-5 mt-1 justify-content-start d-flex flex-row align-items-center">
           <li class="nav-item mx-4" id="navitem">
-            <a class="nav-link" href="/customer/<%= currentUser._id %>/products/favourites">Favourites</a>
+            <a class="nav-link" aria-disabled="true" href="/customer/home">Home</a>
           </li>
-          <% } %>
-    </div>
-    <div class="navbar-nav ml-auto d-flex flex-row align-items-center">
-      
-      <%  if(customer) {%>
-        <form action="/customer/<%= currentUser._id %>/cart">
-          <button type="submit" class="btn  position-relative" style="background-color: rgba(255, 255, 255, 0.0); border: 0px;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-bag-check-fill" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0m-.646 5.354a.5.5 0 0 0-.708-.708L7.5 10.793 6.354 9.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0z"/>
-            </svg>
-            <span class="position-absolute top-75 start-100 translate-middle badge rounded-pill bg-danger">
-              <%= currentUser.cart.length %>
-            </span>
-        
-          </button>
-        </form>
-        <li class="nav-item mx-4" id="navitem">
-          <a class="nav-link mt-2" data-bs-toggle="modal" data-bs-target="#myModal2" style="cursor: pointer">CLogout
-          </a>
-       
-  <% } %>
-      
-      <%  if(seller) {%>
-        <li class="nav-item mx-4" id="navitem">
-          <a class="nav-link mt-1" data-bs-toggle="modal" data-bs-target="#myModal" style="cursor: pointer">SLogout
-          </a>
-     <% } %>
+          <li class="nav-item mx-4" id="navitem">
+            <a class="nav-link" href="/customer/products?page=1" aria-current="page">All Products</a>
+          </li>
 
-      </li>
-      <% if(currentUser){%>
-       <div class=" my-1 d-flex flex-column justify-content-center">
-          <a href="/customer/profile/<%= currentUser._id %>/view"> <img src="<%= currentUser.profilePic %>" width="60px" height="60px"
-            style="border-radius: 100%;" class="me-3" class="m-1" alt=""></a>
-           
-       
-       </div>
-         
-            
-        
-        <% } %>
-    </div>
-    </ul>
+          <li class="nav-item mx-4 " id="navitem">
+            <a class="nav-link" href="/seller/all/sellers">All Sellers</a>
+          </li>
+          <li class="nav-item mx-4 " id="navitem">
+            <a class="nav-link" style="cursor: pointer;" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop"
+              aria-controls="offcanvasTop">Search Products</button>
+          </li>
+          <% if(currentUser) {%>
+            <li class="nav-item mx-4 mb-3" id="navitem">
+              <a class="nav-link" href="/customer/<%= currentUser._id %>/products/favourites">Favourites</a>
+            </li>
+            <% } %>
+      </div>
+      <div class="navbar-nav ml-auto d-flex flex-row align-items-center">
+
+        <% if(customer) {%>
+          <form action="/customer/<%= currentUser._id %>/cart">
+            <button type="submit" class="btn  position-relative"
+              style="background-color: rgba(255, 255, 255, 0.0); border: 0px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                class="bi bi-bag-check-fill" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                  d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0m-.646 5.354a.5.5 0 0 0-.708-.708L7.5 10.793 6.354 9.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0z" />
+              </svg>
+              <span class="position-absolute top-75 start-100 translate-middle badge rounded-pill bg-danger">
+                <%= currentUser.cart.length %>
+              </span>
+
+            </button>
+          </form>
+          <li class="nav-item mx-4" id="navitem">
+            <a class="nav-link mt-2" data-bs-toggle="modal" data-bs-target="#myModal2" style="cursor: pointer">CLogout
+            </a>
+
+            <% } %>
+
+              <% if(seller) {%>
+          <li class="nav-item mx-4" id="navitem">
+            <a class="nav-link mt-1" data-bs-toggle="modal" data-bs-target="#myModal" style="cursor: pointer">SLogout
+            </a>
+            <% } %>
+
+          </li>
+          <% if(currentUser){%>
+            <div class=" my-1 d-flex flex-column justify-content-center">
+              <a href="/customer/profile/<%= currentUser._id %>/view"> <img src="<%= currentUser.profilePic %>"
+                  width="60px" height="60px" style="border-radius: 100%;" class="me-3" class="m-1" alt=""></a>
+
+
+            </div>
+
+
+
+            <% } %>
+      </div>
+      </ul>
+    </nav>
+  </div>
+
   </nav>
-</div>
+  <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
 
-</nav>
-<div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-  aria-labelledby="staticBackdropLabel" aria-hidden="true" id="myModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-
-      <!-- Modal Header -->
+        <!-- Modal Header -->
 
 
-      <!-- Modal Body -->
-      <div class="modal-body">
-        <p>Are you sure to logout Zen?</p>
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <p>Are you sure to logout Zen?</p>
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nope</button>
+          <a type="button" href="/seller/auth/logout" class="btn btn-primary">Yes</a>
+        </div>
+
       </div>
-
-      <!-- Modal Footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nope</button>
-        <a type="button" href="/seller/auth/logout" class="btn btn-primary">Yes</a>
-      </div>
-
     </div>
   </div>
-</div>
 
 
-<div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-  aria-labelledby="staticBackdropLabel" aria-hidden="true" id="myModal2">
-  <div class="modal-dialog">
-    <div class="modal-content">
+  <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true" id="myModal2">
+    <div class="modal-dialog">
+      <div class="modal-content">
 
-      <!-- Modal Header -->
+        <!-- Modal Header -->
 
 
-      <!-- Modal Body -->
-      <div class="modal-body">
-        <p>Are you sure to logout Zen?</p>
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <p>Are you sure to logout Zen?</p>
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nope</button>
+          <a type="button" href="/customer/auth/logout" class="btn btn-primary">Yes</a>
+        </div>
+
       </div>
-
-      <!-- Modal Footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nope</button>
-        <a type="button" href="/customer/auth/logout" class="btn btn-primary">Yes</a>
-      </div>
-
     </div>
   </div>
-</div>
 
 
 
 
 
 
-<script>
-  const btn = document.querySelector('#trans');
-  const search = document.querySelector('.hide1')
-  btn.addEventListener('mouseover', function () {
-    search.setAttribute('class', 'show')
-  })
-</script>
+  <script>
+    const btn = document.querySelector('#trans');
+    const search = document.querySelector('.hide1')
+    btn.addEventListener('mouseover', function () {
+      search.setAttribute('class', 'show')
+    })
+  </script>

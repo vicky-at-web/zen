@@ -50,20 +50,57 @@ router.get('/products/search', catchAsync(async (req, res) => {
     const search1 = productName.replace(/[^\w\s]/g, '');
     const searchName1 = search1.toLowerCase().split(' ');
     const searchName2 = searchName1.join('');
-    const products = await Product.find({ searchTerm: { $regex: searchName2 } }).skip(skip).limit(ITEMS_PER_PAGE).sort({ name: 1 });
+    const products = await Product.find({ searchTerm: { $regex: searchName2 } }).skip(skip).limit(ITEMS_PER_PAGE);
     const totalProducts = await Product.countDocuments({ searchTerm: { $regex: searchName2 } });
     const totalPages = Math.ceil(totalProducts / ITEMS_PER_PAGE);
     console.log(totalPages, totalProducts, page)
     console.log(typeof (totalPages))
-    res.render('./customer/index', { products, currentPage: page, totalPages, productName });
+    res.render('./customer/search', { products, currentPage: page, totalPages, productName, searchName2 });
 }))
+
+router.get('/products/sort/filter', catchAsync(async (req, res) => {
+    const { arrangement, productName, page = 1, pricing } = req.query;
+    if ((arrangement && (arrangement === '123' || arrangement === '321')) || (pricing && (pricing === '123' || pricing === '321'))) {
+        const skip = (page - 1) * ITEMS_PER_PAGE;
+        const searchName2 = productName;
+        let sortCriteria = {};
+
+        // Sort by name
+        if (arrangement === '123' || arrangement === '321') {
+            sortCriteria.name = (arrangement === '123') ? 1 : -1;
+        }
+
+        // Sort by price
+        if (pricing === '123' || pricing === '321') {
+            sortCriteria.price = (pricing === '123') ? 1 : -1;
+        }
+
+        const products = await Product.find({ searchTerm: { $regex: searchName2 } })
+            .sort(sortCriteria)
+            .skip(skip)
+            .limit(ITEMS_PER_PAGE);
+
+        const totalProducts = await Product.countDocuments({ searchTerm: { $regex: searchName2 } });
+        const totalPages = Math.ceil(totalProducts / ITEMS_PER_PAGE);
+        console.log(totalPages, totalProducts, page);
+        res.render('./customer/filters', { products, currentPage: page, totalPages, productName, searchName2, arrangement, pricing });
+    } else {
+        res.redirect(`/customer/products/search?productName=${productName}`);
+    }
+}));
+
+
 
 
 
 router.put('/profile/:id/update', catchAsync(async (req, res) => {
     const { id } = req.params;
-    const customer = await Customer.findByIdAndUpdate(id, { ...req.body });
-    res.redirect(`/customer/products`)
+    const customer = await Customer.findById(id)
+    const profilePic = req.body.profilePic ? req.body.profilePic : 'https://i.pinimg.com/736x/0d/64/98/0d64989794b1a4c9d89bff571d3d5842.jpg';
+    const updatedCustomer = await Customer.findByIdAndUpdate(id, { ...req.body, profilePic }, { new: true });
+    console.log(req.body)
+    req.session.passport.user = updatedCustomer;
+    res.redirect('/customer/products?page=1')
 }))
 
 
