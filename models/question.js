@@ -10,6 +10,9 @@ const questionSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Customer'
     },
+    date:{
+        type: String,
+    },
     answers: [{
         answer: {
             type: String,
@@ -18,6 +21,9 @@ const questionSchema = new Schema({
         author: {
             type: Schema.Types.ObjectId,
             ref: 'Customer'
+        }, 
+        date:{
+            type: String
         }
     }]
 });

@@ -1,14 +1,65 @@
 <% layout('../layout/boilerplate') %>
 
-<center>
-<h1>profile page </h1>
-</center>
+    <center>
+        <h1>profile page </h1>
+    </center>
 
-<form action="/customer/profile/<%= currentUser._id %>/update?_method=PUT" method="POST" >
-    <label for="text">Profile Picture:</label>
-    <input type="text"  name="profilePic" value="<%= customer.profilePic %>">
-    <label for="text">Name:</label>
-    <input type="text"  name="username" value="<%= customer.username %>">
-
-<button type="submit">Submit</button>
-</form>
+    <div class="container-lg">
+        <form class="row g-3" action="/customer/profile/<%= currentUser._id %>/update?_method=PUT" method="POST">
+            <div class="card">
+                <div class="card-body">
+                    <div class="col-12">
+                        <label for="inputEmail4" class="form-label">Username</label>
+                        <input type="text" name="username" class="form-control" id="inputEmail4"
+                            value="<%= customer.username %>">
+                    </div><br>
+                    <!-- <div class="col-md-6">
+              <label for="inputEmail4" class="form-label">Email</label>
+              <input type="email" name="email" class="form-control" id="inputEmail4">
+            </div> -->
+                    <!-- <div class="col-md-6">
+              <label for="inputPassword4" class="form-label">Password</label>
+              <input type="password" class="form-control" id="inputPassword4">
+            </div> -->
+                    <div class="col-12">
+                        <label for="inputAddress" class="form-label">Profile Picture</label>
+                        <input type="text" name="profilePic" class="form-control" id="inputAddress"
+                            value="<%= customer.profilePic %>">
+                    </div><br>
+                    <div class="col-12">
+                        <label for="inputAddress" class="form-label">Mobile Number</label>
+                        <input type="text" name="mobile" class="form-control" id="inputAddress"
+                            value="<%= customer.mobile %>">
+                    </div><br>
+                    <div class="col-12">
+                        <label for="inputAddress" class="form-label">Street</label>
+                        <input type="text" name="address[street]" class="form-control" id="inputAddress"
+                            value="<%= customer.address.street %>">
+                    </div><br>
+                    <div class="col-md-6">
+                        <label for="inputCity" class="form-label">City</label>
+                        <input type="text" name="address[city]" class="form-control" id="inputCity"
+                            value="<%= customer.address.city %>">
+                    </div><br>
+                    <div class="col-md-4">
+                        <label for="inputState" class="form-label">State</label>
+                        <input type="text" name="address[state]" class="form-control" id="inputCity"
+                            value="<%= customer.address.state %>">
+                    </div><br>
+                    <div class="col-md-4">
+                        <label for="inputState" class="form-label">Country</label>
+                        <input type="text" name="address[country]" class="form-control" id="inputCity"
+                            value="<%= customer.address.country %>">
+                    </div><br>
+                    <div class="col-md-2">
+                        <label for="inputZip" class="form-label">Zip</label>
+                        <input type="text" name="address[pincode]" class="form-control" id="inputZip"
+                            value="<%= customer.address.pincode %>">
+                    </div><br>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>

@@ -11,25 +11,25 @@
     </style>
     <div class="container-fluid">
         <div class="d-lg-block d-none">
-            <div class="container-fluid container-lg ">
+            <div class="container-fluid container-xxl ">
              
                     <div class="d-flex row justify-content-center ">
                         <% for(let product of products) {%>
 
-                            <div class="card m-3  shadow-lg p-0" style="width: 18rem;">
+                            <div class="card m-2  shadow-lg p-0" style="width: 19rem; background-color:#F8F6F4; ">
                                 <img src="<%= product.imageUrl[0] %>" class="card-img-top shadow" alt="...">
-                                <div class="card-body p-0 mb-0">
-                                    <ul class="list-group list-group-flush ">
-                                        <li class="list-group-item text-muted">
+                                <div class="card-body p-0 mb-0" style=" background-color: #F8F6F4; " >
+                                    <ul class="list-group">
+                                        <li class="list-group-item text-muted py-3" style=" background-color: #F8F6F4; ">
                                             <center>
-                                                <h6 class="card-title p-1">
+                                                <h6 class="card-title"  >
                                                     <b>A <%= product.brand %> Product</b>
                                                 </h6>
                                             </center>
                                         </li>
 
                                         <li class="list-group-item"
-                                            style="display: flex; align-items: center; justify-content: center;">
+                                            style="display: flex; align-items: center; justify-content: center; background-color: #F8F6F4; ">
                                             <center>
                                                 <h5 class="card-title p-1">
                                                     <%= product.name %>
@@ -37,9 +37,10 @@
                                             </center>
                                         </li>
                                 </div>
+                                
                                 <div class="card-footer p-0">
                                     <ul class="list-group list-group-flush d-flex ">
-                                        <li class="list-group-item d-flex justify-content-between ">
+                                        <li class="list-group-item d-flex justify-content-between "  style=" background-color: #F8F6F4;  ">
                                             <div>
                                                 <b>Price:</b>
                                             </div>
@@ -47,13 +48,15 @@
                                                 &#8377; <%= product.price %>
                                             </div>
                                         </li>
-                                        <li class="list-group-item d-flex flex-column  ">
+                                        
+                                        <li class="list-group-item d-flex flex-column  "  style=" background-color: #F8F6F4; ">
                                             <div class="mb-1"><b>Description:</b></div>
                                             <p class="card-text">
                                                 <%= product.headers %>
                                             </p>
                                         </li>
-                                        <li class="list-group-item d-flex justify-content-around ">
+                                        
+                                        <li class="list-group-item d-flex justify-content-around "  style=" background-color: #F8F6F4; ">
 
                                             <a href="/customer/products/<%= product.id %>"
                                                 class="btn btn-primary me-1 p-2 w-100 mt-auto rounded-2">View
@@ -62,31 +65,12 @@
                                             <% if(customer) {%>
                                                 <form action="/customer/<%= currentUser._id %>/<%= product.id %>/cart"
                                                     method="post" id="cartForm" class="w-100">
-                                                    <button class="btn btn-warning w-100 p-2  mt-auto  rounded-2"
-                                                        id="liveToastBtn">Add
-                                                        to
-                                                        cart</button>
+                                                    <button type="submit" class="btn btn-warning w-100 p-2  mt-auto  rounded-2">Add to cart</button>
                                                 </form>
 
                                                 <% } %>
 
-                                                    <div class="toast-container position-fixed bottom-0 end-0 p-3">
-                                                        <div id="productToast" class="toast" role="alert"
-                                                            aria-live="assertive" aria-atomic="true">
-                                                            <div class="toast-header">
-                                                                <strong class="me-auto">
-                                                                    <p style="font-family: 'DM Serif Display', serif;"
-                                                                        class="m-2 mt-3">
-                                                                        Z&nbsp;&nbsp;E&nbsp;&nbsp;N</p>
-                                                                </strong>
-                                                                <small>11 mins ago</small>
-                                                                <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="toast" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="toast-body" id="toastMessage">
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                  
                                         </li>
                                     </ul>
                                 </div>

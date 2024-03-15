@@ -268,32 +268,36 @@
                 </div>
                 <center>
                     <div class="card text-muted d-flex flex-row justify-content-around" style="width: fit-content;">
-                        <form action="#">
+                        <form action="/customer/<%= currentUser._id %>/<%= product.id %>/cart" method="post">
                             <button class="btn btn-warning rounded btn-sm  py-2 px-3 m-2">Add To Cart</button>
                         </form>
                         <form action="/products/<%= product.id %>/buynow">
                             <button class="btn btn-primary rounded py-2 px-3 btn-sm ms-2 my-2 me-1">Buy Now</button>
                         </form>
                         <% if(favoriteProductIds.includes(product._id)) {%>
-                        <form action="/customer/<%=currentUser._id%>/products/favourites/<%= product.id %>?_method=DELETE" method="post" class="m-2">
-                            <button class="rbutton rounded ">
-                                Remove from Favs &nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-                                    <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
-                                  </svg>
-                            </button>
-                        </form>
-                        <% }else{ %>
-                            <form action="/customer/<%= currentUser._id %>/products/favourite/<%= product.id %>"
-                                class=" m-2" method="post" id="myForm">
-                                <button class="button rounded ">
-                                    Add to Favs &nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                        fill="currentColor" class="bi bi-suit-heart-fill mb-1" viewBox="0 0 16 16">
+                            <form
+                                action="/customer/<%=currentUser._id%>/products/favourites/<%= product.id %>?_method=DELETE"
+                                method="post" class="m-2">
+                                <button class="rbutton rounded ">
+                                    Remove from Favs &nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                        height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
                                         <path
-                                            d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1" />
+                                            d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5" />
                                     </svg>
                                 </button>
                             </form>
-                        <% } %>
+                            <% }else{ %>
+                                <form action="/customer/<%= currentUser._id %>/products/favourite/<%= product.id %>"
+                                    class=" m-2" method="post" id="myForm">
+                                    <button class="button rounded ">
+                                        Add to Favs &nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-suit-heart-fill mb-1" viewBox="0 0 16 16">
+                                            <path
+                                                d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1" />
+                                        </svg>
+                                    </button>
+                                </form>
+                                <% } %>
                     </div>
                     <br>
                 </center>
@@ -334,26 +338,36 @@
                                             <div class="card mb-3">
                                                 <div class="card-body position-relative p-0">
                                                     <div class="p-2">
-                                                        <h4 class="">
-                                                            <span>
-                                                                <img src="<%= query.author.profilePic %>"
-                                                                    style="border-radius: 50%; width: 50px; height: 50px"
-                                                                    class="img-thumbnail m-1" alt="">
-                                                            </span>
-                                                            <%= query.author.username %> asks
-                                                        </h4>
+                                                        <div class="d-flex">
+                                                            <h4 class="">
+                                                                <span>
+                                                                    <img src="<%= query.author.profilePic %>"
+                                                                        style="border-radius: 50%; width: 50px; height: 50px"
+                                                                        class="img-thumbnail m-1" alt="">
+                                                                </span>
+                                                                <%= query.author.username %> asks
+                                                            </h4> &nbsp;&nbsp;
+                                                            <h6 class="mt-3 ms-2 text-muted">
+                                                                <i>~ <small>
+                                                                    <%= query.date %>
+                                                                </small></i>
+                                                            </h6>
+                                                        </div>
 
-                                                        <h6 class="pb-2 px-4">
+                                                        <h6 class=" px-4 mb-0">
                                                             <%= query.question %> ?
 
-                                                                <button class="btn btn-default" type="button"
-                                                                    id="showReplies" data-bs-toggle="collapse"
+                                                                <button class="btn btn-default" style="border: 0px"
+                                                                    type="button" id="showReplies"
+                                                                    data-bs-toggle="collapse"
                                                                     data-bs-target="#collapse<%= query.id %>"
                                                                     aria-expanded="false"
                                                                     aria-controls="collapse<%= query.id %>">
                                                                     View Replies
                                                                 </button>
                                                         </h6>
+                                                        <% if(currentUser && query.author.equals(currentUser._id)) {%>
+
                                                         <form
                                                             action='/customer/products/<%= product.id %>/<%= query.id %>/queries?_method=DELETE'
                                                             method="post"
@@ -361,18 +375,33 @@
                                                             <button
                                                                 class="btn btn-sm rounded p-2 btn-outline-danger mt-1">Delete</button>
                                                         </form>
+                                                        <% } %>
                                                     </div>
 
                                                     <div class="ms-5 mb-2 collapse " id="collapse<%= query.id %>">
                                                         <% if(query.answers.length> 0) {%>
                                                             <% for(let replies of query.answers) {%>
                                                                 <div class="d-flex flex-column">
-                                                                    <ul class="ms-5">
-                                                                        <li>
-                                                                            <%= replies.answer %>
-                                                                        </li>
-                                                                    </ul>
+
+                                                                   <div class="d-flex">
+                                                                    <h5 class="m-0">
+                                                                        <span>
+                                                                            <img src="<%= replies.author.profilePic %>"
+                                                                                style="border-radius: 50%; width: 40px; height: 40px"
+                                                                                class="img-thumbnail mx-1 mt-1" alt="">
+                                                                        </span>
+                                                                        <%= replies.author.username %> </h5>
+                                                                        <div class="mt-2 ms-2">
+                                                                            <i>~  <small>
+                                                                                <%= replies.date %></small></i>
+                                                                        </div>
+                                                                   </div>
+                                                                   
+                                                                    <div class="ms-5">
+                                                                        <%= replies.answer %>&nbsp;
+                                                                    </div>
                                                                 </div>
+
                                                                 <% } %>
                                                                     <% } %>
                                                     </div>
@@ -381,7 +410,7 @@
                                                         action='/customer/products/<%= product.id %>/queries/<%= query.id %>'
                                                         method="post" class=" d-flex p-2">
                                                         <input type="text" class="form-control p-2 m-0 " id="query"
-                                                            name="query[answer]">
+                                                            name="answer">
                                                         <button
                                                             class="btn btn-sm btn-success px-3 py-1 ms-2">Post</button>
                                                     </form>
@@ -485,6 +514,11 @@
                             </h6>
                             <h6 class="ms-2"><b>Review: </b>
                                 <%= review.body %>
+                            </h6>
+                            <h6 class="ms-2 mb-1  text-muted">
+                                <i>Posted on~</i> &nbsp;&nbsp; <small>
+                                    <%= review.date %>
+                                </small>
                             </h6>
                             <% if(currentUser && review.author.equals(currentUser._id)) {%>
 

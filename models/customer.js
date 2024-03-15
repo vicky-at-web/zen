@@ -26,8 +26,38 @@ const customerSchema = new Schema({
     profilePic: {
         type: String,
         default: 'https://i.pinimg.com/736x/0d/64/98/0d64989794b1a4c9d89bff571d3d5842.jpg',
+    },
+    address: {
+        street: {
+            type: String,
+            default: '123 abc street'
+        },
+        city:{
+            type: String,
+            default: 'NY '
+        },
+        state:{
+            type: String,
+            default: 'Washington'
+        },
+        country:{
+            type: String,
+            default: 'USA'
+        },
+        pincode:{
+            type: String,
+            default: '53821'
+        },
+    },
+    mobile: {
+        type: String,
+        default: '1234567890'
+    },
+    dateofjoin: {
+        type: String
     }
 })
+
 
 
 customerSchema.plugin(passportLocalMongoose);

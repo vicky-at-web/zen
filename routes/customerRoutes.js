@@ -95,11 +95,12 @@ router.get('/products/sort/filter', catchAsync(async (req, res) => {
 
 router.put('/profile/:id/update', catchAsync(async (req, res) => {
     const { id } = req.params;
-    const customer = await Customer.findById(id)
-    const profilePic = req.body.profilePic ? req.body.profilePic : 'https://i.pinimg.com/736x/0d/64/98/0d64989794b1a4c9d89bff571d3d5842.jpg';
-    const updatedCustomer = await Customer.findByIdAndUpdate(id, { ...req.body, profilePic }, { new: true });
-    console.log(req.body)
-    req.session.passport.user = updatedCustomer;
+    const customer = await Customer.findOneAndUpdate(
+        { _id: id },
+        { $set: req.body },
+        { new: true, runValidators: true }
+    );
+    req.session.passport.user = customer.toObject();
     res.redirect('/customer/products?page=1')
 }))
 
@@ -192,11 +193,41 @@ router.post('/:customerId/:id/cart', catchAsync(async (req, res) => {
     res.redirect('/customer/products?page=1');
 }));
 
+router.post('/:customerId/:id/undocart', catchAsync(async (req, res) => {
+    const { id, customerId } = req.params;
+    const product = await Product.findById(id);
+    const customer = await Customer.findById(customerId).populate('cart');
+    const isProductInCart = customer.cart.some(cartProduct => cartProduct.id === product.id);
+    if (isProductInCart) {
+        req.flash('error', ' Product already added to the cart!');
+    } else {
+        customer.cart.push(product);
+        await customer.save();
+        req.session.passport.user.cart = customer.cart;
+        req.flash('success', 'Product retrived to the cart!');
+    }
+    res.redirect(`/customer/${customer.id}/cart`);
+}));
+
+
+router.delete('/products/:id/cart/:productId', catchAsync(async (req, res) => {
+    const { id, productId } = req.params;
+    const product = await Product.findById(productId);
+    const customer = await Customer.findByIdAndUpdate(id, { $pull: { cart: productId } }, { new: true });
+    req.session.passport.user = customer;
+    console.log(customer)
+    req.session.undoProduct = { productId: productId, productName: product.name }
+    req.flash('error', `Whoops! deleted ${product.name} from your cart! 😓`)
+    req.flash('cartInfo', `Want to retrieve ${product.name} `);
+    res.redirect(`/customer/${customer.id}/cart`)
+}))
+
 
 router.get('/:customerId/cart', catchAsync(async (req, res) => {
     const { customerId } = req.params;
     const customer = await Customer.findById(customerId).populate('cart');
-    res.render('../views/customer/cart', { customer })
+    const undoProduct = req.session.undoProduct
+    res.render('../views/customer/cart', { customer, undoProduct })
 
 }))
 
@@ -207,6 +238,12 @@ router.post('/products/:id/queries', catchAsync(async (req, res) => {
     const product = await Product.findById(id);
     const question = new Question(req.body.query);
     question.author = req.user._id;
+    const currentDate = new Date();
+    const day = currentDate.getDate();
+    const month = currentDate.getMonth() + 1;
+    const year = currentDate.getFullYear();
+    const formattedDate = `${day}/${month}/${year}`;
+    question.date = formattedDate
     product.queries.push(question)
     await question.save();
     await product.save();
@@ -218,7 +255,12 @@ router.post('/products/:id/queries/:queryId', catchAsync(async (req, res) => {
     const { id, queryId } = req.params;
     const product = await Product.findById(id);
     const question = await Question.findById(queryId);
-    question.answers.push(req.body.query, { author: req.user._id });
+    const currentDate = new Date();
+    const day = currentDate.getDate();
+    const month = currentDate.getMonth() + 1;
+    const year = currentDate.getFullYear();
+    const formattedDate = `${day}/${month}/${year}`;
+    question.answers.push({ answer: req.body.answer, author: req.user._id, date: formattedDate });
     await question.save();
     await product.save();
     res.redirect(`/customer/products/${id}`);
@@ -238,7 +280,13 @@ router.post('/products/:id/reviews', validateReview, catchAsync(async (req, res)
     const { id } = req.params
     const product = await Product.findById(id);
     const review = new Review(req.body.review);
-    review.author = req.user._id
+    review.author = req.user._id;
+    const currentDate = new Date();
+    const day = currentDate.getDate();
+    const month = currentDate.getMonth() + 1;
+    const year = currentDate.getFullYear();
+    const formattedDate = `${day}/${month}/${year}`;
+    review.date = formattedDate;
     product.reviews.push(review);
     await review.save();
     await product.save();

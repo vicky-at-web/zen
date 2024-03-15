@@ -1,9 +1,29 @@
 <% layout('../layout/boilerplate') %>
   <br><br>
-  <div class="container-fluid ">
+  <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Launch demo modal
+  </button> -->
+
+  <!-- Modal -->
+  <div class="modal fade" style="opacity: 1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Want to retrieve the product in your cart?😥😥😥<button class="btn btn-sm btn-primary">Undo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-lg  position-relative">
+
     <div class="d-flex row justify-content-center">
+
       <% for(let product of customer.cart) {%>
-        <div class="card mb-3 p-0" style="max-width: 800px;">
+        <div class="card mb-3 p-0 col-9">
           <div class="row g-0">
             <div class="col-md-4 d-flex justify-content-center align-items-center">
               <img src="<%= product.imageUrl[0] %>" class="img-fluid p-0 rounded-start" alt="...">
@@ -22,8 +42,25 @@
               </div>
               <div class="card-footer">
                 <ul class="pagination pagination">
-                  <li class="page-item" aria-current="page">
-                    <a href="#" contenteditable="false" class="page-link disabled shadow-none" id="del"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16"> <path d = "M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" /> </svg> </a>
+                  <li class="page-item">
+                    <a id="del" class="page-link  minusButton shadow-none" href="#">-</a> </button>
+                    <% let value=1 %>
+
+
+
+
+                      <% if(valueInput===1) {%>
+                        <form action="/customer/products/<%= customer.id %>/cart/<%= product.id %>?_method=DELETE"
+                          method="Post" class="delForm">
+                          <button type="submit" contenteditable="false" style="background-color: red; color: white"
+                            class="page-link shadow-none" id="del"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                              height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                              <path
+                                d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
+                            </svg> </button>
+                        </form>
+
+                        <% } %>
                   </li>
                   <li class="page-item"><a id="value" class="page-link  shadow-none" href="#">1</a></li>
                   <li class="page-item"><a id="plus" class="page-link  shadow-none" href="#">+</a></li>
@@ -36,32 +73,37 @@
     </div>
   </div>
   <script>
-   const del = document.querySelector('#del');
-    const value = document.querySelector('#value');
-    const plus = document.querySelector('#plus');
-    value.innerText = 1;
+    const delButtons = document.querySelectorAll('#del');
+    const valueInputs = document.querySelectorAll('#value');
+    const plusButtons = document.querySelectorAll('#plus');
+    const delForms = document.querySelectorAll('.delForm')
+    const minusButtons = document.querySelectorAll('.minusButton')
 
-    plus.addEventListener('click', function () {
-      value.innerText++;
-      if (parseInt(value.innerText)=== 1) {
-        del.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16"> <path d = "M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" /> </svg> ';
-        del.setAttribute('class', 'page-link disabled shadow-none');
-      } else {
-        del.innerHTML = '-';
-        del.setAttribute('class', 'page-link shadow-none');
-        del.setAttribute('contenteditable', 'false')
-      }
+    valueInputs.forEach((value, index) => {
+      value.innerText = 1;
+      plusButtons[index].addEventListener('click', function () {
+        value.innerText++;
+        if (parseInt(value.innerText) === 1) {
+          delForms[index].style.display = 'block';
+          minusButtons[index].style.display = 'none'
+        } else {
+          minusButtons[index].style.display = 'block'
+          delForms[index].style.display = 'none';
+        }
+      });
+
+      delButtons[index].addEventListener('click', function () {
+        value.innerText--;
+        if (parseInt(value.innerText) === 1) {
+          delForms[index].style.display = 'block';
+          minusButtons[index].style.display = 'none'
+        } else {
+          minusButtons[index].style.display = 'block'
+          delForms[index].style.display = 'none';
+        }
+      });
     });
 
-    del.addEventListener('click', function () {
-      value.innerText--;
-      if (parseInt(value.innerText)=== 1) {
-        del.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16"> <path d = "M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" /> </svg> ';
-        del.setAttribute('class', 'page-link disabled shadow-none');
-      }else {
-        del.innerHTML = '-';
-        del.setAttribute('class', 'page-link shadow-none');
-        del.setAttribute('contenteditable', 'false')
-      }
-    });
+
+
   </script>
