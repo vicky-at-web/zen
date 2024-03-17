@@ -39,7 +39,15 @@ router.get('/products', catchAsync(async (req, res) => {
     const totalProducts = await Product.countDocuments();
     const totalPages = Math.ceil(totalProducts / ITEMS_PER_PAGE);
     console.log(totalPages)
-    res.render('../views/customer/index.ejs', { products, currentPage: page, totalPages, productName });
+    const newProducts = products.filter(product => {
+        const launchDate = new Date(product.launchDate);
+        const today = new Date();
+        const twentyDaysAgo = new Date(today.getTime() - 20 * 24 * 60 * 60 * 1000); // 10 days ago
+        return launchDate > twentyDaysAgo;
+
+    });
+    console.log(newProducts)
+    res.render('../views/customer/index.ejs', { products, currentPage: page, totalPages, productName, newProducts });
 }))
 
 
@@ -55,15 +63,23 @@ router.get('/products/search', catchAsync(async (req, res) => {
     const totalPages = Math.ceil(totalProducts / ITEMS_PER_PAGE);
     console.log(totalPages, totalProducts, page)
     console.log(typeof (totalPages))
-    res.render('./customer/search', { products, currentPage: page, totalPages, productName, searchName2 });
+    const newProducts = products.filter(product => {
+        const launchDate = new Date(product.launchDate);
+        const today = new Date();
+        const twentyDaysAgo = new Date(today.getTime() - 20 * 24 * 60 * 60 * 1000); // 10 days ago
+        return launchDate > twentyDaysAgo;
+
+    });
+    res.render('./customer/search', { products, currentPage: page, totalPages, productName, searchName2, newProducts });
 }))
+
 
 router.get('/products/sort/filter', catchAsync(async (req, res) => {
     const { arrangement, productName, page = 1, pricing } = req.query;
     if ((arrangement && (arrangement === '123' || arrangement === '321')) || (pricing && (pricing === '123' || pricing === '321'))) {
         const skip = (page - 1) * ITEMS_PER_PAGE;
         const searchName2 = productName;
-        let sortCriteria = {};
+        let sortCriteria = {}; // Initialize sortCriteria object
 
         // Sort by name
         if (arrangement === '123' || arrangement === '321') {
@@ -74,20 +90,23 @@ router.get('/products/sort/filter', catchAsync(async (req, res) => {
         if (pricing === '123' || pricing === '321') {
             sortCriteria.price = (pricing === '123') ? 1 : -1;
         }
-
+        // Query products with searchName2 and apply sorting criteria
         const products = await Product.find({ searchTerm: { $regex: searchName2 } })
-            .sort(sortCriteria)
+            .sort(sortCriteria) // Apply sorting criteria
             .skip(skip)
             .limit(ITEMS_PER_PAGE);
 
+        // Retrieve total count of products for pagination
         const totalProducts = await Product.countDocuments({ searchTerm: { $regex: searchName2 } });
         const totalPages = Math.ceil(totalProducts / ITEMS_PER_PAGE);
         console.log(totalPages, totalProducts, page);
         res.render('./customer/filters', { products, currentPage: page, totalPages, productName, searchName2, arrangement, pricing });
     } else {
+        // Redirect if sorting parameters are invalid
         res.redirect(`/customer/products/search?productName=${productName}`);
     }
 }));
+
 
 
 
@@ -226,8 +245,10 @@ router.delete('/products/:id/cart/:productId', catchAsync(async (req, res) => {
 router.get('/:customerId/cart', catchAsync(async (req, res) => {
     const { customerId } = req.params;
     const customer = await Customer.findById(customerId).populate('cart');
-    const undoProduct = req.session.undoProduct
-    res.render('../views/customer/cart', { customer, undoProduct })
+    const undoProduct = req.session.undoProduct;
+    let quantities = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+    res.render('../views/customer/cart', { customer, undoProduct, quantities })
 
 }))
 

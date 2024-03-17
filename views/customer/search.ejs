@@ -72,8 +72,6 @@
                                 </select> -->
                                 <br>
                                 <input type="text" value="<%= searchName2 %>" name="productName" class="d-none">
-                               
-
                                 <select class="form-select shadow" name="arrangement" id="price">
                                     <option value="none">Search By Alphabet</option>
                                     <option value="123">A to Z</option>
@@ -112,7 +110,8 @@
                                         style="display: flex; align-items: center; justify-content: center;">
                                         <center>
                                             <h5 class="card-title p-1">
-                                                <%= product.name %>
+                                                <%= product.name %><% if (newProducts.some(newProduct => newProduct._id.toString() === product._id.toString())) { %> <span class="badge text-bg-info">New</span> 
+                                                <% } %>
                                             </h5>
                                         </center>
                                     </li>

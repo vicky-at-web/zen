@@ -12,11 +12,24 @@ db.once('open', () => {
     console.log('DATABASE CONNECTED');
 });
 
+function getRandomDate(startDate, endDate) {
+    const start = new Date(startDate).getTime();
+    const end = new Date(endDate).getTime();
+    const randomTime = start + Math.random() * (end - start);
+    return new Date(randomTime);
+}
+
+// Example usage:
+const startDate = '2018-01-01'; // Start date for the range
+const endDate = '2024-03-17';   // End date for the range
+
+
 const sample = array => array[Math.floor(Math.random() * array.length)];
 
 const seedDb = async () => {
     await Product.deleteMany({});
     for (let i = 0; i <= 2000; i++) {
+        const randomLaunchDate = getRandomDate(startDate, endDate);
         const productName = `${sample(features)} ${sample(types)}`;
         const sanitizedProductName = productName.replace(/[^\w\s]/g, '');
         const searchName1 = sanitizedProductName.toLowerCase().split(' ');
@@ -32,7 +45,8 @@ const seedDb = async () => {
             category: category,
             rating: 0,
             brand: 'Zen Recommends',
-            headers: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...'
+            headers: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
+            launchDate: randomLaunchDate 
         });
         await product.save();
     }

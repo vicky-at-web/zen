@@ -14,8 +14,10 @@ const customerSchema = new Schema({
         default: 'customer'
     },
     cart: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Product'
+      
+            type: Schema.Types.ObjectId,
+            ref: 'Product'
+      
     }],
     favourites: [
         {
@@ -32,19 +34,19 @@ const customerSchema = new Schema({
             type: String,
             default: '123 abc street'
         },
-        city:{
+        city: {
             type: String,
             default: 'NY '
         },
-        state:{
+        state: {
             type: String,
             default: 'Washington'
         },
-        country:{
+        country: {
             type: String,
             default: 'USA'
         },
-        pincode:{
+        pincode: {
             type: String,
             default: '53821'
         },

@@ -1,19 +1,11 @@
-<div class="d-block d-sm-block d-md-block d-lg-block d-xl-none d-xxl-none mb-5 sticky-top">
-  <nav class="navbar navbar-sm shadow-sm p-0" style="background-color: rgba(255, 255, 255, 0);">
+<div class="d-sm-block d-md-block d-lg-none d-block">
+  <nav class="navbar navbar-sm shadow-sm p-0 sticky-top" style="background-color: rgba(255, 255, 255, 0.75);   -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);">
     <div class="container-fluid py-0">
       <a class="navbar-brand ms-4 mt-3" href="#">
         <p style="font-family: 'DM Serif Display', serif;" class="mt-2">Z&nbsp;&nbsp;E&nbsp;&nbsp;N</p>
       </a>
       <ul class="navbar-nav ml-auto d-flex flex-row">
-        <li class="nav-item  mx-2" id="navitem">
-          <a href="/register" class="nav-link  mt-1">Register</a>
-        </li>
-        <li class="nav-item mx-2" id="navitem">
-          <a href="/customer/login" class="nav-link mx-2 mt-1">Login</a>
-        </li>
-        <li class="nav-item mx-4" id="navitem">
-          <a class="nav-link mt-1" data-bs-toggle="modal" data-bs-target="#myModal">Logout </a>
-        </li>
         <button class="navbar-toggler mt-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#canvas"
           aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -87,8 +79,9 @@
     </form>
   </div>
 </div>
-  <div class="d-xl-block  d-sm-none d-none sticky-top">
-    <nav class="navbar shadow-sm  p-0 " style="background-color: rgba(255, 255, 255, 0.75)">
+  <div class="d-xl-block d-lg-block d-md-none d-sm-none d-none sticky-top">
+    <nav class="navbar shadow-sm  p-0 " style="background-color: rgba(255, 255, 255, 0.75);   -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);">
       <div class="d-flex flex-row">
 
         <a class="navbar-brand ms-4 mt-3" href="#">
@@ -151,7 +144,7 @@
           <% if(currentUser){%>
             <div class=" my-1 d-flex flex-column justify-content-center">
               <a href="/customer/profile/<%= currentUser._id %>/view"> <img src="<%= currentUser.profilePic %>"
-                  width="60px" height="60px" style="border-radius: 100%;" class="me-3" class="m-1" alt=""></a>
+                  width="60px" height="60px" style="border-radius: 100%; object-fit: cover;" class="me-3" class="m-1" alt=""></a>
 
 
             </div>
@@ -211,16 +204,3 @@
       </div>
     </div>
   </div>
-
-
-
-
-
-
-  <script>
-    const btn = document.querySelector('#trans');
-    const search = document.querySelector('.hide1')
-    btn.addEventListener('mouseover', function () {
-      search.setAttribute('class', 'show')
-    })
-  </script>

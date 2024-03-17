@@ -42,6 +42,9 @@ const productSchema = new Schema({
     },
     headers: {
         type: String,
+    },
+    launchDate:{
+        type: Date
     }
 })
 
