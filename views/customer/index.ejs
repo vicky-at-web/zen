@@ -84,133 +84,59 @@
                     <% } %>
             </div>
             <nav aria-label="Page navigation example">
-        <% if(products.length> 0) {%>
-            <ul class="pagination justify-content-center d-flex">
+                <% if(products.length> 0) {%>
+                    <ul class="pagination justify-content-center d-flex">
 
-                <% if(currentPage==='1' ) {%>
-                    <li class="page-item disabled">
-                        <a class="page-link" href="/customer/products?page=<%= currentPage - 1 %>">&#8592;</a>
-                    </li>
-                    <% } else { %>
-                        <li class="page-item ">
-                            <a class="page-link" href="/customer/products?page=<%= currentPage - 1  %>">&#8592;</a>
-                        </li>
-                        <% } %>
-                            <% const startPage=Math.max(1, currentPage - 3); %>
-                                <% const endPage=Math.min(totalPages, startPage + 6); %>
-                                    <% for (let page=startPage; page <=endPage; page++) { %>
+                        <% if(currentPage==='1' ) {%>
+                            <li class="page-item disabled">
+                                <a class="page-link" href="/customer/products?page=<%= currentPage - 1 %>">&#8592;</a>
+                            </li>
+                            <% } else { %>
+                                <li class="page-item ">
+                                    <a class="page-link"
+                                        href="/customer/products?page=<%= currentPage - 1  %>">&#8592;</a>
+                                </li>
+                                <% } %>
+                                    <% const startPage=Math.max(1, currentPage - 3); %>
+                                        <% const endPage=Math.min(totalPages, startPage + 6); %>
+                                            <% for (let page=startPage; page <=endPage; page++) { %>
 
-                                        <% if(currentPage==page) {%>
-                                            <li class="page-item active shadow"><a class="page-link"
-                                                    href="/customer/products?page=<%= page %>">
-                                                    <%= page %>
-                                                </a></li>
-                                            <% } else {%>
-                                                <li class="page-item"><a class="page-link"
-                                                        href="/customer/products?page=<%= page %>">
-                                                        <%= page %>
-                                                    </a></li>
-                                                <% } %>
+                                                <% if(currentPage==page) {%>
+                                                    <li class="page-item active shadow"><a class="page-link"
+                                                            href="/customer/products?page=<%= page %>">
+                                                            <%= page %>
+                                                        </a></li>
+                                                    <% } else {%>
+                                                        <li class="page-item"><a class="page-link"
+                                                                href="/customer/products?page=<%= page %>">
+                                                                <%= page %>
+                                                            </a></li>
+                                                        <% } %>
 
-                                                    <% } %>
-                                                        <% if(currentPage===totalPages.toString() ) {%>
-                                                            <li class="page-item disabled">
-                                                                <a class="page-link"
-                                                                    href="/customer/products?page=<%= parseInt(currentPage) + 1  %>">&#8594;</a>
-                                                            </li>
-                                                            <% } else { %>
-                                                                <li class="page-item">
-                                                                    <a class="page-link"
-                                                                        href="/customer/products?page=<%= parseInt(currentPage) + 1  %>">&#8594;</a>
-                                                                </li>
-                                                                <% } %>
+                                                            <% } %>
+                                                                <% if(currentPage===totalPages.toString() ) {%>
+                                                                    <li class="page-item disabled">
+                                                                        <a class="page-link"
+                                                                            href="/customer/products?page=<%= parseInt(currentPage) + 1  %>">&#8594;</a>
+                                                                    </li>
+                                                                    <% } else { %>
+                                                                        <li class="page-item">
+                                                                            <a class="page-link"
+                                                                                href="/customer/products?page=<%= parseInt(currentPage) + 1  %>">&#8594;</a>
+                                                                        </li>
+                                                                        <% } %>
 
-            </ul>
-            <% } %>
-    </nav>
-        </div>
-    </div>
-
-
-    <div class="d-block d-sm-none d-md-none d-lg-none d-xl-none d-xxl-none">
-
-        <div class="container-xl">
-            <div class="card-group row">
-                <% for(let product of products) { %>
-                    <div class="card col-6 rounded-0 p-0 m-0">
-                        <img src="	https://source.unsplash.com/collection/483251" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h6 class="card-title">
-                                <%= product.name %>
-                            </h6>
-                            <p class="card-text">
-
-                                <%= product.headers %>
-                            </p>
-                            <p class="card-text" <%=product.price %>>
-                                &#8377; <%= product.price %>
-                            </p>
-                        </div>
-
-                        <a href="/customer/products/<%= product.id %>"
-                            class="btn btn-primary btn-sm  p-2  mt-auto ">View
-                            Details!</a>
-
-                    </div>
-
+                    </ul>
                     <% } %>
-            </div>
-        </div>
-        <nav aria-label="Page navigation example">
-        <% if(products.length> 0) {%>
-            <ul class="pagination justify-content-center d-flex">
-
-                <% if(currentPage==='1' ) {%>
-                    <li class="page-item disabled">
-                        <a class="page-link" href="/customer/products?page=<%= currentPage - 1 %>">&#8592;</a>
-                    </li>
-                    <% } else { %>
-                        <li class="page-item ">
-                            <a class="page-link" href="/customer/products?page=<%= currentPage - 1  %>">&#8592;</a>
-                        </li>
-                        <% } %>
-                            <% const startPage=Math.max(1, currentPage - 3); %>
-                                <% const endPage=Math.min(totalPages, startPage + 6); %>
-                                    <% for (let page=startPage; page <=endPage; page++) { %>
-
-                                        <% if(currentPage==page) {%>
-                                            <li class="page-item active shadow"><a class="page-link"
-                                                    href="/customer/products?page=<%= page %>">
-                                                    <%= page %>
-                                                </a></li>
-                                            <% } else {%>
-                                                <li class="page-item"><a class="page-link"
-                                                        href="/customer/products?page=<%= page %>">
-                                                        <%= page %>
-                                                    </a></li>
-                                                <% } %>
-
-                                                    <% } %>
-                                                        <% if(currentPage===totalPages.toString() ) {%>
-                                                            <li class="page-item disabled">
-                                                                <a class="page-link"
-                                                                    href="/customer/products?page=<%= parseInt(currentPage) + 1  %>">&#8594;</a>
-                                                            </li>
-                                                            <% } else { %>
-                                                                <li class="page-item">
-                                                                    <a class="page-link"
-                                                                        href="/customer/products?page=<%= parseInt(currentPage) + 1  %>">&#8594;</a>
-                                                                </li>
-                                                                <% } %>
-
-            </ul>
-            <% } %>
-    </nav>
+            </nav>
       
-    </div><br>
-
-
-
-
-
+      
     </div>
+
+</div>
+
+
+
+
+
+
