@@ -1,14 +1,14 @@
 <div class="container">
 
     <% if(success && success.length) {%>
-        <div class="alert alert-success alert-dismissible fade show mt-5" role="alert">
+        <div class="alert alert-success alert-dismissible fade show my-5" role="alert">
             <%= success %>
                 <button type="button" class="btn-close shadow-none" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         <% } %>
 
             <% if(error && error.length) {%>
-                <div class="alert alert-danger alert-dismissible fade show mt-5" role="alert">
+                <div class="alert alert-danger alert-dismissible fade show my-5" role="alert">
 
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-exclamation-triangle-fill mb-1 me-1" viewBox="0 0 16 16">
@@ -21,7 +21,7 @@
                 <% } %>
 
                     <% if(info && info.length) {%>
-                        <div class="alert alert-info alert-dismissible fade show mt-5" role="alert">
+                        <div class="alert alert-info alert-dismissible fade show my-5" role="alert">
 
                             <%= info %>
                                 <button type="button" class="btn-close shadow-none" data-bs-dismiss="alert"
@@ -30,7 +30,7 @@
                         <% } %>
                             <% if(cartInfo && cartInfo.length) {%>
 
-                                <div class="alert alert-info alert-dismissible fade show mt-5 d-flex" role="alert">
+                                <div class="alert alert-info alert-dismissible fade show my-5 d-flex" role="alert">
 
                                     <div class="mt-1">
                                         <%= cartInfo %>&nbsp;

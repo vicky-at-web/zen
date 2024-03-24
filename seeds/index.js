@@ -5,6 +5,7 @@ const Product = require('../models/product.js');
 const { features, types } = require('./productNames.js');
 const categories = ['Computers', 'Mobiles', 'Cameras', 'Men"s', 'Women"s', 'Kids', 'Accessories', 'Decor', 'Kitchen', 'Bedding', 'Skincare', 'Haircare', 'Perfumes', 'Books', 'Movies', 'Music', 'Equipment', 'Activewear', 'Camping', 'Kids Toys', 'Board Games', 'Video Games', 'Vitamins', 'Fitness Equipment', 'Monitoring Devices', 'Car Accessories', 'Maintenance', 'Motorcycle Gear', 'Rings', 'Watches', 'Necklaces', 'Stationery', 'Furniture', 'Electronics', 'Groceries', ' Snacks', 'Beverages', 'Pet Food', 'Accessories', 'Care products', 'Handmade', 'Customized']
 const db = mongoose.connection;
+const Seller = require('../models/seller.js')
 
 
 db.on('error', console.error.bind(console, 'CONNECTION FAILED!'));
@@ -27,6 +28,7 @@ const endDate = '2024-03-17';   // End date for the range
 const sample = array => array[Math.floor(Math.random() * array.length)];
 
 const seedDb = async () => {
+    const seller =  await Seller.findById('65f6ecdfe3fa623dc70112b2')
     await Product.deleteMany({});
     for (let i = 0; i <= 2000; i++) {
         const randomLaunchDate = getRandomDate(startDate, endDate);
@@ -46,9 +48,13 @@ const seedDb = async () => {
             rating: 0,
             brand: 'Zen Recommends',
             headers: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
-            launchDate: randomLaunchDate 
+            launchDate: randomLaunchDate,
+            seller: '65f6ecdfe3fa623dc70112b2'
+
         });
         await product.save();
+        seller.products.push(product);
+        await seller.save()
     }
 };
 

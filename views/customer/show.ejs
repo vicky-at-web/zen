@@ -342,12 +342,12 @@
                                                             <h4 class="">
                                                                 <span>
                                                                     <img src="<%= query.author.profilePic %>"
-                                                                        style="border-radius: 50%; width: 50px; height: 50px"
+                                                                    style="border-radius: 100%; object-fit: cover; height:60px; width: 60px;"
                                                                         class="img-thumbnail m-1" alt="">
                                                                 </span>
                                                                 <%= query.author.username %> asks
                                                             </h4> &nbsp;&nbsp;
-                                                            <h6 class="mt-3 ms-2 text-muted">
+                                                            <h6 class="mt-4 ms-2 text-muted">
                                                                 <i>~ <small>
                                                                     <%= query.date %>
                                                                 </small></i>
@@ -387,7 +387,7 @@
                                                                     <h5 class="m-0">
                                                                         <span>
                                                                             <img src="<%= replies.author.profilePic %>"
-                                                                                style="border-radius: 50%; width: 40px; height: 40px"
+                                                                                style="border-radius: 100%; object-fit: cover; width: 40px; height: 40px"
                                                                                 class="img-thumbnail mx-1 mt-1" alt="">
                                                                         </span>
                                                                         <%= replies.author.username %> </h5>
@@ -452,7 +452,10 @@
                                 <li class="list-group-item ">
                                     <%= product.description%>
                                 </li>
-
+                                <li class="list-group-item ">
+                                   <b>By</b> ~ <b><a href="/seller/<%= product.seller.id %>" style="text-decoration: none; "><%= product.seller.username %></a></b>,  <i><%= product.seller.bussinessName %></i>
+                                &nbsp; <a href="/customer/products/<%= product.id %>/seller/<%= product.seller._id %>">Want to talk with the seller?</a>
+                                </li>
                     </ul>
                 </div>
                 <br>
@@ -493,14 +496,14 @@
                                     <h4>
                                         <span>
                                             <img src="<%= review.author.profilePic %>" width="50px" height="50px"
-                                                style="border-radius: 100%;" class="" alt="">
+                                            style="border-radius: 100%; object-fit: cover; width: 50px; height: 50px" class="" alt="">
                                         </span> You
                                     </h4>
                                     <% }else{ %>
                                         <h4>
                                             <span>
                                                 <img src="<%= review.author.profilePic %>"
-                                                    style="border-radius: 50%; width: 50px; height: 50px;"
+                                                style="border-radius: 100%; object-fit: cover; width: 50px; height: 50px"
                                                     class="img-thumbnail" alt="">
                                             </span>
                                             <%= review.author.username %>

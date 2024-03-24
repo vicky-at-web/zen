@@ -2,7 +2,7 @@ const express = require('express');
 const Product = require('../models/product');
 const Review = require('../models/review');
 const catchAsync = require('../utils/catchasync');
-const isLoggedIn = require('../utils/isLoggedIn')
+const { isLoggedIn, isAuthor, isReviewAuthor } = require('../utils/middleware')
 const { reviewSchema } = require('../schemas/schema');
 const expErr = require('../utils/expressErr');
 const Question = require('../models/question')
@@ -11,6 +11,8 @@ const categories = ['Computers', 'Mobiles', 'Cameras', 'Men"s', 'Women"s', 'Kids
 const image = 'https://source.unsplash.com/collection/483251';
 const ITEMS_PER_PAGE = 20;
 const router = express.Router();
+const Chat = require('../models/chat');
+const Seller = require('../models/seller')
 
 
 //// MIDDLEWARES STARTS
@@ -157,10 +159,53 @@ router.get('/:id/products/favourites', isLoggedIn, catchAsync(async (req, res) =
     res.render('../views/customer/favourites', { customer })
 }))
 
+router.get('/products/:id/seller/:sellerId', catchAsync(async (req, res) => {
+    const { id, sellerId } = req.params;
+    const customerId = req.user._id;
+    const product = await Product.findById(id)
+    const seller = await Seller.findById(sellerId);
+    let chat = await Chat.findOne({ seller: sellerId, customer: customerId });
+    if (!chat) {
+        chat = new Chat({
+            seller: sellerId,
+            customer: customerId,
+            messages: [] // Initialize messages array
+        });
+        await chat.save(); // Save the newly created chat
+    }
+   
+    res.render('../views/customer/chat', { seller, chat, product })
+}))
+
+router.post('/chat/:id/customer/:sellerId', catchAsync(async (req, res) => {
+    const { sellerId, id } = req.params;
+    const customerId = req.user._id;
+    const customer = await Customer.findById(customerId)
+    let chat = await Chat.findOne({ seller: sellerId, customer: customerId });
+    const messageContent = req.body.content;
+    if (!chat) {
+        chat = new Chat({
+            seller: sellerId,
+            customer: customerId,
+            messages: [] // Initialize messages array
+        });
+    }
+    chat.messages.push({
+        content: messageContent,
+        sender: customer.role,
+        timestamp: new Date()
+    });
+
+    // Save the updated chat document
+    await chat.save();
+    console.log('Message added to the chat successfully');
+    res.redirect(`/customer/products/${id}/seller/${sellerId}`)
+}))
+
 
 router.get('/products/:id', isLoggedIn, catchAsync(async (req, res) => {
     const { id } = req.params;
-    const product = await Product.findById(id).populate('reviews').populate('queries').populate({
+    const product = await Product.findById(id).populate('reviews').populate('queries').populate('seller').populate({
         path: 'reviews',
         populate: {
             path: 'author',
@@ -314,7 +359,7 @@ router.post('/products/:id/reviews', validateReview, catchAsync(async (req, res)
     res.redirect(`/customer/products/${product.id}`)
 }))
 
-router.delete('/products/:id/reviews/:reviewId', catchAsync(async (req, res) => {
+router.delete('/products/:id/reviews/:reviewId', isReviewAuthor, catchAsync(async (req, res) => {
     const { id, reviewId } = req.params;
     await Product.findByIdAndUpdate(id, { $pull: { reviews: reviewId } })
     await Review.findByIdAndDelete(reviewId);

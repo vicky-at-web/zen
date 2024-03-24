@@ -45,6 +45,10 @@ const productSchema = new Schema({
     },
     launchDate:{
         type: Date
+    },
+    seller:{
+        type: Schema.Types.ObjectId,
+        ref: 'Seller'
     }
 })
 
