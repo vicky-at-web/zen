@@ -14,17 +14,17 @@
     <div class="container vh-100">
         <% if(chat.messages.length> 0) {%>
 
-            <div id="chat-messages">
+            <div id="chat-messages" class="overflow-auto">
                 <% chat.messages.forEach(message=> { %>
-                    <% if(message.sender == 'seller') {%>
+                    <% if(message.sender=='seller' ) {%>
                         <div class="d-flex me-auto justify-content-end ">
                             <div class="message d-flex flex-column align-items-end">
-                                <span style=" padding: 3px;background-color: lightcoral; padding: 5px;">
+                                <span style=" padding: 3px;background-color: lightcoral; padding: 5px;border-radius: 10px">
                                     <%= message.content %>
-                                </span> 
+                                </span>
                                 <span>
                                     <%= message.sender %>
-                                </span> 
+                                </span>
                                 <span>
                                     <%= message.timestamp.getHours() % 12 || 12 %>:<%= message.timestamp.getMinutes() %>
                                 </span> <br> <br><br>
@@ -33,24 +33,26 @@
                         <% } else {%>
                             <div class="d-flex  justify-content-start ">
                                 <div class="message d-flex flex-column align-items-start">
-                                    <span style=" padding: 3px; background-color: skyblue; padding: 5px;">
+                                    <span style=" padding: 3px; background-color: skyblue; padding: 5px;border-radius: 10px">
                                         <%= message.content %>
-                                    </span> 
+                                    </span>
                                     <span>
                                         <%= message.sender %>
-                                    </span> 
+                                    </span>
                                     <span>
-                                        <%= message.timestamp.getHours() % 12 || 12 %>:<%= message.timestamp.getMinutes() %>
+                                        <%= message.timestamp.getHours() % 12 || 12 %>:<%=
+                                                message.timestamp.getMinutes() %>
                                     </span> <br> <br><br>
                                 </div>
                             </div>
                             <% } %>
-                    <% }); %>
+                                <% }); %>
             </div>
             <% } %>
 
-                <form action="/seller/chat/65f6c8ea754805b81685ef4d/customer/<%= seller.id %>" method="post" class="d-flex p-3">
-                    <div class="container input-group fixed-bottom p-3 shadow" >
+                <form action="/seller/chat/65f6c8ea754805b81685ef4d/customer/<%= seller.id %>" method="post"
+                    class="d-flex p-3">
+                    <div class="container input-group fixed-bottom p-3 shadow">
                         <input type="text" name="content" class="form-control flex-grow-1"
                             placeholder="Recipient's username" aria-label="Recipient's username with two button addons">
                         <button class="btn btn-primary" type="submit">Send</button>
@@ -61,19 +63,17 @@
     </div>
 
     <script>
-        // Create an EventSource object to connect to the SSE endpoint
-        const eventSource = new EventSource('/seller/chat/seller/65f6ecdfe3fa623dc70112b2'); // Replace 'sellerId' with the actual seller ID
-    
-        // Event listener to handle incoming messages
-        eventSource.addEventListener('message', function(event) {
-            const message = JSON.parse(event.data);
-            console.log('Received message:', message);
-            // Update UI to display the new message
+        document.addEventListener("DOMContentLoaded", function() {
+            scrollToBottom();
         });
     
-        // Optional: Event listener to handle SSE connection errors
-        eventSource.addEventListener('error', function(error) {
-            console.error('SSE connection error:', error);
-        });
-    </script>
-   
+        // Function to scroll to the bottom of the page
+        function scrollToBottom() {
+            // Use either document.body or document.documentElement to ensure cross-browser compatibility
+            var body = document.body;
+            var html = document.documentElement;
+            var height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+            // Scroll to the bottom of the page
+            window.scrollTo(0, height);
+        }
+        </script>

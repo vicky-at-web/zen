@@ -10,6 +10,9 @@
     font-weight: bold;
     color: black;
 }
+body{
+    transition: 0.2s
+}
 </style>
     <div class="container vh-100" >
         <% if(chat.messages.length > 0) {%>
@@ -58,3 +61,18 @@
        
 
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            scrollToBottom();
+        });
+    
+        // Function to scroll to the bottom of the page
+        function scrollToBottom() {
+            // Use either document.body or document.documentElement to ensure cross-browser compatibility
+            var body = document.body;
+            var html = document.documentElement;
+            var height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+            // Scroll to the bottom of the page
+            window.scrollTo(0, height);
+        }
+        </script>
