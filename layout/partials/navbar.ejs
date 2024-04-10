@@ -101,7 +101,7 @@
           </li>
           <% if(currentUser && currentUser.role == 'customer') {%>
           <li class="nav-item mx-4 " id="navitem">
-            <a class="nav-link" href="/chat/customer/seller">Your Chats</a>
+            <a class="nav-link" href="/chat/customer">Your Chats</a>
           </li>
           <% } %>
           <li class="nav-item mx-4 " id="navitem">
@@ -110,14 +110,14 @@
           </li>
           <% if(currentUser && currentUser.role == 'customer') {%>
             <li class="nav-item mx-4 mb-3" id="navitem">
-              <a class="nav-link" href="/customer/<%= currentUser._id %>/products/favourites">Favourites</a>
+              <a class="nav-link" href="/customer/favourites">Favourites</a>
             </li>
             <% } %>
       </div>
       <div class="navbar-nav ml-auto d-flex flex-row align-items-center">
 
         <% if(currentUser && currentUser.role == 'customer') {%>
-          <form action="/customer/<%= currentUser._id %>/cart">
+          <form action="/customer/cart">
            <% if(currentUser.cart) {%>
             <button type="submit" class="btn  position-relative"
             style="background-color: rgba(255, 255, 255, 0.0); border: 0px;">
@@ -140,21 +140,21 @@
             <% } %>
 
             <% if(currentUser && currentUser.role == 'seller') {%>
-          <li class="nav-item mx-4" id="navitem">
-            <a class="nav-link mb-3" data-bs-toggle="modal" data-bs-target="#myModal" style="cursor: pointer">SLogout
+          <li class="nav-item mx-4 mb-2" id="navitem">
+            <a class="nav-link" data-bs-toggle="modal" data-bs-target="#myModal" style="cursor: pointer">SLogout
             </a>
             <% } %>
 
           </li>
           <% if(currentUser && currentUser.role == 'customer') {%>
             <div class=" my-1 d-flex flex-column justify-content-center">
-              <a href="/customer/profile/<%= currentUser._id %>/view"> <img src="<%= currentUser.profilePic %>"
+              <a href="/customer/profile"> <img src="<%= currentUser.profilePic %>"
                   width="60px" height="60px" style="border-radius: 100%; object-fit: cover;" class="me-3" class="m-1" alt=""></a>
             </div>
             <% } %>
             <% if(currentUser && currentUser.role == 'seller') {%>
               <div class=" my-1 d-flex flex-column justify-content-center">
-                <a href="/customer/profile/<%= currentUser._id %>/view"> <img src="<%= currentUser.imageUrl %>"
+                <a href="/customer/profile"> <img src="<%= currentUser.imageUrl %>"
                     width="60px" height="60px" style="border-radius: 100%; object-fit: cover;" class="me-3" class="m-1" alt=""></a>
               </div>
               <% } %>

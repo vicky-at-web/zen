@@ -66,7 +66,7 @@
                                         Details!</a>
 
                                     <% if(customer) {%>
-                                        <form action="/customer/<%= currentUser._id %>/<%= product.id %>/cart"
+                                        <form action="/customer/<%= product.id %>/cart"
                                             method="post" id="cartForm" class="w-100">
                                             <button type="submit"
                                                 class="btn btn-warning w-100 p-2  mt-auto  rounded-2">Add to

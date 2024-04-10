@@ -69,7 +69,7 @@ passport.serializeUser(function(user, done) {
 ///ADDING GLOBAL VARIABLES
 
 app.use((req, res, next) => {
-    console.log(req.session) 
+    console.log("SESSION  :",req.session) 
     res.locals.currentUser = req.user;
     if (req.user && req.user.role) {
         // Set a local variable indicating if the user is a customer

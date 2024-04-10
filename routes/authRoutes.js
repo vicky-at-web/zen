@@ -21,7 +21,6 @@ router.post('/customer/auth/register', catchAsync(async (req, res) => {
         req.login(registeredCustomer, err => {
             if (err) return next(err);
             req.flash('success', `Welcome to Zen!`)
-            console.log(customer.role)
             res.redirect('/customer/products')
         })
     } catch (e) {
@@ -39,16 +38,13 @@ router.get('/customer/auth/login', (req, res) => {
 
 
 router.post('/customer/auth/login',
-    // use the storeReturnTo middleware to save the returnTo value from session to res.locals
     storeReturnTo,
-    // passport.authenticate logs the user in and clears req.session
     passport.authenticate('customerLocal', { failureFlash: true, failureRedirect: '/customer/auth/login' }),
-    // Now we can use res.locals.returnTo to redirect the user after login
     (req, res) => {
 
         const { username } = req.body;
         req.flash('success', `Welcome back! ${username}`);
-        const redirectUrl = res.locals.returnTo || '/customer/products'; // update this line to use res.locals.returnTo now
+        const redirectUrl = res.locals.returnTo || '/customer/products'; 
         res.redirect(redirectUrl);
     });
 

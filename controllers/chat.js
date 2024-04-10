@@ -11,44 +11,40 @@ module.exports.renderCustomerChatInterface = catchAsync(async (req, res) => {
 
 
 module.exports.renderCustomerChat = catchAsync (async (req, res) => {
-    const { sellerId, customerId } = req.params;
+    const { sellerId } = req.params;
+    const customerId = req.user._id
     const seller = await Seller.findById(sellerId);
-    const customer = await Customer.findById(customerId)
-    let chat = await Chat.findOne({ seller: seller, customer: customer })
-    console.log('chat found')
+    const customer = await Customer.findById(req.user._id)
+    let chat = await Chat.findOne({ seller: seller, customer: customerId })
     if (!chat) {
         chat = new Chat({
             seller: sellerId,
             customer: customerId,
             messages: []
         });
-        console.log('chat initialized')
     }
     res.render('../views/customer/chat', { chat, seller, customerId, customer })
 })
 
 
 module.exports.renderSellerChatInterface = catchAsync(async (req, res) => {
-    const { sellerId } = req.params;
-    const seller = await Seller.findById(sellerId);
+    const seller = await Seller.findById(req.user._id);
     const chats = await Chat.find({ seller: seller }).populate('customer').populate('seller');
     res.render('../views/seller/chatFace', { seller, chats })
 })
 
 
 module.exports.renderSellerChat = catchAsync(async (req, res) => {
-    const { sellerId, customerId } = req.params;
-    const seller = await Seller.findById(sellerId);
+    const { customerId } = req.params;
+    const seller = await Seller.findById(req.user._id);
     const customer = await Customer.findById(customerId);
     let chat = await Chat.findOne({ seller: seller, customer: customerId })
-    console.log('chat found')
     if (!chat) {
         chat = new Chat({
-            seller: sellerId,
+            seller: seller.id,
             customer: customerId,
             messages: [] 
         });
-        console.log('chat initialized')
     }
     res.render('../views/seller/chat', { chat, seller, customerId, customer })
 })

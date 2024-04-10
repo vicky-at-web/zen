@@ -268,7 +268,7 @@
                 </div>
                 <center>
                     <div class="card text-muted d-flex flex-row justify-content-around" style="width: fit-content;">
-                        <form action="/customer/<%= currentUser._id %>/<%= product.id %>/cart" method="post">
+                        <form action="/customer/<%= product.id %>/cart" method="post">
                             <button class="btn btn-warning rounded btn-sm  py-2 px-3 m-2">Add To Cart</button>
                         </form>
                         <form action="/products/<%= product.id %>/buynow">
@@ -276,7 +276,7 @@
                         </form>
                         <% if(favoriteProductIds.includes(product._id)) {%>
                             <form
-                                action="/customer/<%=currentUser._id%>/products/favourites/<%= product.id %>?_method=DELETE"
+                                action="/customer/<%= product.id %>/products/favourites?_method=DELETE"
                                 method="post" class="m-2">
                                 <button class="rbutton rounded ">
                                     Remove from Favs &nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="16"
@@ -287,7 +287,7 @@
                                 </button>
                             </form>
                             <% }else{ %>
-                                <form action="/customer/<%= currentUser._id %>/products/favourite/<%= product.id %>"
+                                <form action="/customer/<%= product.id %>/products/favourites"
                                     class=" m-2" method="post" id="myForm">
                                     <button class="button rounded ">
                                         Add to Favs &nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -349,7 +349,7 @@
                                                             </h4> &nbsp;&nbsp;
                                                             <h6 class="mt-4 ms-2 text-muted">
                                                                 <i>~ <small>
-                                                                    <%= query.date %>
+                                                                    <%=  query.date.getDay() %>/<%= query.date.getMonth() + 1 %>/<%= query.date.getFullYear() %>
                                                                 </small></i>
                                                             </h6>
                                                         </div>
@@ -369,7 +369,7 @@
                                                         <% if(currentUser && query.author.equals(currentUser._id)) {%>
 
                                                         <form
-                                                            action='/customer/products/<%= product.id %>/<%= query.id %>/queries?_method=DELETE'
+                                                            action='/customer/products/<%= product.id %>/queries/<%= query.id %>/?_method=DELETE'
                                                             method="post"
                                                             class=" position-absolute pe-2 pt-2  top-0 end-0">
                                                             <button
@@ -393,7 +393,7 @@
                                                                         <%= replies.author.username %> </h5>
                                                                         <div class="mt-2 ms-2">
                                                                             <i>~  <small>
-                                                                                <%= replies.date %></small></i>
+                                                                                <%= replies.date.getDay() %>/<%=replies.date.getMonth() + 1 %>/<%=replies.date.getFullYear() %></small></i>
                                                                         </div>
                                                                    </div>
                                                                    
@@ -519,8 +519,8 @@
                                 <%= review.body %>
                             </h6>
                             <h6 class="ms-2 mb-1  text-muted">
-                                <i>Posted on~</i> &nbsp;&nbsp; <small>
-                                    <%= review.date %>
+                                <i>Posted on~ &nbsp;&nbsp; <small>
+                                    <%=  review.date.getDay() %>/<%= review.date.getMonth() + 1 %>/<%= review.date.getFullYear() %></i>
                                 </small>
                             </h6>
                             <% if(currentUser && review.author.equals(currentUser._id)) {%>

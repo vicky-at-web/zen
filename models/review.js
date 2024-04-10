@@ -15,7 +15,7 @@ const reviewSchema = new Schema({
     ref: 'Customer'
   },
   date: {
-    type: String,
+    type: Date,
   }
 })
 

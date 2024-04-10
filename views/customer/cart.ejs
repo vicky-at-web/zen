@@ -43,7 +43,7 @@
               <div class="card-footer">
                 <ul class="pagination pagination">
                   <li class="page-item">
-                    <form action="/customer/products/<%= customer.id %>/cart/<%= product.id %>?_method=DELETE"
+                    <form action="/customer/<%= product.id %>/cart?_method=DELETE"
                       method="Post" class="delForm">
                       <button type="submit" contenteditable="false" style="background-color: red; color: white"
                         class="page-link shadow-none delButton"><svg xmlns="http://www.w3.org/2000/svg" width="16"
@@ -69,12 +69,13 @@
           </div>
         </div>
         <% } %>
-          <div class="d-flex justify-content-center my-3">
-            <div class="d-flex"><b>Total Price:  </b>
-              <div class="total">&nbsp;0</div>
+          <% if(sum > 0) {%>
+            <div class="d-flex justify-content-center my-3">
+              <div class="d-flex"><b>Total Price:  </b>
+                <div class="total">&nbsp;<%= sum %></div>
+              </div>
             </div>
-
-          </div>
+            <% } %>
     </div>
 
 

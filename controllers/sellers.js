@@ -26,6 +26,5 @@ module.exports.addProduct = catchAsync(async(req, res) =>{
     seller.products.push(product);
     await product.save();
     await seller.save();
-    console.log(seller)
     res.redirect(`/seller/${id}`)
 })

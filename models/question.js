@@ -11,7 +11,7 @@ const questionSchema = new Schema({
         ref: 'Customer'
     },
     date:{
-        type: String,
+        type: Date,
     },
     answers: [{
         answer: {
@@ -23,7 +23,7 @@ const questionSchema = new Schema({
             ref: 'Customer'
         }, 
         date:{
-            type: String
+            type: Date
         }
     }]
 });

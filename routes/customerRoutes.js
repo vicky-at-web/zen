@@ -19,35 +19,35 @@ router.get('/products/sort/filter', customers.renderSortedProducts);
 
 ///CUSTOMER PROFILE ROUTES
 
-router.get('/profile/:id/view', customers.renderProfile)
-
-router.put('/profile/:id/update', customers.updateProfile)
+router.route('/profile')
+    .get(customers.renderProfile)
+    .put(customers.updateProfile)
 
 ///FAVOURITES ROUTE
 
-router.get('/:id/products/favourites', isLoggedIn, customers.renderFavourite)
+router.get('/favourites', isLoggedIn, customers.renderFavourites)
 
-router.post('/:id/products/favourite/:productId', customers.addFavourite)
-
-router.delete('/:id/products/favourites/:productId', customers.deleteFavourite)
+router.route('/:productId/products/favourites')
+    .post(customers.addFavourite)
+    .delete(customers.deleteFavourite)
 
 ///CART ROUTES
 
-router.get('/:customerId/cart', customers.showCart)
+router.get('/cart', isLoggedIn, customers.showCart)
 
-router.post('/:customerId/:id/cart', customers.addToCart);
+router.post('/:id/undocart', customers.addUndoProductToCart);
 
-router.post('/:customerId/:id/undocart', customers.addUndoProductToCart);
-
-router.delete('/products/:id/cart/:productId', customers.deleteProductFromCart)
+router.route('/:id/cart')
+    .post(isLoggedIn, customers.addToCart)
+    .delete(customers.deleteProductFromCart)
 
 ///QUERIES ROUTES
 
 router.post('/products/:id/queries', customers.postQuery);
 
-router.post('/products/:id/queries/:queryId', customers.postAnswer)
-
-router.delete('/products/:id/:queryId/queries', customers.deleteQuery)
+router.route('/products/:id/queries/:queryId')
+    .post(customers.postAnswer)
+    .delete(customers.deleteQuery)
 
 ////REVIEW ROUTES 
 
