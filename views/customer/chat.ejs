@@ -1,78 +1,152 @@
 <% layout('../layout/boilerplate') %>
-<style>
-    .read {
-    /* Apply styles for read messages */
-    color: grey;
-}
-
-.unread {
-    /* Apply styles for unread messages */
-    font-weight: bold;
-    color: black;
-}
-body{
-    transition: 0.2s
-}
-</style>
-    <div class="container vh-100" >
-        <% if(chat.messages.length > 0) {%>
-   
-                <div id="chat-messages">
-                    <% chat.messages.forEach(message => { %>
-                        <% if(message.sender == 'customer') {%>
-                            <div class="d-flex me-auto justify-content-end ">
-                                <div class="message d-flex flex-column align-items-end">
-                                    <span style=" padding: 3px; background-color: skyblue;  padding: 5px; border-radius: 10px ">
-                                        <%= message.content %>
-                                    </span> 
-                                    <span>
-                                        <%= message.sender %>
-                                    </span> 
-                                    <span>
-                                        <%= message.timestamp.getHours() % 12 || 12 %>:<%= message.timestamp.getMinutes() %>
-                                    </span> <br> <br><br>
-                                </div>
-                            </div>
-                            <% } else {%>
-                                <div class="d-flex  justify-content-start ">
-                                    <div class="message d-flex flex-column align-items-start">
-                                        <span style=" padding: 3px; background-color: lightcoral; padding: 5px; border-radius: 10px ">
-                                            <%= message.content %>
-                                        </span> 
-                                        <span>
-                                            <%= message.sender %>
-                                        </span>
-                                        <span>
-                                            <%= message.timestamp.getHours() % 12 || 12 %>:<%= message.timestamp.getMinutes() %>
-                                        </span> <br> <br><br>
-                                    </div>
-                                </div>
-                                <% } %>
-                    <% }); %>
-                </div>
-            <% } %>
-          
-            <form action="/customer/chat/<%= product.id %>/customer/<%= seller.id %>" method="post" class="d-flex ">
-                <div class="container input-group fixed-bottom p-3 shadow">
-                <input type="text" name="content"  class="form-control flex-grow-1" placeholder="Recipient's username" aria-label="Recipient's username with two button addons">
-                <button class="btn btn-primary" type="submit">Send</button>
-            </div>
-            </form>
-       
-
-    </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            scrollToBottom();
-        });
-    
-        // Function to scroll to the bottom of the page
-        function scrollToBottom() {
-            // Use either document.body or document.documentElement to ensure cross-browser compatibility
-            var body = document.body;
-            var html = document.documentElement;
-            var height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
-            // Scroll to the bottom of the page
-            window.scrollTo(0, height);
+    <style>
+        .customer {
+            display: flex;
+            justify-content: end;
+            padding: 10px;
+            background-color: lightcyan;
+            width: fit-content;
+            border-radius: 10px;
+            margin: 10px;
         }
-        </script>
+
+        .seller {
+            display: flex;
+            justify-content: start;
+            padding: 10px;
+            background-color: lightsteelblue;
+            width: fit-content;
+            border-radius: 10px;
+            margin: 10px;
+        }
+
+        #chatMessages {
+            height: 700px;
+            /* Example fixed height */
+            overflow-y: auto;
+           
+            /* Ensure vertical scrolling */
+        }
+    </style>
+    <br>
+    <section id="chatMessages" class="container">
+        <% if(chat) {%>
+            <h3 class="ms-3 p-3 sticky-top" style="background-color: rgb(215, 231, 247); border-radius: 10px;">
+                <span>
+                    <img src="<%= seller.imageUrl %>"
+                    style="border-radius: 100%; object-fit: cover; height:60px; width: 60px;"
+                        class="img-thumbnail m-1" alt="">
+                </span>
+                <%= seller.bussinessName %> 
+            </h3> <br><br>
+            <% for(let message of chat.messages){ %>
+                <% if(message.sender=='customer' ) {%>
+                    <div style="display: flex; justify-content: end;">
+                        <p style="display: flex; justify-content: end;" class="customer"><strong>
+                               You :&nbsp;&nbsp;
+                            </strong>
+                            <%= message.content %> &nbsp; <%= message.timestamp.getHours() % 12 || 12 %> : <%=
+                                        String(message.timestamp.getMinutes()).padStart(2, '0' ) %> &nbsp; <svg
+                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="blue"
+                                            class="bi bi-check2-all mt-1" viewBox="0 0 16 16">
+                                            <path
+                                                d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0" />
+                                            <path d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708" />
+                                        </svg>
+                        </p>
+                    </div>
+                    <% } else { %>
+                        <div>
+                            <p style="display: flex; justify-content: start;" class="seller"><strong>
+                                    <%= seller.bussinessName %>:&nbsp;&nbsp;
+                                </strong>
+                                <%= message.content %> &nbsp; <%= message.timestamp.getHours() % 12 || 12 %> : <%=
+                                            String(message.timestamp.getMinutes()).padStart(2, '0' ) %> &nbsp;
+                                            <% } %>
+                        </div>
+                        <% } %>
+                            <% }else{ %>
+                                <h1>nothing to see here</h1>
+                                <% } %>
+    </section><br>
+
+    <br>
+    <div class="fixed-bottom container">
+        <form class="d-flex gap-1">
+            <input type="text" class="form-control  m-1" name="message" id="message" style="border: 1px solid black;">
+            <button type="submit" class="btn btn-primary m-1"
+                onclick="sendMessage('<%= customerId  %>','<%= seller._id  %>')"><svg xmlns="http://www.w3.org/2000/svg"
+                    width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+                    <path
+                        d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z" />
+                </svg></button>
+        </form>
+    </div>
+
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        socket.on('client_connected', (data) => {
+            console.log(data);
+        });
+
+
+        // Emit joinRoom event when joining a room
+        socket.emit('joinRoom', 'roomName');
+
+        function sendMessage(customerId, sellerId) {
+            const chatMessages = document.querySelector('#chatMessages');
+            const messageInput = document.querySelector('#message');
+            const messageContent = messageInput.value;
+            const sender = 'customer' // Getting the sender from the role element
+            socket.emit('sendMessage', {
+                customerId,
+                sellerId,
+                message: {
+                    sender: sender,
+                    content: messageContent
+                }
+               
+            });
+            messageInput.value = ''; // Clear input after sending
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        socket.on('newMessage', (messageData) => {
+            console.log('got the message!!')
+            const { content, sender, timestamp } = messageData;
+            const chatMessages = document.querySelector('#chatMessages');
+            const messageElement = document.createElement('p');
+            const messageDiv = document.createElement('div');
+
+            // Set class attribute based on sender
+            messageElement.setAttribute('class', sender);
+
+            // Set innerHTML for messageElement
+            const timestamp1 = new Date(timestamp);
+            if (sender === 'customer') {
+                messageElement.innerHTML = `<strong>${sender}: &nbsp;&nbsp; </strong> ${content} &nbsp;  ${timestamp1.getHours() % 12 || 12} : ${String(timestamp1.getMinutes()).padStart(2, '0')} &nbsp; <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="blue" class="bi bi-check2-all mt-1" viewBox="0 0 16 16">
+        <path d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0"/>
+        <path d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708"/>
+      </svg>`;
+            } else {
+                messageElement.innerHTML = `<strong>${sender}: &nbsp;&nbsp; </strong> ${content} &nbsp;  ${timestamp1.getHours() % 12 || 12} : ${String(timestamp1.getMinutes()).padStart(2, '0')} &nbsp; `;
+            }
+
+            // Append messageElement to messageDiv
+            messageDiv.appendChild(messageElement);
+
+            // Set styles for messageDiv
+            messageDiv.style.display = 'flex'; // Set display to flex
+            messageDiv.style.justifyContent = sender === 'seller' ? 'start' : 'end'; // Align messages based on sender
+
+            // Append messageDiv to chatMessages
+            chatMessages.appendChild(messageDiv);
+
+            // Scroll to the bottom of the chat container
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        });
+
+    </script>

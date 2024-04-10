@@ -1,0 +1,19 @@
+<% layout('../layout/boilerplate') %>
+
+  <div class="container d-flex flex-column">
+    <% for(let chat of chats ) {%>
+      <div class="container">
+        <br>
+        <a href="/chat/customer/seller/<%= chat.seller.id %>/<%= chat.customer.id %>" style="text-decoration: none; color: black;">  <h3 class="ms-3 p-3 sticky-top" style="background-color: rgb(215, 231, 247); border-radius: 10px;">
+          <span>
+            <img src="<%= chat.seller.imageUrl %>"
+              style="border-radius: 100%; object-fit: cover; height:60px; width: 60px;" class="img-thumbnail m-1"
+              alt="">
+          </span>
+         
+            <%= chat.seller.bussinessName %>
+         
+        </h3> </a>
+      </div>
+      <% } %>
+  </div>

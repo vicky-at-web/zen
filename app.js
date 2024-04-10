@@ -16,6 +16,8 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const Seller = require('./models/seller')
 const Customer = require('./models/customer')
+const chatRoutes = require('./routes/chatRoutes')
+const Chat = require('./models/chat')
 
 //EJS ENGINE CONNECTIONS
 
@@ -112,11 +114,70 @@ app.use('/seller', sellerRoutes)
 
 app.use('/', authRoutes)
 
+///CHAT ROUTES
 
+app.use('/chat', chatRoutes)
 
 app.get('/', (req, res) => {
     res.send('welcome to zen, the ecommerce store developed by one of you!')
 })
+
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+
+io.on('connection', socket => {
+    console.log('Socket connected:', socket.id);
+
+    socket.on('joinRoom', room => {
+        socket.join(room);
+        console.log(`${socket.id} joined room ${room}`);
+        const socketsInRoom = io.sockets.adapter.rooms.get(room);
+        console.log(`Sockets in room ${room}:`, socketsInRoom);
+    });
+
+    socket.on('sendMessage', async messageData => {
+        try {
+            // Extract data from messageData
+            console.log(messageData);
+            const { sellerId, customerId, message } = messageData;
+            const timestamp1 = new Date();
+    
+            // Find or create a new Chat document
+            let chat = await Chat.findOne({ seller: sellerId, customer: customerId });
+            if (!chat) {
+                chat = new Chat({
+                    seller: sellerId,
+                    customer: customerId,
+                    messages: []
+                });
+            }
+    
+            // Push the new message data into the messages array of the Chat document
+            const newMessage = {
+                content: message.content,
+                sender: message.sender,
+                timestamp: timestamp1
+            };
+    
+            chat.messages.push(newMessage);
+    
+            // Save the Chat document to MongoDB
+            await chat.save();
+            console.log('Message saved to MongoDB:', chat);
+    
+            // Emit the newMessage to all clients
+            io.emit('newMessage', newMessage);
+        } catch (error) {
+            console.error('Error saving message to MongoDB:', error);
+        }
+    });
+    
+
+
+    socket.on('disconnect', () => {
+        console.log('Socket disconnected:', socket.id);
+    });
+});
 
 // ERROR MIDDLEWARES 
 
@@ -132,6 +193,6 @@ app.use((err, req, res, next) => {
 
 //PORT CONFIGURATION
 
-app.listen(3000, () => {
+server.listen(3000, () => {
     console.log('LISTENING ON THE PORT 3000')
 })

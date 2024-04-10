@@ -12,19 +12,19 @@ const chatSchema = new mongoose.Schema({
   messages: [{
     content: {
       type: String,
-      required: true
+      required: true  // Assuming you want the content to be required
     },
     sender: {
       type: String,
-      enum: ['seller', 'customer'], // Sender can be either 'seller' or 'customer'
-      required: true
+      required: true  // Assuming you want the sender to be required
     },
     timestamp: {
       type: Date,
       default: Date.now
     },
-    isRead: { 
-        type: Boolean, default: false 
+    isread:{
+      type: Boolean,
+      default: false
     }
   }]
 });
@@ -32,3 +32,4 @@ const chatSchema = new mongoose.Schema({
 const Chat = mongoose.model('Chat', chatSchema);
 
 module.exports = Chat;
+

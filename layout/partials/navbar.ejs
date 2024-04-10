@@ -99,11 +99,16 @@
           <li class="nav-item mx-4 " id="navitem">
             <a class="nav-link" href="/seller/all/sellers">All Sellers</a>
           </li>
+          <% if(currentUser && currentUser.role == 'customer') {%>
+          <li class="nav-item mx-4 " id="navitem">
+            <a class="nav-link" href="/chat/customer/seller">Your Chats</a>
+          </li>
+          <% } %>
           <li class="nav-item mx-4 " id="navitem">
             <a class="nav-link" style="cursor: pointer;" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop"
               aria-controls="offcanvasTop">Search Products</button>
           </li>
-          <% if(currentUser) {%>
+          <% if(currentUser && currentUser.role == 'customer') {%>
             <li class="nav-item mx-4 mb-3" id="navitem">
               <a class="nav-link" href="/customer/<%= currentUser._id %>/products/favourites">Favourites</a>
             </li>
@@ -111,20 +116,22 @@
       </div>
       <div class="navbar-nav ml-auto d-flex flex-row align-items-center">
 
-        <% if(customer) {%>
+        <% if(currentUser && currentUser.role == 'customer') {%>
           <form action="/customer/<%= currentUser._id %>/cart">
+           <% if(currentUser.cart) {%>
             <button type="submit" class="btn  position-relative"
-              style="background-color: rgba(255, 255, 255, 0.0); border: 0px;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
-                class="bi bi-bag-check-fill" viewBox="0 0 16 16">
-                <path fill-rule="evenodd"
-                  d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0m-.646 5.354a.5.5 0 0 0-.708-.708L7.5 10.793 6.354 9.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0z" />
-              </svg>
-              <span class="position-absolute top-75 start-100 translate-middle badge rounded-pill bg-danger">
-                <%= currentUser.cart.length %>
-              </span>
+            style="background-color: rgba(255, 255, 255, 0.0); border: 0px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+              class="bi bi-bag-check-fill" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0m-.646 5.354a.5.5 0 0 0-.708-.708L7.5 10.793 6.354 9.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0z" />
+            </svg>
+            <span class="position-absolute top-75 start-100 translate-middle badge rounded-pill bg-danger">
+              <%= currentUser.cart.length %>
+            </span>
 
-            </button>
+          </button>
+            <% } %>
           </form>
           <li class="nav-item mx-4" id="navitem">
             <a class="nav-link mt-2" data-bs-toggle="modal" data-bs-target="#myModal2" style="cursor: pointer">CLogout
@@ -132,24 +139,26 @@
 
             <% } %>
 
-              <% if(seller) {%>
+            <% if(currentUser && currentUser.role == 'seller') {%>
           <li class="nav-item mx-4" id="navitem">
-            <a class="nav-link mt-1" data-bs-toggle="modal" data-bs-target="#myModal" style="cursor: pointer">SLogout
+            <a class="nav-link mb-3" data-bs-toggle="modal" data-bs-target="#myModal" style="cursor: pointer">SLogout
             </a>
             <% } %>
 
           </li>
-          <% if(currentUser){%>
+          <% if(currentUser && currentUser.role == 'customer') {%>
             <div class=" my-1 d-flex flex-column justify-content-center">
               <a href="/customer/profile/<%= currentUser._id %>/view"> <img src="<%= currentUser.profilePic %>"
                   width="60px" height="60px" style="border-radius: 100%; object-fit: cover;" class="me-3" class="m-1" alt=""></a>
-
-
             </div>
-
-
-
             <% } %>
+            <% if(currentUser && currentUser.role == 'seller') {%>
+              <div class=" my-1 d-flex flex-column justify-content-center">
+                <a href="/customer/profile/<%= currentUser._id %>/view"> <img src="<%= currentUser.imageUrl %>"
+                    width="60px" height="60px" style="border-radius: 100%; object-fit: cover;" class="me-3" class="m-1" alt=""></a>
+              </div>
+              <% } %>
+
       </div>
       </ul>
     </nav>

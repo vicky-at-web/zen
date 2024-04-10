@@ -454,7 +454,7 @@
                                 </li>
                                 <li class="list-group-item ">
                                    <b>By</b> ~ <b><a href="/seller/<%= product.seller.id %>" style="text-decoration: none; "><%= product.seller.username %></a></b>,  <i><%= product.seller.bussinessName %></i>
-                                &nbsp; <a href="/customer/products/<%= product.id %>/seller/<%= product.seller._id %>">Want to talk with the seller?</a>
+                                &nbsp; <a href="/chat/customer/seller/<%= product.seller.id %>/<%= currentUser._id %>">Want to talk with the seller?</a>
                                 </li>
                     </ul>
                 </div>

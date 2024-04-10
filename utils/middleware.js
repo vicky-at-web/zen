@@ -33,3 +33,12 @@ module.exports.isReviewAuthor = catchAsync(async (req, res, next) => {
     next();
 })
 
+module.exports.validateReview = (req, res, next) => {
+    const { error } = reviewSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(',')
+        throw new expErr(msg, 400)
+    } else {
+        next();
+    }
+}
