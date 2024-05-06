@@ -18,6 +18,7 @@
 * PASSPORT JS for authentication
 * CLOUDINARY for image storage
 * GIT for version control
+* WEBSOCKET for chatting between customers and sellers
 
 ## To visit
  The project is currently in progress, once its completed, I will post this web app link
