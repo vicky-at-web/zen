@@ -102,6 +102,10 @@ db.once('open', () => {
     console.log('DATABASE CONNECTED');
 })
 
+/// AUTHENTICATION ROUTE
+
+app.use('/', authRoutes)
+
 //CUSTOMER ROUTES
 
 app.use('/customer', customerRoutes);
@@ -110,9 +114,7 @@ app.use('/customer', customerRoutes);
 
 app.use('/seller', sellerRoutes)
 
-/// AUTHENTICATION ROUTE
 
-app.use('/', authRoutes)
 
 ///CHAT ROUTES
 

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { isLoggedIn, isAuthor, isReviewAuthor, validateReview } = require('../utils/middleware')
 const customers = require('../controllers/customers')
+const storeReturnTo = require('../utils/storeInfo')
 
 ///HOME ROUTES
 
@@ -11,9 +12,9 @@ router.get('/home', customers.renderHome)
 
 router.get('/products', customers.renderProducts)
 
-router.get('/products/:id', isLoggedIn, customers.showProduct)
-
 router.get('/products/search', customers.renderSearchedProducts)
+
+router.get('/products/:id', isLoggedIn, customers.showProduct)
 
 router.get('/products/sort/filter', customers.renderSortedProducts);
 
@@ -38,7 +39,7 @@ router.get('/cart', isLoggedIn, customers.showCart)
 router.post('/:id/undocart', customers.addUndoProductToCart);
 
 router.route('/:id/cart')
-    .post(isLoggedIn, customers.addToCart)
+    .post(storeReturnTo,isLoggedIn, customers.addToCart)
     .delete(customers.deleteProductFromCart)
 
 ///QUERIES ROUTES

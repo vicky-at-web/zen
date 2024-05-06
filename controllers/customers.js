@@ -13,6 +13,52 @@ module.exports.renderHome = (req, res) => {
 
 ///PRODUCTS SHOWING ROUTINGS 
 
+module.exports.renderSearchedProducts = catchAsync(async (req, res) => {
+    let { productName, page = 1 } = req.query;
+    if(productName == ""){
+        res.redirect('/customer/products?page=1')
+    }
+    const skip = (page - 1) * ITEMS_PER_PAGE;
+    const search1 = productName.replace(/[^\w\s]/g, '');
+    const searchName1 = search1.toLowerCase().split(' ');
+    const searchName2 = searchName1.join('');
+    const products = await Product.find({ searchTerm: { $regex: searchName2 } }).skip(skip).limit(ITEMS_PER_PAGE);
+    const totalProducts = await Product.countDocuments({ searchTerm: { $regex: searchName2 } });
+    const totalPages = Math.ceil(totalProducts / ITEMS_PER_PAGE);
+    const newProducts = products.filter(product => {
+        const launchDate = new Date(product.launchDate);
+        const today = new Date();
+        const twentyDaysAgo = new Date(today.getTime() - 20 * 24 * 60 * 60 * 1000); // 10 days ago
+        return launchDate > twentyDaysAgo;
+
+    });
+    res.render('./customer/search', { products, currentPage: page, totalPages, productName, searchName2, newProducts });
+})
+
+module.exports.renderSortedProducts = catchAsync(async (req, res) => {
+    const { arrangement, productName, page = 1, pricing } = req.query;
+    if ((arrangement && (arrangement === '123' || arrangement === '321')) || (pricing && (pricing === '123' || pricing === '321'))) {
+        const skip = (page - 1) * ITEMS_PER_PAGE;
+        const searchName2 = productName;
+        let sortCriteria = {};
+        if (arrangement === '123' || arrangement === '321') {
+            sortCriteria.name = (arrangement === '123') ? 1 : -1;
+        }
+        if (pricing === '123' || pricing === '321') {
+            sortCriteria.price = (pricing === '123') ? 1 : -1;
+        }
+        const products = await Product.find({ searchTerm: { $regex: searchName2 } })
+            .sort(sortCriteria)
+            .skip(skip)
+            .limit(ITEMS_PER_PAGE);
+        const totalProducts = await Product.countDocuments({ searchTerm: { $regex: searchName2 } });
+        const totalPages = Math.ceil(totalProducts / ITEMS_PER_PAGE);
+        res.render('./customer/filters', { products, currentPage: page, totalPages, productName, searchName2, arrangement, pricing });
+    } else {
+        res.redirect(`/customer/products/search?productName=${productName}`);
+    }
+})
+
 module.exports.showProduct = catchAsync(async (req, res) => {
     const { id } = req.params;
     const product = await Product.findById(id).populate('reviews').populate('queries').populate('seller').populate({
@@ -59,49 +105,6 @@ module.exports.renderProducts = catchAsync(async (req, res) => {
 
     });
     res.render('../views/customer/index.ejs', { products, currentPage: page, totalPages, productName, newProducts });
-})
-
-module.exports.renderSearchedProducts = catchAsync(async (req, res) => {
-    let { productName, page = 1 } = req.query;
-    const skip = (page - 1) * ITEMS_PER_PAGE;
-    const search1 = productName.replace(/[^\w\s]/g, '');
-    const searchName1 = search1.toLowerCase().split(' ');
-    const searchName2 = searchName1.join('');
-    const products = await Product.find({ searchTerm: { $regex: searchName2 } }).skip(skip).limit(ITEMS_PER_PAGE);
-    const totalProducts = await Product.countDocuments({ searchTerm: { $regex: searchName2 } });
-    const totalPages = Math.ceil(totalProducts / ITEMS_PER_PAGE);
-    const newProducts = products.filter(product => {
-        const launchDate = new Date(product.launchDate);
-        const today = new Date();
-        const twentyDaysAgo = new Date(today.getTime() - 20 * 24 * 60 * 60 * 1000); // 10 days ago
-        return launchDate > twentyDaysAgo;
-
-    });
-    res.render('./customer/search', { products, currentPage: page, totalPages, productName, searchName2, newProducts });
-})
-
-module.exports.renderSortedProducts = catchAsync(async (req, res) => {
-    const { arrangement, productName, page = 1, pricing } = req.query;
-    if ((arrangement && (arrangement === '123' || arrangement === '321')) || (pricing && (pricing === '123' || pricing === '321'))) {
-        const skip = (page - 1) * ITEMS_PER_PAGE;
-        const searchName2 = productName;
-        let sortCriteria = {};
-        if (arrangement === '123' || arrangement === '321') {
-            sortCriteria.name = (arrangement === '123') ? 1 : -1;
-        }
-        if (pricing === '123' || pricing === '321') {
-            sortCriteria.price = (pricing === '123') ? 1 : -1;
-        }
-        const products = await Product.find({ searchTerm: { $regex: searchName2 } })
-            .sort(sortCriteria)
-            .skip(skip)
-            .limit(ITEMS_PER_PAGE);
-        const totalProducts = await Product.countDocuments({ searchTerm: { $regex: searchName2 } });
-        const totalPages = Math.ceil(totalProducts / ITEMS_PER_PAGE);
-        res.render('./customer/filters', { products, currentPage: page, totalPages, productName, searchName2, arrangement, pricing });
-    } else {
-        res.redirect(`/customer/products/search?productName=${productName}`);
-    }
 })
 
 ///FAVOURITES ROUTINGS
@@ -156,7 +159,8 @@ module.exports.addToCart = catchAsync(async (req, res) => {
         req.session.passport.user.cart = customer.cart;
         req.flash('success', 'Product added to the cart!');
     }
-    res.redirect('/customer/products?page=1');
+    const redirectUrl = res.locals.returnTo || '/customer/products?page=1'; 
+    res.redirect(redirectUrl);
 })
 
 module.exports.addUndoProductToCart =  catchAsync(async (req, res) => {
