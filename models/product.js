@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const Question = require('./question');
-const Review = require('./review')
+const Review = require('./review');
+const details = require('./details');
+
+
 
 const productSchema = new Schema({
     name: {
@@ -22,7 +25,7 @@ const productSchema = new Schema({
     },
     category: {
         type: String,
-        enum: ['Computers', 'Mobiles', 'Cameras', 'Men"s', 'Women"s', 'Kids', 'Accessories', 'Decor', 'Kitchen', 'Bedding', 'Skincare', 'Haircare', 'Perfumes', 'Books', 'Movies', 'Music', 'Equipment', 'Activewear', 'Camping', 'Kids Toys', 'Board Games', 'Video Games', 'Vitamins', 'Fitness Equipment', 'Monitoring Devices', 'Car Accessories', 'Maintenance', 'Motorcycle Gear', 'Rings', 'Watches', 'Necklaces', 'Stationery', 'Furniture', 'Electronics', 'Groceries', ' Snacks', 'Beverages', 'Pet Food', 'Accessories', 'Care products', 'Handmade', 'Customized']
+        enum: ['Computer', 'Mobile', 'Camera', 'Mens', 'Womens', 'Kids', 'Accessories', 'Decor', 'Kitchen', 'Bedding', 'Skincare', 'Haircare', 'Perfumes', 'Books', 'Movies', 'Music', 'Equipment', 'Activewear', 'Camping', 'Kids Toys', 'Board Games', 'VideoGames', 'Medicines', 'FitnessEquipment', 'MonitoringDevices', 'CarAccessories', 'Maintenance', 'MotorcycleGear', 'Ornaments', 'Stationery', 'Furniture', 'Electronics', 'Groceries', ' Snacks', 'Beverages', 'PetFood', 'Careproducts', 'Handmade']
     },
     reviews: [{
         type: Schema.Types.ObjectId,
@@ -43,14 +46,26 @@ const productSchema = new Schema({
     headers: {
         type: String,
     },
-    launchDate:{
+    launchDate: {
         type: Date
     },
-    seller:{
+    seller: {
         type: Schema.Types.ObjectId,
         ref: 'Seller'
+    },
+    details: {
+        type: Schema.Types.Mixed
     }
 })
+
+productSchema.pre('save', function (next) {
+    this.details = this.details || {};
+    let objName = `${this.category.toLowerCase()}Details`;
+    if (!this.details[objName]) {
+        this.details[objName] = details[objName + 'Schema'];
+    }
+    next();
+});
 
 productSchema.post('findOneAndDelete', async function (doc) {
     if (doc) {

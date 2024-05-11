@@ -1,12 +1,12 @@
 <div class="sticky-top d-none d-xl-block d-xxl-block">
   <link rel="stylesheet" href="/stylesheets/navbarStyles.css">
-  <nav class="navbar shadow p-0 "
+  <nav class="navbar shadow row  p-0"
     style="background-color: rgba(255, 255, 255, 0.75);-webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);">
-    <div class="d-flex flex-row justify-content-between w-100">
+    <div class="d-flex flex-row justify-content-center" style="padding: 0px 0px">
 
       <!-- OFFCANVAS LEFT BUTTON -->
 
-      <div class="ms-4 mt-4 col-2">
+      <div class=" d-flex justify-content-center col-2">
         <button class="navbar-toggler mt-1" type="button" data-bs-toggle="offcanvas"
           data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
           <span class="navbar-toggler-icon"></span>
@@ -15,7 +15,7 @@
 
       <!-- NAV LINKS (HOME, ALL PRODUCTS, ALL SELLERS, YOUR CHATS, SEARCH PRODUCTS) -->
 
-      <ul class="navbar-nav mt-1 col-8 justify-content-center d-flex flex-row align-items-center ">
+      <ul class="navbar-nav mt-1 col-8 p-0 justify-content-center d-flex flex-row align-items-center ">
         <a class="navbar-brand ms-4 mt-3 mb-2" href="#">
           <p style="font-family: 'DM Serif Display', serif;" class="mt-2 ms-4"
             style="background-color: rgba(255, 255, 255, 0.75)">
@@ -27,19 +27,24 @@
         <li class="nav-item mx-4" id="navitem">
           <a class="nav-link" href="/customer/products?page=1" aria-current="page">All Products</a>
         </li>
-        <% if(currentUser && currentUser.role=='customer') {%>
+        <% if(currentUser && currentUser.role=='customer' ) {%>
           <li class="nav-item mx-4" id="navitem">
             <a class="nav-link" href="/customer/favourites">Favourites</a>
           </li>
           <% } %>
-          <li class="nav-item mx-4" >
-            <form class="d-flex" role="search" action="/customer/products/search?page=1" style=" transition: 2s">
-              <input id="searchInput" class="form-control me-2 shadow-none" style="border: 0px; background-color: rgba(255, 255, 255, 0.00);" type="text" placeholder="Search Products" name="productName">
-              <button type="submit" id="searchButton" class="p-2 btn d-none" style=" border: 0px;" ><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-search mb-1" viewBox="0 0 16 16">
-                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-              </svg></button>
-            </form>
-          </li>
+            <li class="nav-item mx-4">
+              <form class="d-flex" role="search" action="/customer/products/search?page=1" style=" transition: 2s">
+                <input id="searchInput" class="form-control me-2 shadow-none"
+                  style="border: 0px; background-color: rgba(255, 255, 255, 0.00);" type="text"
+                  placeholder="Search Products" name="productName">
+                <button type="submit" id="searchButton" class="p-2 btn d-none" style=" border: 0px;"><svg
+                    xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                    class="bi bi-search mb-1" viewBox="0 0 16 16">
+                    <path
+                      d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                  </svg></button>
+              </form>
+            </li>
       </ul>
 
       <!-- AFTER LOGGING IN UTILITIES -->
@@ -61,6 +66,7 @@
             </button>
           </form>
           <% } %>
+
             <!-- TO CHECK IF CUSTOMER LOGGED IN AND DISPLAY LOGOUT AND LOGIN OPTIONS -->
             <% if(currentUser && currentUser.role=='customer' ) {%>
               <li class="nav-item mx-4" id="navitem" style="cursor: pointer">
@@ -83,14 +89,14 @@
                   </li>
                   <!-- TO CHECK THE CURRENTUSER IS CUSTOMER AND DISPLAY PROFILE PICTURE -->
                   <% if(currentUser && currentUser.role=='customer' ) {%>
-                    <div class=" my-1 d-flex flex-column justify-content-center">
+                    <div class="my-1 d-flex flex-column justify-content-center">
                       <a href="/customer/profile"> <img src="<%= currentUser.profilePic %>" width="60px" height="60px"
                           style="border-radius: 100%; object-fit: cover;" class="me-3" class="m-1" alt=""></a>
                     </div>
                     <% } %>
                       <!-- TO CHECK THE CURRENTUSER IS SELLER AND DISPLAY PROFILE PICTURE -->
                       <% if(currentUser && currentUser.role=='seller' ) {%>
-                        <div class=" my-1 d-flex flex-column justify-content-center">
+                        <div class="my-1 d-flex flex-column justify-content-center">
                           <a href="/customer/profile"> <img src="<%= currentUser.imageUrl %>" width="60px" height="60px"
                               style="border-radius: 100%; object-fit: cover;" class="me-3" class="m-1" alt=""></a>
                         </div>
@@ -158,9 +164,9 @@
           style="text-decoration: none; color: #000000A6; font-size:larger ;">Account Info</a>
         <a href="#" class="list-group-item py-3" id="option"
           style="text-decoration: none; color: #000000A6; font-size:larger ;">Your Orders</a>
-          <a href="/seller/all/sellers" class="list-group-item py-3" id="option"
+        <a href="/seller/all/sellers" class="list-group-item py-3" id="option"
           style="text-decoration: none; color: #000000A6; font-size:larger ;">Zen Sellers</a>
-        <% if(currentUser && currentUser.role=='customer') {%>
+        <% if(currentUser && currentUser.role=='customer' ) {%>
           <a href="/chat/customer" class="list-group-item py-3" id="option"
             style="text-decoration: none; color: #000000A6; font-size:larger;">Your Chats</a>
           <% } %>

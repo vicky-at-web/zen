@@ -1,12 +1,11 @@
 <% layout('../layout/boilerplate') -%>
     <div class="container">
-       
-       <div class="row">
-            <div class="col-6 offset-3">
-            <h1 class="text-center">Add Product</h1>
-         
-                   
-                    
+        <h1 class="text-center ">Add Product</h1>
+        <div class="row mt-3">
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-body p-5">
+
                         <form action="/seller/<%= seller.id %>/product/new" method="post" class="mb-3 p-0 formvalid"
                             novalidate>
                             <div>
@@ -25,9 +24,9 @@
                                 <label class="form-label" for="image">Image Url:</label>
                                 <input class="form-control mb-1" required autocomplete="off" type="text" id="image"
                                     name="product[imageUrl]">
-                                <input class="form-control mb-1" required autocomplete="off" type="text" id="image"
+                                <input class="form-control mb-1" required autocomplete="off" type="text" id="image2"
                                     name="product[imageUrl]">
-                                <input class="form-control" required autocomplete="off" type="text" id="image"
+                                <input class="form-control" required autocomplete="off" type="text" id="image3"
                                     name="product[imageUrl]">
                                 <div class="valid-feedback">
                                     Looks good!
@@ -40,14 +39,14 @@
                             <div>
                                 <label class="form-label" for="price">Price:</label>
                                 <div class="input-group mb-3">
-    
+
                                     <span class="input-group-text">$</span>
                                     <input type="text" name="product[price]" autocomplete="off" required
-                                        class="form-control" placeholder='0.00'>
+                                       id="price" class="form-control" placeholder='0.00'>
                                     <div class="valid-feedback">
                                         Looks good!
                                     </div>
-    
+
                                     <div class="invalid-feedback">
                                         Please give a price!
                                     </div>
@@ -59,12 +58,12 @@
                                     placeholder="Open this to select category">Category:</label>
                                 <select class="form-select" id='category' name="product[category]"
                                     aria-label="Default select example">
-                                    <option value="Computers">Computers</option>
-                                    <option value="Mobiles">Mobiles</option>
-                                    <option value="Cameras">Cameras</option>
-                                    <option value="Men's">Men's</option>
-                                    <option value="Women's">Women's</option>
-                                    <option value="Kids'">Kids'</option>
+                                    <option value="Computer">Computers</option>
+                                    <option value="Mobile">Mobiles</option>
+                                    <option value="Camera">Cameras</option>
+                                    <option value="Men">Men's</option>
+                                    <option value="Womens">Women's</option>
+                                    <option value="Kids">Kids'</option>
                                     <option value="Accessories">Accessories</option>
                                     <option value="Decor">Decor</option>
                                     <option value="Kitchen">Kitchen</option>
@@ -78,15 +77,15 @@
                                     <option value="Equipment">Equipment</option>
                                     <option value="Activewear">Activewear</option>
                                     <option value="Camping">Camping</option>
-                                    <option value="Kids' Toys">Kids' Toys</option>
-                                    <option value="Board Games">Board Games</option>
-                                    <option value="Video Games">Video Games</option>
-                                    <option value="Vitamins">Vitamins</option>
-                                    <option value="Fitness Equipment">Fitness Equipment</option>
-                                    <option value="Monitoring Devices">Monitoring Devices</option>
-                                    <option value="Car Accessories">Car Accessories</option>
+                                    <option value="KidsToys">Kid's Toys</option>
+                                    <option value="BoardGames">Board Games</option>
+                                    <option value="VideoGames">Video Games</option>
+                                    <option value="Medicines">Medicines</option>
+                                    <option value="FitnessEquipment">Fitness Equipment</option>
+                                    <option value="MonitoringDevices">Monitoring Devices</option>
+                                    <option value="CarAccessories">Car Accessories</option>
                                     <option value="Maintenance">Maintenance</option>
-                                    <option value="Motorcycle Gear">Motorcycle Gear</option>
+                                    <option value="MotorcycleGear">Motorcycle Gear</option>
                                     <option value="Rings">Rings</option>
                                     <option value="Watches">Watches</option>
                                     <option value="Necklaces">Necklaces</option>
@@ -96,17 +95,16 @@
                                     <option value="Groceries">Groceries</option>
                                     <option value="Snacks">Snacks</option>
                                     <option value="Beverages">Beverages</option>
-                                    <option value="Pet Food">Pet Food</option>
+                                    <option value="PetFood">Pet Food</option>
                                     <option value="Accessories">Accessories</option>
-                                    <option value="Care Products">Care Products</option>
+                                    <option value="CareProducts">Care Products</option>
                                     <option value="Handmade">Handmade</option>
-                                    <option value="Customized">Customized</option>
                                 </select>
                             </div>
                             <br>
-    
-    
-    
+
+
+
                             <div>
                                 <label class="form-label" for="des">Description:</label>
                                 <textarea name="product[description]" value="" autocomplete="off" required id="des"
@@ -122,12 +120,65 @@
                             <button class="btn btn-info">Add Product</button>
                             <br><br>
                             <a href="/products" class="">Back To All Products</a>
-                        </form>
-                
-            
-                
-          
-          
-        </div>
 
-    </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- <script>
+            const cate = document.querySelector('#category');
+            const computerForm = document.querySelector('.computerDetailsForm');
+            const mobileForm = document.querySelector('.mobileDetailsForm');
+            const cameraForm = document.querySelector('.cameraDetailsForm');
+            const mensForm = document.querySelector('.mensDetailsForm');
+            const womensForm = document.querySelector('.womensDetailsForm');
+            cate.addEventListener('change', function () {
+                const selectedCategory = cate.value
+                switch (selectedCategory) {
+                    case 'Computers':
+                        computerForm.classList.remove('d-none');
+                        mobileForm.classList.add('d-none');
+                        cameraForm.classList.add('d-none');
+                        mensForm.classList.add('d-none');
+                        womensForm.classList.add('d-none');
+                        break;
+                    case 'Mobiles':
+                        mobileForm.classList.remove('d-none');
+                        computerForm.classList.add('d-none');
+                        cameraForm.classList.add('d-none');
+                        mensForm.classList.add('d-none');
+                        womensForm.classList.add('d-none');
+                        break;
+                    case 'Cameras':
+                        cameraForm.classList.remove('d-none');
+                        computerForm.classList.add('d-none');
+                        mobileForm.classList.add('d-none');
+                        mensForm.classList.add('d-none');
+                        womensForm.classList.add('d-none');
+                        break;
+                    case "Men's":
+                        mensForm.classList.remove('d-none');
+                        computerForm.classList.add('d-none');
+                        mobileForm.classList.add('d-none');
+                        cameraForm.classList.add('d-none');
+                        womensForm.classList.add('d-none');
+                        break;
+                    case "Women's":
+                        womensForm.classList.remove('d-none');
+                        computerForm.classList.add('d-none');
+                        mobileForm.classList.add('d-none');
+                        cameraForm.classList.add('d-none');
+                        mensForm.classList.add('d-none');
+                        break;
+                    default:
+                        computerForm.classList.add('d-none');
+                        mobileForm.classList.add('d-none');
+                        cameraForm.classList.add('d-none');
+                        mensForm.classList.add('d-none');
+                        womensForm.classList.add('d-none');
+                }
+            })
+
+
+        </script> -->

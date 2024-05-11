@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 mongoose.connect('mongodb://127.0.0.1:27017/zen26');
 const Product = require('../models/product.js');
 const { features, types } = require('./productNames.js');
-const categories = ['Computers', 'Mobiles', 'Cameras', 'Men"s', 'Women"s', 'Kids', 'Accessories', 'Decor', 'Kitchen', 'Bedding', 'Skincare', 'Haircare', 'Perfumes', 'Books', 'Movies', 'Music', 'Equipment', 'Activewear', 'Camping', 'Kids Toys', 'Board Games', 'Video Games', 'Vitamins', 'Fitness Equipment', 'Monitoring Devices', 'Car Accessories', 'Maintenance', 'Motorcycle Gear', 'Rings', 'Watches', 'Necklaces', 'Stationery', 'Furniture', 'Electronics', 'Groceries', ' Snacks', 'Beverages', 'Pet Food', 'Accessories', 'Care products', 'Handmade', 'Customized']
+const categories = ['Computers', 'Mobiles', 'Cameras', 'Men"s', 'Women"s', 'Kids', 'Accessories', 'Decor', 'Kitchen', 'Bedding', 'Skincare', 'Haircare', 'Perfumes', 'Books', 'Movies', 'Music', 'Equipment', 'Activewear', 'Camping', 'Kids Toys', 'Board Games', 'Video Games', 'Medicines', 'Fitness Equipment', 'Monitoring Devices', 'Car Accessories', 'Maintenance', 'Motorcycle Gear', 'Ornaments', 'Stationery', 'Furniture', 'Electronics', 'Groceries', ' Snacks', 'Beverages', 'Pet Food', 'Care products', 'Handmade'];
 const db = mongoose.connection;
 const Seller = require('../models/seller.js')
 
@@ -28,9 +28,9 @@ const endDate = '2024-03-17';   // End date for the range
 const sample = array => array[Math.floor(Math.random() * array.length)];
 
 const seedDb = async () => {
-    const seller =  await Seller.findById('65f6ecdfe3fa623dc70112b2')
+    const seller =  await Seller.findById('663f70522777df6b0f2b624d')
     await Product.deleteMany({});
-    for (let i = 0; i <= 2000; i++) {
+    for (let i = 1; i <= 2000; i++) {
         const randomLaunchDate = getRandomDate(startDate, endDate);
         const productName = `${sample(features)} ${sample(types)}`;
         const sanitizedProductName = productName.replace(/[^\w\s]/g, '');
@@ -49,12 +49,12 @@ const seedDb = async () => {
             brand: 'Zen Recommends',
             headers: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
             launchDate: randomLaunchDate,
-            seller: '65f6ecdfe3fa623dc70112b2'
-
+            seller: '663f70522777df6b0f2b624d'
         });
         await product.save();
-        seller.products.push(product);
-        await seller.save()
+        await seller.products.push(product)
+        await seller.save();
+        console.log(`${i} product saved`)
     }
 };
 

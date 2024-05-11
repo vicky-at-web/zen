@@ -6,7 +6,7 @@ const Customer = require('../models/customer')
 module.exports.renderCustomerChatInterface = catchAsync(async (req, res) => {
     const customerId = req.user._id;
     const chats = await Chat.find({ customer: customerId }).populate('seller').populate('customer')
-    res.render('../views/customer/chatFace', { chats, customerId })
+    res.render('../views/customer/interface', { chats, customerId })
 })
 
 
@@ -30,7 +30,7 @@ module.exports.renderCustomerChat = catchAsync (async (req, res) => {
 module.exports.renderSellerChatInterface = catchAsync(async (req, res) => {
     const seller = await Seller.findById(req.user._id);
     const chats = await Chat.find({ seller: seller }).populate('customer').populate('seller');
-    res.render('../views/seller/chatFace', { seller, chats })
+    res.render('../views/seller/interface', { seller, chats })
 })
 
 
