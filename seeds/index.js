@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 mongoose.connect('mongodb://127.0.0.1:27017/zen26');
 const Product = require('../models/product.js');
 const { features, types } = require('./productNames.js');
-const categories = ['Computers', 'Mobiles', 'Cameras', 'Men"s', 'Women"s', 'Kids', 'Accessories', 'Decor', 'Kitchen', 'Bedding', 'Skincare', 'Haircare', 'Perfumes', 'Books', 'Movies', 'Music', 'Equipment', 'Activewear', 'Camping', 'Kids Toys', 'Board Games', 'Video Games', 'Medicines', 'Fitness Equipment', 'Monitoring Devices', 'Car Accessories', 'Maintenance', 'Motorcycle Gear', 'Ornaments', 'Stationery', 'Furniture', 'Electronics', 'Groceries', ' Snacks', 'Beverages', 'Pet Food', 'Care products', 'Handmade'];
+const categories =  ['Computer', 'Mobile', 'Camera', 'Mens', 'Womens', 'Kids', 'Accessories', 'Decor', 'Kitchen', 'Bedding', 'Skincare', 'Haircare', 'Perfumes', 'Books', 'Movies', 'Music', 'Equipment', 'Activewear', 'Camping', 'Kids Toys', 'Board Games', 'VideoGames', 'Medicines', 'FitnessEquipment', 'MonitoringDevices', 'CarAccessories', 'Maintenance', 'MotorcycleGear', 'Ornaments', 'Stationery', 'Furniture', 'Electronics', 'Groceries', ' Snacks', 'Beverages', 'PetFood', 'Careproducts', 'Handmade']
 const db = mongoose.connection;
 const Seller = require('../models/seller.js')
 
