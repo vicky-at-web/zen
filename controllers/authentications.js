@@ -33,7 +33,7 @@ module.exports.renderLoginForm = (req, res) => {
 module.exports.loginCustomer =  (req, res) => {
     const { username } = req.body;
     req.flash('success', `Welcome back! ${username}`);
-    const redirectUrl = res.locals.returnTo || '/customer/products'; 
+    const redirectUrl = res.locals.returnTo || '/customer/products?page=1'; 
     res.redirect(redirectUrl);
 }
 
@@ -78,7 +78,7 @@ module.exports.renderSellerLoginForm = (req, res) => {
 module.exports.loginSeller = (req, res) => {
     const { username } = req.body;
     req.flash('success', `Welcome back! ${username}`);
-    const redirectUrl = res.locals.returnTo || '/customer/products'; // update this line to use res.locals.returnTo now
+    const redirectUrl = res.locals.returnTo || `/seller/home`; // update this line to use res.locals.returnTo now
     res.redirect(`${redirectUrl}`);
 }
 

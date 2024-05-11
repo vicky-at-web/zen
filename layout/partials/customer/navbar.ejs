@@ -1,0 +1,160 @@
+<div class="sticky-top d-none d-xl-block d-xxl-block">
+  <link rel="stylesheet" href="/stylesheets/navbarStyles.css">
+  <nav class="navbar shadow row  p-0"
+    style="background-color: rgba(255, 255, 255, 0.75);-webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);">
+    <div class="d-flex flex-row justify-content-center" style="padding: 0px 0px">
+
+      <!-- OFFCANVAS LEFT BUTTON -->
+
+      <div class=" d-flex justify-content-center col-2">
+        <button class="navbar-toggler mt-1" type="button" data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+
+      <!-- NAV LINKS (HOME, ALL PRODUCTS, ALL SELLERS, YOUR CHATS, SEARCH PRODUCTS) -->
+
+      <ul class="navbar-nav mt-1 col-8 p-0 justify-content-center d-flex flex-row align-items-center ">
+        <a class="navbar-brand ms-4 mt-3 mb-2" href="#">
+          <p style="font-family: 'DM Serif Display', serif;" class="mt-2 ms-4"
+            style="background-color: rgba(255, 255, 255, 0.75)">
+            Z&nbsp;&nbsp;E&nbsp;&nbsp;N</p>
+        </a>
+        <li class="nav-item mx-4" id="navitem">
+          <a class="nav-link" aria-disabled="true" href="/customer/home">Home</a>
+        </li>
+        <li class="nav-item mx-4" id="navitem">
+          <a class="nav-link" href="/customer/products?page=1" aria-current="page">All Products</a>
+        </li>
+        <% if(currentUser) {%>
+          <li class="nav-item mx-4" id="navitem">
+            <a class="nav-link" href="/customer/favourites">Favourites</a>
+          </li>
+          <% } %>
+            <li class="nav-item mx-4">
+              <form class="d-flex" role="search" action="/customer/products/search?page=1" style=" transition: 2s">
+                <input id="searchInput" class="form-control me-2 shadow-none"
+                  style="border: 0px; background-color: rgba(255, 255, 255, 0.00);" type="text"
+                  placeholder="Search Products" name="productName">
+                <button type="submit" id="searchButton" class="p-2 btn d-none" style=" border: 0px;"><svg
+                    xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                    class="bi bi-search mb-1" viewBox="0 0 16 16">
+                    <path
+                      d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                  </svg></button>
+              </form>
+            </li>
+      </ul>
+
+      <!-- AFTER LOGGING IN UTILITIES -->
+
+      <div class="d-flex flex-row align-items-center justify-content-center col-2">
+        <!-- TO CHECK IF THE CURRENTUSER IS PRESENT AND DISPLAY CART  -->
+        <% if(currentUser && currentUser.cart.length > 0) {%>
+          <form action="/customer/cart">
+            <button type="submit" class="btn position-relative"
+              style="background-color: rgba(255, 255, 255, 0.0); border: 0px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                class="bi bi-bag-check-fill" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                  d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0m-.646 5.354a.5.5 0 0 0-.708-.708L7.5 10.793 6.354 9.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0z" />
+              </svg>
+              <span class="position-absolute top-75 start-100 translate-middle badge rounded-pill bg-danger">
+                <%= currentUser.cart.length %>
+              </span>
+            </button>
+          </form>
+          <% } %>
+
+            <!-- TO CHECK IF CUSTOMER LOGGED IN AND DISPLAY LOGOUT AND LOGIN OPTIONS -->
+            <% if(currentUser) {%>
+              <li class="nav-item mx-4" id="navitem" style="cursor: pointer">
+                <a class="nav-link mt-2 pb-2" data-bs-toggle="modal" style="color: #000000A6" data-bs-target="#myModal2"
+                  style="cursor: pointer">Logout
+                </a>
+                </li>
+                <% } else { %>
+              <li class="nav-item mx-4 mb-1" id="navitem" style="cursor: pointer; color: #000000A6">
+                <a class="nav-link mt-2 pb-2" href='/customer/auth/login'>Login</a>
+              </li>
+              <li class="nav-item me-4 mb-1" id="navitem" style="cursor: pointer; color: #000000A6">
+                <a class="nav-link mt-2 pb-2" href='/customer/auth/register'>Register</a>
+              </li>
+              <% } %>
+
+                <!-- TO CHECK THE CURRENTUSER IS CUSTOMER AND DISPLAY PROFILE PICTURE -->
+                <% if(currentUser) {%>
+                  <div class="my-1 d-flex flex-column justify-content-center">
+                    <a href="/customer/profile"> <img src="<%= currentUser.profilePic %>" width="60px" height="60px"
+                        style="border-radius: 100%; object-fit: cover;" class="me-3" class="m-1" alt=""></a>
+                  </div>
+                  <% } %>
+
+      </div>
+    </div>
+  </nav>
+</div>
+<br>
+
+
+<!-- CUSTOMER LOGOUT MODAL -->
+
+<div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true" id="myModal2">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p>Are you sure to logout Zen?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nope</button>
+        <a type="button" href="/customer/auth/logout" class="btn btn-primary">Yes</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- OFFCANVAS LEFT -->
+
+<div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
+  id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasScrollingLabel">
+      <p style="font-family: 'DM Serif Display', serif;" class="mt-3 ms-4"
+        style="background-color: rgba(255, 255, 255, 0.75)">
+        Z&nbsp;&nbsp;E&nbsp;&nbsp;N</p>
+    </h5>
+    <button type="button" class="btn-close shadow-none" style="border: 0px" data-bs-dismiss="offcanvas"
+      aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="container">
+      <ul class="list-group">
+        <a href="/customer/profile" class="list-group-item py-3" id="option"
+          style="text-decoration: none; color: #000000A6; font-size:larger ;">Account Info</a>
+        <a href="#" class="list-group-item py-3" id="option"
+          style="text-decoration: none; color: #000000A6; font-size:larger ;">Your Orders</a>
+        <a href="/seller/all/sellers" class="list-group-item py-3" id="option"
+          style="text-decoration: none; color: #000000A6; font-size:larger ;">Zen Sellers</a>
+        <% if(currentUser) {%>
+          <a href="/chat/customer" class="list-group-item py-3" id="option"
+            style="text-decoration: none; color: #000000A6; font-size:larger;">Your Chats</a>
+          <% } %>
+            <a href="/seller/auth/register" class="list-group-item py-3" id="option"
+              style="text-decoration: none; color: #000000A6; font-size:larger ;">Join As Seller</a>
+            <a href="#" class="list-group-item py-3" id="option"
+              style="text-decoration: none; color: #000000A6; font-size:larger ;">Terms & Conditions</a>
+            <a href="#" class="list-group-item py-3" id="option"
+              style="text-decoration: none; color: #000000A6; font-size:larger ;">About Zen</a>
+            <a href="#" class="list-group-item py-3" id="option"
+              style="text-decoration: none; color: #000000A6; font-size:larger ;">Settings</a>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- SHADOW TOGGLE EFFECT OFFCANVAS LEFT -->
+
+<script src="/javascripts/navbar.js"></script>

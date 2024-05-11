@@ -79,6 +79,12 @@ module.exports.showProduct = catchAsync(async (req, res) => {
             path: 'answers.author',
             model: 'Customer'
         }
+    }).populate({
+        path: 'reviews',
+        populate:{
+            path: 'author',
+            model:'Seller'
+        }
     });
     let sum = 0;
     for (let review of product.reviews) {
@@ -200,7 +206,7 @@ module.exports.postQuery = catchAsync(async (req, res) => {
     const question = new Question(req.body.query);
     question.author = req.user._id;
     question.date = currentDate
-    product.queries.push(question)
+    product.queries.push(question);
     await question.save();
     await product.save();
     req.flash('success', 'Welcome to Zen!')
@@ -234,9 +240,11 @@ module.exports.postReview = catchAsync(async (req, res) => {
     review.author = req.user._id;
     const currentDate = new Date();
     review.date = currentDate;
+    review.authorType = req.user.role
     product.reviews.push(review);
     await review.save();
     await product.save();
+    console.log(review)
     res.redirect(`/customer/products/${product.id}`)
 })
 

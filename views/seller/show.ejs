@@ -1,4 +1,5 @@
-<% layout('../layout/boilerplate') %>
+<% layout('../layout/templates/seller/boilerplate') -%>
+
     <br><br>
     <div class="d-lg-block d-md-block d-none">
         <div class="row">
@@ -264,7 +265,7 @@
                             data-bs-parent="#accordionExample">
                             <div class="accordion-body">
 
-                                <% for(let product of seller.products) { %>
+                                <% for(let product of products) { %>
                                     <div class="card mb-3">
                                         <div class="row g-0">
                                             <div

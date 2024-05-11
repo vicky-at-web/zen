@@ -1,6 +1,5 @@
-<% layout('../layout/templates/customer/boilerplate') -%>
+<% layout('../layout/templates/seller/boilerplate') -%>
 
-    <link rel="stylesheet" href="/stylesheets/button_animation.css">
     <div class="container-fluid ">
         <div class="row mt-3 p-4">
             <div class="col-md-6 mt-4">
@@ -48,40 +47,7 @@
                         </div>
                     </div>
                 </div>
-                <center>
-                    <div class="card text-muted d-flex flex-row justify-content-around" style="width: fit-content;">
-                        <form action="/customer/<%= product.id %>/cart" method="post">
-                            <button class="btn btn-warning rounded btn-sm  py-2 px-3 m-2">Add To Cart</button>
-                        </form>
-                        <form action="/products/<%= product.id %>/buynow">
-                            <button class="btn btn-primary rounded py-2 px-3 btn-sm ms-2 my-2 me-1">Buy Now</button>
-                        </form>
-                        <% if(favoriteProductIds.includes(product._id)) {%>
-                            <form action="/customer/<%= product.id %>/products/favourites?_method=DELETE" method="post"
-                                class="m-2">
-                                <button class="rbutton rounded ">
-                                    Remove from Favs &nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                        height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-                                        <path
-                                            d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5" />
-                                    </svg>
-                                </button>
-                            </form>
-                            <% }else{ %>
-                                <form action="/customer/<%= product.id %>/products/favourites" class=" m-2"
-                                    method="post" id="myForm">
-                                    <button class="button rounded ">
-                                        Add to Favs &nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            fill="currentColor" class="bi bi-suit-heart-fill mb-1" viewBox="0 0 16 16">
-                                            <path
-                                                d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1" />
-                                        </svg>
-                                    </button>
-                                </form>
-                                <% } %>
-                    </div>
-                    <br>
-                </center>
+
                 <br>
                 <div class="card ">
                     <div class="card-body p-2">
@@ -228,14 +194,21 @@
                                     <%= product.description%>
                                 </li>
                                 <li class="list-group-item ">
-                                    <b>By</b> ~ <b><a href="/seller/<%= product.seller.id %>"
-                                            style="text-decoration: none; ">
-                                            <%= product.seller.username %>
-                                        </a></b>, <i>
-                                        <%= product.seller.bussinessName %>
-                                    </i>
-                                    &nbsp; <a href="/chat/customer/<%= product.seller.id %>">Want to talk with the
-                                        seller?</a>
+                                    <b>By</b> ~ <% if(currentUser && product.seller.equals(currentUser._id)) {%>
+                                        <b><a href="/seller/<%= product.seller.id %>" style="text-decoration: none; ">
+                                                You
+                                            </a></b>
+                                        <% }else{ %>
+                                            <b><a href="/seller/<%= product.seller.id %>"
+                                                    style="text-decoration: none; ">
+                                                    <%= product.seller.username %>
+                                                </a></b>, <i>
+                                                <%= product.seller.bussinessName %>
+                                            </i>
+                                            &nbsp; <a href="/chat/customer/<%= product.seller.id %>">Want to talk with
+                                                the
+                                                seller?</a>
+                                            <% } %>
                                 </li>
                     </ul>
                 </div>
@@ -245,7 +218,7 @@
                         <h2>
                             Leave a Review
                         </h2>
-                        <form action="/customer/products/<%=product.id %>/reviews" method="post" class="form-valid"
+                        <form action="/seller/products/<%=product.id %>/reviews" method="post" class="form-valid"
                             novalidate>
                             <div class="mb-3">
                                 <label class="form-label" for="rating">Rate:</label>
@@ -273,8 +246,9 @@
                         <div class="card-body  position-relative">
                             <div class="card-subtitle text-muted me-2">
 
-                                <% if(review.authorType =='customer' ) {%>
-                                    <% if(review.author && review.author.equals(String(currentUser.id))) { %>
+                                <% if(review.authorType=='customer' ) {%>
+                                    <% if(review.author &&
+                                        review.author.equals(String(currentUser.id))) { %>
                                         <h4>
                                             <span>
                                                 <img src="<%= review.author.profilePic %>" width="50px" height="50px"
@@ -296,7 +270,8 @@
                                             <% } %>
                                                 <% } %>
                                                     <% if(review.authorType=='seller' ) {%>
-                                                        <% if(review.author &&  review.author.equals(String(currentUser.id))){ %>
+                                                        <% if(review.author && 
+                                                            review.author.equals(String(currentUser))){ %>
                                                             <h4>
                                                                 <span>
                                                                     <img src="<%= review.author.imageUrl %>"
@@ -318,6 +293,11 @@
                                                                 </h4>
                                                                 <% } %>
                                                                     <%}%>
+
+
+
+
+
                             </div>
                             <h6 class="ms-2"><b>Rating:</b>
                                 <%= review.rating %>
@@ -331,9 +311,9 @@
                                                     review.date.getFullYear() %></i>
                                 </small>
                             </h6>
-                            <% if(currentUser && review.author.equals(currentUser)) {%>
+                            <% if(currentUser && review.author.equals(currentUser._id)) {%>
                                 <form
-                                    action='/customer/products/<%= product.id %>/reviews/<%= review.id %>?_method=DELETE'
+                                    action='/seller/products/<%= product.id %>/reviews/<%= review.id %>?_method=DELETE'
                                     method="post" class=" position-absolute pe-3 pt-3  top-0 end-0">
                                     <button class="btn btn-sm btn-danger">Delete</button>
                                 </form>

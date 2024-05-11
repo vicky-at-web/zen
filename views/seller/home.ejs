@@ -1,0 +1,93 @@
+<% layout('../layout/templates/seller/boilerplate') -%>
+
+
+
+
+    <br><br>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <center>
+
+                <div class="card mb-3 ">
+                    <div>
+                        <img src="<%= seller.imageUrl %>" class="card-img-top" alt="">
+                    </div>
+                    <h5 class="card-title mx-3 mt-3">
+                        <%= seller.username.toUpperCase() %>
+                    </h5>
+                    <p class="card-text mx-3 mt-3"><b>CONTACT NUMBER:&nbsp;&nbsp;&nbsp;</b>
+                        <%= seller.contact%>
+                    </p>
+                    <p class="card-text mx-3 mt-3"><b>EMAIL: &nbsp;&nbsp;&nbsp;</b>
+                        <%= seller.email%>
+                    </p>
+
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item text-muted">
+                            <%= seller.address%>
+                        </li>
+
+                    </ul>
+
+                    <div class="card-body  ">
+                        <a class="card-link btn btn-info" href="/sellers/<%= seller.id%>/update">Edit
+                            Profile</a>
+                        <form class="d-inline" action="/sellers/<%= seller._id%>?_method=DELETE" method="POST">
+                            <button class="btn btn-danger mx-2 my-2">Delete Profile</button>
+                        </form>
+
+                        <a class="card-link btn btn-info" href="/seller/<%= seller.id %>/product/new">Add
+                            Product</a>
+                            <a class="btn btn-primary m-2" href="/chat/seller">View Chats</a>
+                    </div>
+
+
+                    <div class="card-footer text-muted">
+                        Number of Products: &nbsp; <%= seller.products.length %>
+                    </div>
+                </div>
+
+
+            </center>
+            <br><br>
+        </div>
+
+        <div class="col-md-6 ">
+            <h3>Recently Added Products</h3>
+            <br>
+            <% for(let product of products) { %>
+
+            <div class="card mb-3 p-0">
+                    <div class="row g-0">
+                      <div class="col-md-4 d-flex justify-content-center align-items-center">
+                        <img src="<%= product.imageUrl[0] %>" class="img-fluid p-0 rounded-start" alt="...">
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body">
+                          <h5 class="card-title">
+                            <%= product.name %>
+                          </h5>
+                          <p class="card-text">
+                            <%= product.description %>
+                          </p>
+                          <p class="card-text"><small class="text-body-secondary price">
+                              <%= product.price %>
+                            </small></p>
+                        </div>
+                        <div class="card-footer">
+                            <a class="card-link btn btn-info text-light mb-3 mx-2" href="/seller/products/<%=product.id%>/update">Edit</a>
+                            <form class="d-inline" action="/seller/products/<%=product._id%>?_method=DELETE" method="POST">
+                                <button class="btn btn-danger mb-3 ">Delete</button>
+                            </form>
+                            <a class="btn btn-primary mb-3 mx-2" href="/seller/products/<%=product.id %>">View Product</a>
+                        </div>
+          
+                      </div>
+                    </div>
+                  </div>
+                <% } %>
+
+
+        </div>
+    </div>

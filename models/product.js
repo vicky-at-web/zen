@@ -69,25 +69,15 @@ productSchema.pre('save', function (next) {
 
 productSchema.post('findOneAndDelete', async function (doc) {
     if (doc) {
-        await Review.deleteMany({
-            id: {
-                $in: doc.reviews
-            }
-        })
+        const reviewIds = Array.isArray(doc.reviews) ? doc.reviews : [doc.reviews];
+        const questionIds = Array.isArray(doc.questions) ? doc.questions : [doc.questions];
+
+        await Review.deleteMany({ id: { $in: reviewIds } });
+        await Question.deleteMany({ id: { $in: questionIds } });
     }
+});
 
-})
 
-productSchema.post('findOneAndDelete', async function (doc) {
-    if (doc) {
-        await Question.deleteMany({
-            id: {
-                $in: doc.questions
-            }
-        })
-    }
-
-})
 
 
 
