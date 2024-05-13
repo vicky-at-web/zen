@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
+
+
 const questionSchema = new Schema({
     question: {
         type: String,
@@ -10,7 +12,7 @@ const questionSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Customer'
     },
-    date:{
+    date: {
         type: Date,
     },
     answers: [{
@@ -19,14 +21,21 @@ const questionSchema = new Schema({
             required: true
         },
         author: {
-            type: Schema.Types.ObjectId,
-            ref: 'Customer'
-        }, 
-        date:{
+           username: String,
+           profile: String,
+        },
+        authorRole: {
+            type: String,
+            enum: ['customer', 'seller'],
+            required: true
+        },
+        date: {
             type: Date
         }
     }]
 });
+
+
 
 
 const Question = mongoose.model('Question', questionSchema)

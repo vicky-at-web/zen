@@ -15,8 +15,10 @@ router.route('/products/:id')
     .get(sellers.viewProduct)
     .delete(sellers.deleteProduct)
 
-router.post('/products/:id/reviews', validateReview, sellers.postReview)
+router.post('/products/:id/queries', sellers.postQuery);
 
-router.delete('/products/:id/reviews/:reviewId', isReviewAuthor, sellers.deleteReview)
+router.route('/products/:id/queries/:queryId')
+    .post(sellers.postAnswer)
+    .delete(sellers.deleteQuery)
 
 module.exports = router

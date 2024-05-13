@@ -12,12 +12,7 @@ const reviewSchema = new Schema({
   },
   author: {
     type: Schema.Types.ObjectId,
-    refPath: 'authorType' // Dynamic reference based on the authorType field
-  },
-  authorType: {
-    type: String,
-    enum: ['seller', 'customer'], // Enumerate possible author types
-    required: true
+    ref: 'Customer' 
   },
   date: {
     type: Date,

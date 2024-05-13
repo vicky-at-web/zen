@@ -49,126 +49,97 @@
                 </div>
 
                 <br>
-                <div class="card ">
-                    <div class="card-body p-2">
-                        <div class="d-flex flex-column align-items-start m-0">
-                            <h5 class="ms-3 p-1">
-                                Ask Any Queries globally!
-                            </h5>
-                        </div>
-                        <form action='/customer/products/<%= product.id %>/queries' method="post" class=" d-flex p-1">
-                            <input type="text" class="form-control p-2 m-0 " id="query" name="query[question]">
-                            <button class="btn btn-sm btn-success px-3 py-1 ms-2">Post</button>
-                        </form>
-                    </div>
-                </div>
-                <br>
+
                 <% if(product.queries.length> 0) {%>
-                    <div class="accordion accordion-flush" id="accordionFlushExample">
-                        <div class="card">
-                            <div class="card-body">
-                                <button class="accordion-button collapsed shadow-none p-0" type="button"
-                                    data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false"
-                                    aria-controls="flush-collapseOne">
-                                    Our Customers Frequently Asks!
-                                </button>
-                            </div>
-                        </div>
-                        <div id="flush-collapseOne" class="accordion-collapse collapse"
-                            aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <% for(let query of product.queries) { %>
-                                            <div class="card mb-3">
-                                                <div class="card-body position-relative p-0">
-                                                    <div class="p-2">
-                                                        <div class="d-flex">
-                                                            <h4 class="">
-                                                                <span>
-                                                                    <img src="<%= query.author.profilePic %>"
-                                                                        style="border-radius: 100%; object-fit: cover; height:60px; width: 60px;"
-                                                                        class="img-thumbnail m-1" alt="">
-                                                                </span>
-                                                                <%= query.author.username %> asks
-                                                            </h4> &nbsp;&nbsp;
-                                                            <h6 class="mt-4 ms-2 text-muted">
-                                                                <i>~ <small>
-                                                                        <%= query.date.getDay() %>/<%=
-                                                                                query.date.getMonth() + 1 %>/<%=
-                                                                                    query.date.getFullYear() %>
-                                                                    </small></i>
-                                                            </h6>
-                                                        </div>
-                                                        <h6 class=" px-4 mb-0">
-                                                            <%= query.question %> ?
-                                                                <button class="btn btn-default" style="border: 0px"
-                                                                    type="button" id="showReplies"
-                                                                    data-bs-toggle="collapse"
-                                                                    data-bs-target="#collapse<%= query.id %>"
-                                                                    aria-expanded="false"
-                                                                    aria-controls="collapse<%= query.id %>">
-                                                                    View Replies
-                                                                </button>
-                                                        </h6>
-                                                        <% if(currentUser && query.author.equals(currentUser._id)) {%>
-                                                            <form
-                                                                action='/customer/products/<%= product.id %>/queries/<%= query.id %>/?_method=DELETE'
-                                                                method="post"
-                                                                class=" position-absolute pe-2 pt-2  top-0 end-0">
-                                                                <button
-                                                                    class="btn btn-sm rounded p-2 btn-outline-danger mt-1">Delete</button>
-                                                            </form>
-                                                            <% } %>
-                                                    </div>
-                                                    <div class="ms-5 mb-2 collapse " id="collapse<%= query.id %>">
-                                                        <% if(query.answers.length> 0) {%>
-                                                            <% for(let replies of query.answers) {%>
-                                                                <div class="d-flex flex-column">
-                                                                    <div class="d-flex">
-                                                                        <h5 class="m-0">
-                                                                            <span>
-                                                                                <img src="<%= replies.author.profilePic %>"
-                                                                                    style="border-radius: 100%; object-fit: cover; width: 40px; height: 40px"
-                                                                                    class="img-thumbnail mx-1 mt-1"
-                                                                                    alt="">
-                                                                            </span>
-                                                                            <%= replies.author.username %>
-                                                                        </h5>
-                                                                        <div class="mt-2 ms-2">
-                                                                            <i>~ <small>
-                                                                                    <%= replies.date.getDay() %>/
-                                                                                        <%=replies.date.getMonth() + 1
-                                                                                            %>/
-                                                                                            <%=replies.date.getFullYear()
-                                                                                                %>
-                                                                                </small></i>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="ms-5">
-                                                                        <%= replies.answer %>&nbsp;
-                                                                    </div>
-                                                                </div>
-                                                                <% } %>
+
+
+
+                    <% for(let query of product.queries) { %>
+                        <div class="card mb-3">
+                            <div class="card-body position-relative p-0">
+                                <div class="p-2">
+                                    <div class="d-flex">
+                                        <h4 class="">
+                                            <span>
+                                                <img src="<%= query.author.profilePic %>"
+                                                    style="border-radius: 100%; object-fit: cover; height:60px; width: 60px;"
+                                                    class="img-thumbnail m-1" alt="">
+                                            </span>
+                                            <%= query.author.username %> asks
+                                        </h4> &nbsp;&nbsp;
+                                        <h6 class="mt-4 ms-2 text-muted">
+                                            <i>~ <small>
+                                                    <%= query.date.getDay() %>/<%= query.date.getMonth() + 1 %>/<%=
+                                                                query.date.getFullYear() %>
+                                                </small></i>
+                                        </h6>
+                                    </div>
+                                    <h6 class=" px-4 mb-0">
+                                        <%= query.question %> ?
+                                            <button class="btn btn-default" style="border: 0px" type="button"
+                                                id="showReplies" data-bs-toggle="collapse"
+                                                data-bs-target="#collapse<%= query.id %>" aria-expanded="false"
+                                                aria-controls="collapse<%= query.id %>">
+                                                View Replies
+                                            </button>
+                                    </h6>
+                                    <% if(currentUser && query.author.equals(currentUser._id)) {%>
+                                        <form
+                                            action='/customer/products/<%= product.id %>/queries/<%= query.id %>/?_method=DELETE'
+                                            method="post" class=" position-absolute pe-2 pt-2  top-0 end-0">
+                                            <button
+                                                class="btn btn-sm rounded p-2 btn-outline-danger mt-1">Delete</button>
+                                        </form>
+                                        <% } %>
+                                </div>
+                                <div class="ms-5 mb-2 collapse " id="collapse<%= query.id %>">
+                                    <% if(query.answers.length> 0) {%>
+                                        <% for(let replies of query.answers) {%>
+                                            <div class="d-flex flex-column">
+                                                <div class="d-flex">
+                                                    <h5 class="m-0">
+                                                        <% if(replies.authorRole=='customer' ) {%>
+                                                            <span>
+                                                                <img src="<%= replies.author.profile %>"
+                                                                    style="border-radius: 100%; object-fit: cover; width: 40px; height: 40px"
+                                                                    class="img-thumbnail mx-1 mt-1" alt="">
+                                                            </span>
+                                                            <%= replies.author.username %> <small>(<%= replies.authorRole %>)</small>
+                                                                <% }%>
+                                                                <% if(replies.authorRole == 'seller') {%>
+                                                                    <span>
+                                                                        <img src="<%= replies.author.profile %>"
+                                                                            style="border-radius: 100%; object-fit: cover; width: 40px; height: 40px"
+                                                                            class="img-thumbnail mx-1 mt-1" alt="">
+                                                                    </span>
+                                                                    <%= replies.author.username %> <small>(<%= replies.authorRole %>)</small>
                                                                     <% } %>
+                                                    </h5>
+                                                    <div class="mt-2 ms-2">
+                                                        <i>~ <small>
+                                                                <%= replies.date.getDay() %>/
+                                                                    <%=replies.date.getMonth() + 1 %>/
+                                                                        <%=replies.date.getFullYear() %>
+                                                            </small></i>
                                                     </div>
-                                                    <form
-                                                        action='/customer/products/<%= product.id %>/queries/<%= query.id %>'
-                                                        method="post" class=" d-flex p-2">
-                                                        <input type="text" class="form-control p-2 m-0 " id="query"
-                                                            name="answer">
-                                                        <button
-                                                            class="btn btn-sm btn-success px-3 py-1 ms-2">Post</button>
-                                                    </form>
+                                                </div>
+                                                <div class="ms-5">
+                                                    <%= replies.answer %>&nbsp;
                                                 </div>
                                             </div>
                                             <% } %>
-                                    </div>
+                                                <% } %>
                                 </div>
+                                <form action='/seller/products/<%= product.id %>/queries/<%= query.id %>' method="post"
+                                    class=" d-flex p-2">
+                                    <input type="text" class="form-control p-2 m-0 " id="query" name="answer">
+                                    <button class="btn btn-sm btn-success px-3 py-1 ms-2">Post</button>
+                                </form>
                             </div>
                         </div>
-                    </div>
-                    <% } %>
+                        <% } %>
+
+                            <% } %>
             </div>
             <div class="col-md-6 mt-3">
                 <div class="card">
@@ -213,91 +184,29 @@
                     </ul>
                 </div>
                 <br>
-                <div class="card">
-                    <div class="card-body">
-                        <h2>
-                            Leave a Review
-                        </h2>
-                        <form action="/seller/products/<%=product.id %>/reviews" method="post" class="form-valid"
-                            novalidate>
-                            <div class="mb-3">
-                                <label class="form-label" for="rating">Rate:</label>
-                                <input type="range" min="1" max="5" name="review[rating]" required class="form-range">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="body">Review:</label>
-                                <textarea class="form-control" name="review[body]" required cols="30"
-                                    rows="3"></textarea>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
-                                <div class="invalid-feedback">
-                                    Please give a title!
-                                </div>
-                                <button class="btn btn-success mt-3">Submit</button>
-
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <br>
                 <% for(let review of product.reviews) {%>
                     <div class="card mb-3">
                         <div class="card-body  position-relative">
                             <div class="card-subtitle text-muted me-2">
 
-                                <% if(review.authorType=='customer' ) {%>
-                                    <% if(review.author &&
-                                        review.author.equals(String(currentUser.id))) { %>
+                                <% if(currentUser && review.author.equals(currentUser)) {%>
+                                    <h4>
+                                        <span>
+                                            <img src="<%= review.author.profilePic %>" width="50px" height="50px"
+                                                style="border-radius: 100%; object-fit: cover; width: 50px; height: 50px"
+                                                class="" alt="">
+                                        </span> You
+                                    </h4>
+                                    <% }else{ %>
                                         <h4>
                                             <span>
-                                                <img src="<%= review.author.profilePic %>" width="50px" height="50px"
+                                                <img src="<%= review.author.profilePic %>"
                                                     style="border-radius: 100%; object-fit: cover; width: 50px; height: 50px"
-                                                    class="" alt="">
-                                            </span> You
+                                                    class="img-thumbnail" alt="">
+                                            </span>
+                                            <%= review.author.username %>
                                         </h4>
-                                        <% } else { %>
-                                            <h4>
-                                                <span>
-                                                    <img src="<%= review.author.profilePic %>"
-                                                        style="border-radius: 100%; object-fit: cover; width: 50px; height: 50px"
-                                                        class="img-thumbnail" alt="">
-                                                </span>
-                                                <%= review.author.username %> ~ <i>
-                                                        <%= review.author.role %>
-                                                    </i>
-                                            </h4>
-                                            <% } %>
-                                                <% } %>
-                                                    <% if(review.authorType=='seller' ) {%>
-                                                        <% if(review.author && 
-                                                            review.author.equals(String(currentUser))){ %>
-                                                            <h4>
-                                                                <span>
-                                                                    <img src="<%= review.author.imageUrl %>"
-                                                                        width="50px" height="50px"
-                                                                        style="border-radius: 100%; object-fit: cover; width: 50px; height: 50px"
-                                                                        class="" alt="">
-                                                                </span> You
-                                                            </h4>
-                                                            <% } else { %>
-                                                                <h4>
-                                                                    <span>
-                                                                        <img src="<%= review.author.imageUrl %>"
-                                                                            style="border-radius: 100%; object-fit: cover; width: 50px; height: 50px"
-                                                                            class="img-thumbnail" alt="">
-                                                                    </span>
-                                                                    <%= review.author.username %> ~ <small><i>
-                                                                                <%= review.author.role %>
-                                                                            </i></small>
-                                                                </h4>
-                                                                <% } %>
-                                                                    <%}%>
-
-
-
-
-
+                                        <% } %>
                             </div>
                             <h6 class="ms-2"><b>Rating:</b>
                                 <%= review.rating %>
@@ -307,13 +216,13 @@
                             </h6>
                             <h6 class="ms-2 mb-1  text-muted">
                                 <i>Posted on~ &nbsp;&nbsp; <small>
-                                        <%= review.date.getDay() %>/<%= review.date.getMonth() + 1 %>/<%=
+                                        <%= review.date.getDay()%>/<%= review.date.getMonth() + 1 %>/<%=
                                                     review.date.getFullYear() %></i>
                                 </small>
                             </h6>
                             <% if(currentUser && review.author.equals(currentUser._id)) {%>
                                 <form
-                                    action='/seller/products/<%= product.id %>/reviews/<%= review.id %>?_method=DELETE'
+                                    action='/customer/products/<%= product.id %>/reviews/<%= review.id %>?_method=DELETE'
                                     method="post" class=" position-absolute pe-3 pt-3  top-0 end-0">
                                     <button class="btn btn-sm btn-danger">Delete</button>
                                 </form>

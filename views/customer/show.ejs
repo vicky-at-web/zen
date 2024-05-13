@@ -161,13 +161,22 @@
                                                                 <div class="d-flex flex-column">
                                                                     <div class="d-flex">
                                                                         <h5 class="m-0">
-                                                                            <span>
-                                                                                <img src="<%= replies.author.profilePic %>"
-                                                                                    style="border-radius: 100%; object-fit: cover; width: 40px; height: 40px"
-                                                                                    class="img-thumbnail mx-1 mt-1"
-                                                                                    alt="">
-                                                                            </span>
-                                                                            <%= replies.author.username %>
+                                                                            <% if(replies.authorRole=='customer' ) {%>
+                                                                                <span>
+                                                                                    <img src="<%= replies.author.profile %>"
+                                                                                        style="border-radius: 100%; object-fit: cover; width: 40px; height: 40px"
+                                                                                        class="img-thumbnail mx-1 mt-1" alt="">
+                                                                                </span>
+                                                                                <%= replies.author.username %> <small>(<%= replies.authorRole %>)</small>
+                                                                                    <% }%>
+                                                                                    <% if(replies.authorRole == 'seller') {%>
+                                                                                        <span>
+                                                                                            <img src="<%= replies.author.profile %>"
+                                                                                                style="border-radius: 100%; object-fit: cover; width: 40px; height: 40px"
+                                                                                                class="img-thumbnail mx-1 mt-1" alt="">
+                                                                                        </span>
+                                                                                        <%= replies.author.username %> <small>(<%= replies.authorRole %>)</small>
+                                                                                        <% } %>
                                                                         </h5>
                                                                         <div class="mt-2 ms-2">
                                                                             <i>~ <small>
@@ -186,7 +195,8 @@
                                                                 <% } %>
                                                                     <% } %>
                                                     </div>
-                                                    <form
+                                                    <% if(!currentUser && query.author.equals(currentUser._id)) {%>
+                                                        <form
                                                         action='/customer/products/<%= product.id %>/queries/<%= query.id %>'
                                                         method="post" class=" d-flex p-2">
                                                         <input type="text" class="form-control p-2 m-0 " id="query"
@@ -194,6 +204,8 @@
                                                         <button
                                                             class="btn btn-sm btn-success px-3 py-1 ms-2">Post</button>
                                                     </form>
+                                                        <% } %>
+
                                                 </div>
                                             </div>
                                             <% } %>
@@ -273,51 +285,24 @@
                         <div class="card-body  position-relative">
                             <div class="card-subtitle text-muted me-2">
 
-                                <% if(review.authorType =='customer' ) {%>
-                                    <% if(review.author && review.author.equals(String(currentUser.id))) { %>
+                                <% if(currentUser && review.author.equals(currentUser)) {%>
+                                    <h4>
+                                        <span>
+                                            <img src="<%= review.author.profilePic %>" width="50px" height="50px"
+                                                style="border-radius: 100%; object-fit: cover; width: 50px; height: 50px"
+                                                class="" alt="">
+                                        </span> You
+                                    </h4>
+                                    <% }else{ %>
                                         <h4>
                                             <span>
-                                                <img src="<%= review.author.profilePic %>" width="50px" height="50px"
+                                                <img src="<%= review.author.profilePic %>"
                                                     style="border-radius: 100%; object-fit: cover; width: 50px; height: 50px"
-                                                    class="" alt="">
-                                            </span> You
+                                                    class="img-thumbnail" alt="">
+                                            </span>
+                                            <%= review.author.username %>
                                         </h4>
-                                        <% } else { %>
-                                            <h4>
-                                                <span>
-                                                    <img src="<%= review.author.profilePic %>"
-                                                        style="border-radius: 100%; object-fit: cover; width: 50px; height: 50px"
-                                                        class="img-thumbnail" alt="">
-                                                </span>
-                                                <%= review.author.username %> ~ <i>
-                                                        <%= review.author.role %>
-                                                    </i>
-                                            </h4>
-                                            <% } %>
-                                                <% } %>
-                                                    <% if(review.authorType=='seller' ) {%>
-                                                        <% if(review.author &&  review.author.equals(String(currentUser.id))){ %>
-                                                            <h4>
-                                                                <span>
-                                                                    <img src="<%= review.author.imageUrl %>"
-                                                                        width="50px" height="50px"
-                                                                        style="border-radius: 100%; object-fit: cover; width: 50px; height: 50px"
-                                                                        class="" alt="">
-                                                                </span> You
-                                                            </h4>
-                                                            <% } else { %>
-                                                                <h4>
-                                                                    <span>
-                                                                        <img src="<%= review.author.imageUrl %>"
-                                                                            style="border-radius: 100%; object-fit: cover; width: 50px; height: 50px"
-                                                                            class="img-thumbnail" alt="">
-                                                                    </span>
-                                                                    <%= review.author.username %> ~ <small><i>
-                                                                                <%= review.author.role %>
-                                                                            </i></small>
-                                                                </h4>
-                                                                <% } %>
-                                                                    <%}%>
+                                        <% } %>
                             </div>
                             <h6 class="ms-2"><b>Rating:</b>
                                 <%= review.rating %>
@@ -327,11 +312,11 @@
                             </h6>
                             <h6 class="ms-2 mb-1  text-muted">
                                 <i>Posted on~ &nbsp;&nbsp; <small>
-                                        <%= review.date.getDay() %>/<%= review.date.getMonth() + 1 %>/<%=
+                                        <%= review.date.getDay()%>/<%= review.date.getMonth() + 1 %>/<%=
                                                     review.date.getFullYear() %></i>
                                 </small>
                             </h6>
-                            <% if(currentUser && review.author.equals(currentUser)) {%>
+                            <% if(currentUser && review.author.equals(currentUser._id)) {%>
                                 <form
                                     action='/customer/products/<%= product.id %>/reviews/<%= review.id %>?_method=DELETE'
                                     method="post" class=" position-absolute pe-3 pt-3  top-0 end-0">

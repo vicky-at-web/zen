@@ -15,7 +15,7 @@ module.exports.renderHome = (req, res) => {
 
 module.exports.renderSearchedProducts = catchAsync(async (req, res) => {
     let { productName, page = 1 } = req.query;
-    if(productName == ""){
+    if (productName == "") {
         res.redirect('/customer/products?page=1')
     }
     const skip = (page - 1) * ITEMS_PER_PAGE;
@@ -61,31 +61,27 @@ module.exports.renderSortedProducts = catchAsync(async (req, res) => {
 
 module.exports.showProduct = catchAsync(async (req, res) => {
     const { id } = req.params;
-    const product = await Product.findById(id).populate('reviews').populate('queries').populate('seller').populate({
-        path: 'reviews',
-        populate: {
-            path: 'author',
-            model: 'Customer',
-        },
-    }).populate({
-        path: 'queries',
-        populate: {
-            path: 'author',
-            model: 'Customer'
-        }
-    }).populate({
-        path: 'queries',
-        populate: {
-            path: 'answers.author',
-            model: 'Customer'
-        }
-    }).populate({
-        path: 'reviews',
-        populate:{
-            path: 'author',
-            model:'Seller'
-        }
-    });
+    const product = await Product.findById(id).populate('reviews')
+        .populate('queries')
+        .populate('seller')
+        .populate({
+            path: 'reviews',
+            populate: {
+                path: 'author',
+                model: 'Customer',
+            },
+        })
+        .populate({
+            path: 'queries',
+            populate: [
+                {
+                    path: 'author',
+                    model: 'Customer'
+                }
+            ],
+        })
+        
+        // console.log({ answers:product.queries[0].answers[0].author})
     let sum = 0;
     for (let review of product.reviews) {
         sum += parseInt(review.rating);
@@ -146,7 +142,7 @@ module.exports.showCart = catchAsync(async (req, res) => {
     const customer = await Customer.findById(req.user._id).populate('cart');
     const undoProduct = req.session.undoProduct;
     let sum = 0
-    for(let product of customer.cart){
+    for (let product of customer.cart) {
         sum += product.price
     }
     res.render('../views/customer/cart', { customer, undoProduct, sum })
@@ -165,11 +161,11 @@ module.exports.addToCart = catchAsync(async (req, res) => {
         req.session.passport.user.cart = customer.cart;
         req.flash('success', 'Product added to the cart!');
     }
-    const redirectUrl = res.locals.returnTo || '/customer/products?page=1'; 
+    const redirectUrl = res.locals.returnTo || '/customer/products?page=1';
     res.redirect(redirectUrl);
 })
 
-module.exports.addUndoProductToCart =  catchAsync(async (req, res) => {
+module.exports.addUndoProductToCart = catchAsync(async (req, res) => {
     const { id } = req.params;
     const product = await Product.findById(id);
     const customer = await Customer.findById(req.user._id).populate('cart');
@@ -209,7 +205,7 @@ module.exports.postQuery = catchAsync(async (req, res) => {
     product.queries.push(question);
     await question.save();
     await product.save();
-    req.flash('success', 'Welcome to Zen!')
+    req.flash('success', 'The question has been posted Successfully!')
     res.redirect(`/customer/products/${id}`);
 })
 
@@ -218,7 +214,8 @@ module.exports.postAnswer = catchAsync(async (req, res) => {
     const product = await Product.findById(id);
     const question = await Question.findById(queryId);
     const currentDate = new Date();
-    question.answers.push({ answer: req.body.answer, author: req.user._id, date: currentDate });
+    question.answers.push({ answer: req.body.answer, author: {username: req.user.username, profile: req.user.profilePic}, date: currentDate, authorRole: req.user.role });
+    console.log(question.answers)
     await question.save();
     await product.save();
     res.redirect(`/customer/products/${id}`);
@@ -240,7 +237,6 @@ module.exports.postReview = catchAsync(async (req, res) => {
     review.author = req.user._id;
     const currentDate = new Date();
     review.date = currentDate;
-    review.authorType = req.user.role
     product.reviews.push(review);
     await review.save();
     await product.save();
