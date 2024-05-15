@@ -6,6 +6,8 @@ const categories = ['Computers', 'Mobiles', 'Cameras', 'Men"s', 'Women"s', 'Kids
 const image = 'https://source.unsplash.com/collection/483251';
 const Customer = require('../models/customer')
 const ITEMS_PER_PAGE = 20;
+const Notification = require('../models/notification');
+const Seller = require('../models/seller')
 
 module.exports.renderHome = (req, res) => {
     res.render('../views/customer/home', { categories, image })
@@ -80,8 +82,8 @@ module.exports.showProduct = catchAsync(async (req, res) => {
                 }
             ],
         })
-        
-        // console.log({ answers:product.queries[0].answers[0].author})
+
+    // console.log({ answers:product.queries[0].answers[0].author})
     let sum = 0;
     for (let review of product.reviews) {
         sum += parseInt(review.rating);
@@ -197,25 +199,39 @@ module.exports.deleteProductFromCart = catchAsync(async (req, res) => {
 
 module.exports.postQuery = catchAsync(async (req, res) => {
     const { id } = req.params;
-    const product = await Product.findById(id);
+    const product = await Product.findById(id).populate('seller');
     const currentDate = new Date();
     const question = new Question(req.body.query);
     question.author = req.user._id;
-    question.date = currentDate
-    product.queries.push(question);
+    question.date = currentDate;
     await question.save();
+    product.queries.push(question);
     await product.save();
+    const notification = new Notification({
+        header: `New query From ${req.user.username} from the product ${product.name}`,
+        message: question.question,
+        timestamp: Date.now(),
+        read: false,
+        productName: product.name,
+        productId: product.id,
+        productSeller: product.seller.id
+
+    })
+    const seller = await Seller.findById(product.seller.id);
+    await notification.save();
+    seller.notifications.push(notification);
+    await seller.save();
     req.flash('success', 'The question has been posted Successfully!')
     res.redirect(`/customer/products/${id}`);
 })
+
 
 module.exports.postAnswer = catchAsync(async (req, res) => {
     const { id, queryId } = req.params;
     const product = await Product.findById(id);
     const question = await Question.findById(queryId);
     const currentDate = new Date();
-    question.answers.push({ answer: req.body.answer, author: {username: req.user.username, profile: req.user.profilePic}, date: currentDate, authorRole: req.user.role });
-    console.log(question.answers)
+    question.answers.push({ answer: req.body.answer, author: { username: req.user.username, profile: req.user.profilePic }, date: currentDate, authorRole: req.user.role });
     await question.save();
     await product.save();
     res.redirect(`/customer/products/${id}`);
@@ -240,7 +256,6 @@ module.exports.postReview = catchAsync(async (req, res) => {
     product.reviews.push(review);
     await review.save();
     await product.save();
-    console.log(review)
     res.redirect(`/customer/products/${product.id}`)
 })
 

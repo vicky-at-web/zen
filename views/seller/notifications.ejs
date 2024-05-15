@@ -1,0 +1,45 @@
+<% layout('../layout/templates/seller/boilerplate') -%>
+    <style>
+        .message {
+            background-color: lightblue;
+            padding: 20px;
+            border-radius: 10px;
+        }
+    </style>
+    <div class="container">
+        <% for(let notification of seller.notifications) {%>
+            <div class="message position-relative" href="/seller/products/<%= notification.productId %>">
+                <b>
+                    <%= notification.header %> from the <%= notification.productName %> Product
+                </b> <br>
+                <%= notification.message %> ?
+                    <div class="position-absolute bottom-0 end-0 pe-2" style="padding-bottom: 20px;"><b>
+                            <%= notification.timestamp.getHours() % 12 || 12 %>:<%= String(
+                                    notification.timestamp.getMinutes()).padStart(2,'0') %>
+                                    <%= (notification.timestamp.getHours()> 12) ? 'PM' : 'AM' %>
+                        </b>
+                        <%= notification.timestamp.getDate() %>/<%= notification.timestamp.getMonth() + 1 %>/<%=
+                                    notification.timestamp.getFullYear() %>
+                    </div>
+            </div> <br>
+            <% } %>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        socket.emit('joinRoom', 'notification');
+
+
+        socket.on('newQuery', (notification) => {
+            try {
+                // Handle the new query notification
+                console.log('New query received:', notification);
+            } catch (e) {
+                console.log(e)
+            }
+        });
+
+
+
+    </script>

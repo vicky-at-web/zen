@@ -84,8 +84,8 @@ module.exports.postAnswer = catchAsync(async (req, res) => {
     const { id, queryId } = req.params;
     const product = await Product.findById(id);
     const question = await Question.findById(queryId);
-    const currentDate = new Date();
-    question.answers.push({ answer: req.body.answer, author: {username: req.user.username, profile: req.user.imageUrl}, date: currentDate, authorRole: req.user.role });
+    const currentDate = new Date;
+    question.answers.push({ answer: req.body.answer, author: {username: req.user.username, profile: req.user.imageUrl}, date: currentDate.getTime(), authorRole: req.user.role });
     await question.save();
     await product.save();
     res.redirect(`/seller/products/${id}`);
@@ -96,4 +96,9 @@ module.exports.deleteQuery = catchAsync(async (req, res) => {
     await Product.findByIdAndUpdate(id, { $pull: { queries: queryId } })
     await Question.findByIdAndDelete(queryId);
     res.redirect(`/seller/products/${id}`);
+})
+
+module.exports.showNotifications = catchAsync(async(req, res) => {
+    const seller = await Seller.findById(req.user._id).populate('notifications')
+    res.render('../views/seller/notifications', { seller })
 })

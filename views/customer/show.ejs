@@ -90,9 +90,10 @@
                                 Ask Any Queries globally!
                             </h5>
                         </div>
-                        <form action='/customer/products/<%= product.id %>/queries' method="post" class=" d-flex p-1">
+                        <form action='/customer/products/<%= product.id %>/queries' method="post" id="queryForm"
+                            class=" d-flex p-1">
                             <input type="text" class="form-control p-2 m-0 " id="query" name="query[question]">
-                            <button class="btn btn-sm btn-success px-3 py-1 ms-2">Post</button>
+                            <button class="btn btn-sm btn-success px-3 py-1 ms-2" id="queryButton">Post</button>
                         </form>
                     </div>
                 </div>
@@ -128,7 +129,7 @@
                                                             </h4> &nbsp;&nbsp;
                                                             <h6 class="mt-4 ms-2 text-muted">
                                                                 <i>~ <small>
-                                                                        <%= query.date.getDay() %>/<%=
+                                                                        <%= query.date.getDate() %>/<%=
                                                                                 query.date.getMonth() + 1 %>/<%=
                                                                                     query.date.getFullYear() %>
                                                                     </small></i>
@@ -165,23 +166,31 @@
                                                                                 <span>
                                                                                     <img src="<%= replies.author.profile %>"
                                                                                         style="border-radius: 100%; object-fit: cover; width: 40px; height: 40px"
-                                                                                        class="img-thumbnail mx-1 mt-1" alt="">
+                                                                                        class="img-thumbnail mx-1 mt-1"
+                                                                                        alt="">
                                                                                 </span>
-                                                                                <%= replies.author.username %> <small>(<%= replies.authorRole %>)</small>
+                                                                                <%= replies.author.username %> <small>(
+                                                                                        <%= replies.authorRole %>
+                                                                                            )
+                                                                                    </small>
                                                                                     <% }%>
-                                                                                    <% if(replies.authorRole == 'seller') {%>
-                                                                                        <span>
-                                                                                            <img src="<%= replies.author.profile %>"
-                                                                                                style="border-radius: 100%; object-fit: cover; width: 40px; height: 40px"
-                                                                                                class="img-thumbnail mx-1 mt-1" alt="">
-                                                                                        </span>
-                                                                                        <%= replies.author.username %> <small>(<%= replies.authorRole %>)</small>
-                                                                                        <% } %>
+                                                                                        <% if(replies.authorRole=='seller'){%>
+                                                                                            <span>
+                                                                                                <img src="<%= replies.author.profile %>"
+                                                                                                    style="border-radius: 100%; object-fit: cover; width: 40px; height: 40px"
+                                                                                                    class="img-thumbnail mx-1 mt-1"
+                                                                                                    alt="">
+                                                                                            </span>
+                                                                                            <%= replies.author.username
+                                                                                                %> <small>(<%=
+                                                                                                        replies.authorRole
+                                                                                                        %>)</small>
+                                                                                                <% } %>
                                                                         </h5>
                                                                         <div class="mt-2 ms-2">
                                                                             <i>~ <small>
-                                                                                    <%= replies.date.getDay() %>/
-                                                                                        <%=replies.date.getMonth() + 1
+                                                                                    <%= replies.date.getDate() %>/
+                                                                                        <%=replies.date.getMonth() + 11
                                                                                             %>/
                                                                                             <%=replies.date.getFullYear()
                                                                                                 %>
@@ -197,13 +206,13 @@
                                                     </div>
                                                     <% if(!currentUser && query.author.equals(currentUser._id)) {%>
                                                         <form
-                                                        action='/customer/products/<%= product.id %>/queries/<%= query.id %>'
-                                                        method="post" class=" d-flex p-2">
-                                                        <input type="text" class="form-control p-2 m-0 " id="query"
-                                                            name="answer">
-                                                        <button
-                                                            class="btn btn-sm btn-success px-3 py-1 ms-2">Post</button>
-                                                    </form>
+                                                            action='/customer/products/<%= product.id %>/queries/<%= query.id %>'
+                                                            method="post" class=" d-flex p-2">
+                                                            <input type="text" class="form-control p-2 m-0 " id="query"
+                                                                name="answer">
+                                                            <button
+                                                                class="btn btn-sm btn-success px-3 py-1 ms-2">Post</button>
+                                                        </form>
                                                         <% } %>
 
                                                 </div>
@@ -329,3 +338,35 @@
             </div>
         </div>
     </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+
+        socket.emit('joinRoom', 'notification');
+
+        let username = '<%= currentUser.username %>';
+        let date = new Date;
+        let name = '<%= product.name %>';
+        let productId = '<%= product.id %>'
+        let sellerId = '<%= product.seller.id%>'
+
+        const notification = {
+            header: `new Query from ${username}`,
+            message: message.value,
+            timestamp: date,
+            read: false,
+            productName: name,
+            productId: productId,
+            productSeller: sellerId
+
+        }
+        socket.emit('notify', notification)
+        
+
+
+
+
+    </script>
+   

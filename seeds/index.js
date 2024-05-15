@@ -28,7 +28,7 @@ const endDate = '2024-03-17';   // End date for the range
 const sample = array => array[Math.floor(Math.random() * array.length)];
 
 const seedDb = async () => {
-    const seller =  await Seller.findById('663f70522777df6b0f2b624d')
+    const seller =  await Seller.findById('66448f3704100ff5e7bae60b')
     await Product.deleteMany({});
     for (let i = 1; i <= 2000; i++) {
         const randomLaunchDate = getRandomDate(startDate, endDate);
@@ -49,7 +49,7 @@ const seedDb = async () => {
             brand: 'Zen Recommends',
             headers: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
             launchDate: randomLaunchDate,
-            seller: '663f70522777df6b0f2b624d'
+            seller: '66448f3704100ff5e7bae60b'
         });
         await product.save();
         await seller.products.push(product)

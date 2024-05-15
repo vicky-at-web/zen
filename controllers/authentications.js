@@ -88,6 +88,6 @@ module.exports.logOutSeller = (req, res, next) => {
             return next(err);
         }
         req.flash('success', 'Goodbye!');
-        res.redirect('/customer/products');
+        res.redirect('/customer/home');
     });
 }

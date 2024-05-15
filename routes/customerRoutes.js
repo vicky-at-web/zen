@@ -44,7 +44,7 @@ router.route('/:id/cart')
 
 ///QUERIES ROUTES
 
-router.post('/products/:id/queries', customers.postQuery);
+router.post('/products/:id/queries',customers.postQuery);
 
 router.route('/products/:id/queries/:queryId')
     .post(customers.postAnswer)

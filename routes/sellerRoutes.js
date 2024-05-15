@@ -21,4 +21,7 @@ router.route('/products/:id/queries/:queryId')
     .post(sellers.postAnswer)
     .delete(sellers.deleteQuery)
 
+router.route('/notifications')
+    .get(sellers.showNotifications)
+
 module.exports = router

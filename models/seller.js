@@ -1,8 +1,6 @@
-
-
 const mongoose = require('mongoose');
 const Product = require('./product');
-const passportLocalMongoose = require('passport-local-mongoose')
+const passportLocalMongoose = require('passport-local-mongoose');
 
 
 const { Schema } = mongoose;
@@ -24,6 +22,10 @@ const sellerSchema = new Schema({
         type: String,
         required: true,
     },
+    notifications:[{
+        type: Schema.Types.ObjectId,
+        ref: 'Notification'
+    }],
     role:{
         type: String,
     },

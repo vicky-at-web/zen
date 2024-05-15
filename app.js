@@ -1,5 +1,4 @@
 // DECLARATIONS OF VARIABLES
-
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
@@ -17,11 +16,12 @@ const LocalStrategy = require('passport-local');
 const Seller = require('./models/seller')
 const Customer = require('./models/customer')
 const chatRoutes = require('./routes/chatRoutes')
-const Chat = require('./models/chat')
+const Chat = require('./models/chat');
+const Notification = require('./models/notification')
+const Question = require('./models/question');
+const Product = require('./models/product')
 
 //EJS ENGINE CONNECTIONS
-
-
 app.engine('ejs', ejsMate)
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
@@ -29,47 +29,38 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 ///SESSION CONFIG
-
 const sessionConfig = {
     secret: 'thisshouldbeabettersecret!',
     resave: false,
     saveUninitialized: true,
-
     cookie: {
         httpOnly: true,
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
-
 }
 
 ///PASSPORT CONFIGURATION
-
 app.use(session(sessionConfig))
 app.use(flash())
-
 app.use(passport.initialize());
 app.use(passport.session());
 
 //////CUSTOMER PASSPORT CONFIG
-passport.use('customerLocal',new LocalStrategy(Customer.authenticate()))
-passport.use('sellerLocal',new LocalStrategy(Seller.authenticate()))
-passport.serializeUser(function(user, done) { 
-    done(null, user);
-  });
-  
-  passport.deserializeUser(function(user, done) {
-    if(user!=null)
-      done(null,user);
-  });
+passport.use('customerLocal', new LocalStrategy(Customer.authenticate()))
+passport.use('sellerLocal', new LocalStrategy(Seller.authenticate()))
+passport.serializeUser(function (customer, done) {
+    done(null, customer);
+});
 
-///SELLER PASSPORT CONFIG
-
+passport.deserializeUser(function (user, done) {
+    if (user != null)
+        done(null, user);
+});
 
 ///ADDING GLOBAL VARIABLES
-
 app.use((req, res, next) => {
-    console.log("SESSION  :",req.session) 
+    // console.log("SESSION  :", req.session)
     res.locals.currentUser = req.user;
     if (req.user && req.user.role) {
         // Set a local variable indicating if the user is a customer
@@ -88,13 +79,10 @@ app.use((req, res, next) => {
     next();
 })
 
-
 //ADDING PUBLIC DIRECTORY
-
 app.use(express.static(path.join(__dirname, 'public')))
 
 //MONGO CONNECTIONS
-
 mongoose.connect('mongodb://127.0.0.1:27017/zen26');
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'CONNECTION FAILED!'));
@@ -103,21 +91,15 @@ db.once('open', () => {
 })
 
 /// AUTHENTICATION ROUTE
-
 app.use('/', authRoutes)
 
 //CUSTOMER ROUTES
-
 app.use('/customer', customerRoutes);
 
 //SELLER ROUTES
-
 app.use('/seller', sellerRoutes)
 
-
-
 ///CHAT ROUTES
-
 app.use('/chat', chatRoutes)
 
 app.get('/', (req, res) => {
@@ -137,13 +119,14 @@ io.on('connection', socket => {
         console.log(`Sockets in room ${room}:`, socketsInRoom);
     });
 
+
     socket.on('sendMessage', async messageData => {
         try {
             // Extract data from messageData
             console.log(messageData);
             const { sellerId, customerId, message } = messageData;
             const timestamp1 = new Date();
-    
+
             // Find or create a new Chat document
             let chat = await Chat.findOne({ seller: sellerId, customer: customerId });
             if (!chat) {
@@ -153,36 +136,52 @@ io.on('connection', socket => {
                     messages: []
                 });
             }
-    
+
             // Push the new message data into the messages array of the Chat document
             const newMessage = {
                 content: message.content,
                 sender: message.sender,
                 timestamp: timestamp1
             };
-    
+
             chat.messages.push(newMessage);
-    
+
             // Save the Chat document to MongoDB
             await chat.save();
             console.log('Message saved to MongoDB:', chat);
-    
+
             // Emit the newMessage to all clients
             io.emit('newMessage', newMessage);
         } catch (error) {
             console.error('Error saving message to MongoDB:', error);
         }
     });
-    
 
+    socket.on('notify', async (notification) => {
+        try{
+        // const { product } = messageData
+        // const seller1 = await Seller.findById(product.seller);
+        // const notification  = new Notification(messageData);
+        // await notification.save();
+        // seller1.notifications.push(notification);
+        // await seller1.save();
+        // console.log('notification sent to seller');
+        // console.log(notification);
+        // io.emit('newQuery', notification)
+        console.log(notification)
+    } catch (error) {
+        console.error('Error saving message to MongoDB:', error);
+    }
+    })
 
     socket.on('disconnect', () => {
         console.log('Socket disconnected:', socket.id);
     });
 });
 
-// ERROR MIDDLEWARES 
 
+
+// ERROR MIDDLEWARES 
 app.all('*', (req, res, next) => {
     next(new expErr('NOT FOUND', 400))
 })
@@ -194,9 +193,6 @@ app.use((err, req, res, next) => {
 })
 
 //PORT CONFIGURATION
-
 server.listen(3000, () => {
     console.log('LISTENING ON THE PORT 3000')
-})     
-
-
+})
