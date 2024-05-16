@@ -6,7 +6,6 @@
             <div class="col-6">
                 <div class="card">
                     <div class="card-body p-5">
-
                         <form action="/seller/<%= seller.id %>/product/new" method="post" class="mb-3 p-0 formvalid"
                             novalidate>
                             <div>
@@ -42,8 +41,8 @@
                                 <div class="input-group mb-3">
 
                                     <span class="input-group-text">$</span>
-                                    <input type="text" name="product[price]" autocomplete="off" required
-                                       id="price" class="form-control" placeholder='0.00'>
+                                    <input type="text" name="product[price]" autocomplete="off" required id="price"
+                                        class="form-control" placeholder='0.00'>
                                     <div class="valid-feedback">
                                         Looks good!
                                     </div>
@@ -103,9 +102,6 @@
                                 </select>
                             </div>
                             <br>
-
-
-
                             <div>
                                 <label class="form-label" for="des">Description:</label>
                                 <textarea name="product[description]" value="" autocomplete="off" required id="des"
@@ -121,7 +117,6 @@
                             <button class="btn btn-info">Add Product</button>
                             <br><br>
                             <a href="/products" class="">Back To All Products</a>
-
                     </div>
                 </div>
             </div>

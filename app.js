@@ -1,4 +1,5 @@
 // DECLARATIONS OF VARIABLES
+
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
@@ -19,9 +20,11 @@ const chatRoutes = require('./routes/chatRoutes')
 const Chat = require('./models/chat');
 const Notification = require('./models/notification')
 const Question = require('./models/question');
-const Product = require('./models/product')
+const Product = require('./models/product');
+const catchAsync = require('./utils/catchasync')
 
 //EJS ENGINE CONNECTIONS
+
 app.engine('ejs', ejsMate)
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
@@ -29,6 +32,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 ///SESSION CONFIG
+
 const sessionConfig = {
     secret: 'thisshouldbeabettersecret!',
     resave: false,
@@ -41,12 +45,14 @@ const sessionConfig = {
 }
 
 ///PASSPORT CONFIGURATION
+
 app.use(session(sessionConfig))
 app.use(flash())
 app.use(passport.initialize());
 app.use(passport.session());
 
 //////CUSTOMER PASSPORT CONFIG
+
 passport.use('customerLocal', new LocalStrategy(Customer.authenticate()))
 passport.use('sellerLocal', new LocalStrategy(Seller.authenticate()))
 passport.serializeUser(function (customer, done) {
@@ -60,15 +66,13 @@ passport.deserializeUser(function (user, done) {
 
 ///ADDING GLOBAL VARIABLES
 app.use((req, res, next) => {
-    // console.log("SESSION  :", req.session)
+    console.log("SESSION  :", req.session)
     res.locals.currentUser = req.user;
     if (req.user && req.user.role) {
-        // Set a local variable indicating if the user is a customer
         res.locals.customer = req.user.role === 'customer';
         res.locals.seller = req.user.role === 'seller';
     }
     else {
-        // If user is not authenticated or role is not defined, set customer to false
         res.locals.customer = false;
         res.locals.seller = false;
     }
@@ -80,9 +84,11 @@ app.use((req, res, next) => {
 })
 
 //ADDING PUBLIC DIRECTORY
+
 app.use(express.static(path.join(__dirname, 'public')))
 
 //MONGO CONNECTIONS
+
 mongoose.connect('mongodb://127.0.0.1:27017/zen26');
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'CONNECTION FAILED!'));
@@ -91,20 +97,26 @@ db.once('open', () => {
 })
 
 /// AUTHENTICATION ROUTE
+
 app.use('/', authRoutes)
 
 //CUSTOMER ROUTES
+
 app.use('/customer', customerRoutes);
 
 //SELLER ROUTES
+
 app.use('/seller', sellerRoutes)
 
 ///CHAT ROUTES
+
 app.use('/chat', chatRoutes)
 
 app.get('/', (req, res) => {
     res.send('welcome to zen, the ecommerce store developed by one of you!')
 })
+
+///SOCKET.IO CONFIGURATIONS
 
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
@@ -122,12 +134,9 @@ io.on('connection', socket => {
 
     socket.on('sendMessage', async messageData => {
         try {
-            // Extract data from messageData
             console.log(messageData);
             const { sellerId, customerId, message } = messageData;
             const timestamp1 = new Date();
-
-            // Find or create a new Chat document
             let chat = await Chat.findOne({ seller: sellerId, customer: customerId });
             if (!chat) {
                 chat = new Chat({
@@ -136,52 +145,64 @@ io.on('connection', socket => {
                     messages: []
                 });
             }
-
-            // Push the new message data into the messages array of the Chat document
             const newMessage = {
                 content: message.content,
                 sender: message.sender,
                 timestamp: timestamp1
             };
-
             chat.messages.push(newMessage);
-
-            // Save the Chat document to MongoDB
             await chat.save();
             console.log('Message saved to MongoDB:', chat);
-
-            // Emit the newMessage to all clients
             io.emit('newMessage', newMessage);
         } catch (error) {
             console.error('Error saving message to MongoDB:', error);
         }
     });
 
-    socket.on('notify', async (notification) => {
-        try{
-        // const { product } = messageData
-        // const seller1 = await Seller.findById(product.seller);
-        // const notification  = new Notification(messageData);
-        // await notification.save();
-        // seller1.notifications.push(notification);
-        // await seller1.save();
-        // console.log('notification sent to seller');
-        // console.log(notification);
-        // io.emit('newQuery', notification)
-        console.log(notification)
-    } catch (error) {
-        console.error('Error saving message to MongoDB:', error);
-    }
-    })
-
     socket.on('disconnect', () => {
         console.log('Socket disconnected:', socket.id);
     });
 });
 
+///ROUTES FOR REAL TIME EVENTS AND DATABASE OPERATIONS
+
+app.post('/customer/products/:id/queries', catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const product = await Product.findById(id).populate('seller');
+    const currentDate = new Date();
+    const question = new Question(req.body.query);
+    question.author = req.user._id;
+    question.date = currentDate;
+    await question.save();
+    product.queries.push(question);
+    await product.save();
+    const notification = new Notification({
+        header: `New query From ${req.user.username} from the product ${product.name}`,
+        message: question.question,
+        timestamp: Date.now(),
+        read: false,
+        productName: product.name,
+        productId: product.id,
+        productSeller: product.seller.id
+
+    })
+    const seller = await Seller.findById(product.seller.id);
+    await notification.save();
+    seller.notifications.push(notification);
+    await seller.save();
+    try {
+        io.emit('notify', notification)
+        console.log('notification has been sent successfully')
+    } catch (e) {
+        console.log(e)
+    }
+    req.flash('success', 'The question has been posted Successfully!')
+    res.redirect(`/customer/products/${id}`);
+}));
 
 
 // ERROR MIDDLEWARES 
+
 app.all('*', (req, res, next) => {
     next(new expErr('NOT FOUND', 400))
 })
@@ -193,6 +214,7 @@ app.use((err, req, res, next) => {
 })
 
 //PORT CONFIGURATION
+
 server.listen(3000, () => {
     console.log('LISTENING ON THE PORT 3000')
 })

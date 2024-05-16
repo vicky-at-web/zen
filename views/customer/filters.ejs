@@ -149,9 +149,7 @@
                                                     to
                                                     cart</button>
                                             </form>
-
                                             <% } %>
-
                                                 <div class="toast-container position-fixed bottom-0 end-0 p-3">
                                                     <div id="productToast" class="toast" role="alert"
                                                         aria-live="assertive" aria-atomic="true">
@@ -278,7 +276,6 @@
         <nav aria-label="Page navigation example">
             <% if(products.length> 0) {%>
                 <ul class="pagination justify-content-center d-flex">
-
                     <% if(currentPage==='1' ) {%>
                         <li class="page-item disabled">
                             <a class="page-link"
@@ -293,7 +290,6 @@
                                 <% const startPage=Math.max(1, currentPage - 3); %>
                                     <% const endPage=Math.min(totalPages, startPage + 6); %>
                                         <% for (let page=startPage; page <=endPage; page++) { %>
-
                                             <% if(currentPage==page) {%>
                                                 <li class="page-item active shadow"><a class="page-link"
                                                         href="/customer/products/sort/filter?page=<%= page %>&productName=<%= productName %>&arrangement=<%= arrangement %>&pricing=<%= pricing %>">
@@ -305,7 +301,6 @@
                                                             <%= page %>
                                                         </a></li>
                                                     <% } %>
-
                                                         <% } %>
                                                             <% if(currentPage===totalPages.toString() ) {%>
                                                                 <li class="page-item disabled">
@@ -318,37 +313,7 @@
                                                                             href="/customer/products/sort/filter?page=<%= parseInt(currentPage) + 1  %>&productName=<%= productName %>&arrangement=<%= arrangement %>&pricing=<%= pricing %>">&#8594;</a>
                                                                     </li>
                                                                     <% } %>
-
                 </ul>
                 <% } %>
         </nav>
     </div>
-
-
-
-    <script>
-        var count = 1;
-        function showToast(productName, productId, customerId) {
-            var toast = new bootstrap.Toast(document.getElementById('productToast'));
-            const button = document.createElement('a');
-            button.setAttribute('class', 'btn btn-primary btn-sm m-2 position-relative');
-            button.setAttribute('href', `/customer/${customerId}/${productId}/cart`)
-            const span = document.createElement('span')
-            const span2 = document.createElement('span')
-            span.setAttribute('class', 'position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger')
-            span.innerText = count++;
-            button.innerText = 'View Cart!'
-            button.appendChild(span)
-            document.getElementById('toastMessage').innerText = `Hurray! ${productName} is added to your cart `;
-            document.getElementById('toastMessage').appendChild(button);
-            toast.show();
-        }
-        const cartForm = document.querySelector('#cartForm');
-
-
-        cartForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-        })
-
-
-    </script>

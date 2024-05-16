@@ -7,7 +7,8 @@
                 transition: 0.25s;
                 box-shadow: 10px 5px 5px rgba(0, 0, 0);
             }
-            body{
+
+            body {
                 transition: 0.25s
             }
         </style>
@@ -19,7 +20,8 @@
                         Sorting options
                     </button>
                 </div>
-                <div class="col-3 mt-1 rounded collapse p-0 m-0" id="collapseExample" style="transition: 1s;height: 1000px; ">
+                <div class="col-3 mt-1 rounded collapse p-0 m-0" id="collapseExample"
+                    style="transition: 1s;height: 1000px; ">
                     <div class="card shadow-lg">
                         <div class="card-body">
                             <form class="form" id="filterForm" action="/customer/products/sort/filter"
@@ -94,152 +96,121 @@
                 </div>
                 <div class="col-9 d-flex row justify-content-center" style="transition: 1s">
                     <% for(let product of products) {%>
-                    
-                    <div class="card m-2  shadow-lg p-0 " id="card" style="width: 19rem; ">
 
-                        <img src="<%= product.imageUrl[0] %>" class="card-img-top shadow" alt="...">
-                        <div class="card-body p-0 mb-0">
-                            <ul class="list-group">
-                                <li class="list-group-item text-muted py-3">
-                                    <center>
-                                        <h6 class="card-title">
-                                            <b>A <%= product.brand %> Product</b>
-                                        </h6>
-                                    </center>
-                                </li>
-                                <li class="list-group-item"
-                                    style="display: flex; align-items: center; justify-content: center;  border: 0px;">
-                                    <center>
-                                        <h5 class="card-title  ">
-                                            <%= product.name %>
-                                                <% if (newProducts.some(newProduct=> newProduct._id.toString() === product._id.toString())) { %> <span
-                                                        class="badge text-bg-info">New</span>
-                                                    <% } %>
-                                        </h5>
+                        <div class="card m-2  shadow-lg p-0 " id="card" style="width: 19rem; ">
 
-                                    </center>
-                                </li>
-                        </div>
-
-                        <div class="card-footer p-0">
-                            <ul class="list-group list-group-flush d-flex ">
-                                <li class="list-group-item d-flex justify-content-between ">
-                                    <div>
-                                        <b>Price:</b>
-                                    </div>
-                                    <div>
-                                        &#8377; <%= product.price %>
-                                    </div>
-                                </li>
-
-                                <li class="list-group-item d-flex flex-column  ">
-                                    <div class="mb-1"><b>Description:</b></div>
-                                    <p class="card-text">
-                                        <%= product.headers %>
-                                    </p>
-                                </li>
-
-                                <li class="list-group-item d-flex justify-content-around "
-                                    style=" background-color: #F8F6F4; ">
-
-                                    <a href="/customer/products/<%= product.id %>"
-                                        class="btn btn-primary me-1 p-2 w-100 mt-auto rounded-2">View
-                                        Details!</a>
-
-                                    <% if(customer) {%>
-                                        <form action="/customer/<%= product.id %>/cart"
-                                            method="post" id="cartForm" class="w-100">
-                                            <button type="submit"
-                                                class="btn btn-warning w-100 p-2  mt-auto  rounded-2">Add to
-                                                cart</button>
-                                        </form>
-
-                                        <% } %>
-
-
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <% } %>
-</div>
-
-
-
-        <nav aria-label="Page navigation example">
-            <% if(products.length> 0) {%>
-                <ul class="pagination justify-content-center d-flex">
-
-                    <% if(currentPage==='1' ) {%>
-                        <li class="page-item disabled">
-                            <a class="page-link"
-                                href="/customer/products/search?page=<%= currentPage - 1 %>&productName=<%= productName %>">&#8592;</a>
-                        </li>
-                        <% } else { %>
-                            <li class="page-item ">
-                                <a class="page-link"
-                                    href="/customer/products/search?page=<%= currentPage - 1  %>&productName=<%= productName %>">&#8592;</a>
-                            </li>
-                            <% } %>
-                                <% const startPage=Math.max(1, currentPage - 3); %>
-                                    <% const endPage=Math.min(totalPages, startPage + 6); %>
-                                        <% for (let page=startPage; page <=endPage; page++) { %>
-
-                                            <% if(currentPage==page) {%>
-                                                <li class="page-item active shadow"><a class="page-link"
-                                                        href="/customer/products/search?page=<%= page %>&productName=<%= productName %>">
-                                                        <%= page %>
-                                                    </a></li>
-                                                <% } else {%>
-                                                    <li class="page-item"><a class="page-link"
-                                                            href="/customer/products/search?page=<%= page %>&productName=<%= productName %>">
-                                                            <%= page %>
-                                                        </a></li>
-                                                    <% } %>
-
+                            <img src="<%= product.imageUrl[0] %>" class="card-img-top shadow" alt="...">
+                            <div class="card-body p-0 mb-0">
+                                <ul class="list-group">
+                                    <li class="list-group-item text-muted py-3">
+                                        <center>
+                                            <h6 class="card-title">
+                                                <b>A <%= product.brand %> Product</b>
+                                            </h6>
+                                        </center>
+                                    </li>
+                                    <li class="list-group-item"
+                                        style="display: flex; align-items: center; justify-content: center;  border: 0px;">
+                                        <center>
+                                            <h5 class="card-title  ">
+                                                <%= product.name %>
+                                                    <% if (newProducts.some(newProduct=>newProduct._id.toString()===product._id.toString())) { %> <span
+                                                            class="badge text-bg-info">New</span>
                                                         <% } %>
-                                                            <% if(currentPage===totalPages.toString() ) {%>
-                                                                <li class="page-item disabled">
-                                                                    <a class="page-link"
-                                                                        href="/customer/products/search?page=<%= parseInt(currentPage) + 1  %>&productName=<%= productName %>">&#8594;</a>
-                                                                </li>
-                                                                <% } else { %>
-                                                                    <li class="page-item">
-                                                                        <a class="page-link"
-                                                                            href="/customer/products/search?page=<%= parseInt(currentPage) + 1  %>&productName=<%= productName %>">&#8594;</a>
-                                                                    </li>
-                                                                    <% } %>
+                                            </h5>
+                                        </center>
+                                    </li>
+                            </div>
 
-                </ul>
-                <% } %>
-        </nav>
-    </div>
+                            <div class="card-footer p-0">
+                                <ul class="list-group list-group-flush d-flex ">
+                                    <li class="list-group-item d-flex justify-content-between ">
+                                        <div>
+                                            <b>Price:</b>
+                                        </div>
+                                        <div>
+                                            &#8377; <%= product.price %>
+                                        </div>
+                                    </li>
 
+                                    <li class="list-group-item d-flex flex-column  ">
+                                        <div class="mb-1"><b>Description:</b></div>
+                                        <p class="card-text">
+                                            <%= product.headers %>
+                                        </p>
+                                    </li>
 
+                                    <li class="list-group-item d-flex justify-content-around "
+                                        style=" background-color: #F8F6F4; ">
 
-    <script>
-        var count = 1;
-        function showToast(productName, productId, customerId) {
-            var toast = new bootstrap.Toast(document.getElementById('productToast'));
-            const button = document.createElement('a');
-            button.setAttribute('class', 'btn btn-primary btn-sm m-2 position-relative');
-            button.setAttribute('href', `/customer/${customerId}/${productId}/cart`)
-            const span = document.createElement('span')
-            const span2 = document.createElement('span')
-            span.setAttribute('class', 'position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger')
-            span.innerText = count++;
-            button.innerText = 'View Cart!'
-            button.appendChild(span)
-            document.getElementById('toastMessage').innerText = `Hurray! ${productName} is added to your cart `;
-            document.getElementById('toastMessage').appendChild(button);
-            toast.show();
-        }
-        const cartForm = document.querySelector('#cartForm');
+                                        <a href="/customer/products/<%= product.id %>"
+                                            class="btn btn-primary me-1 p-2 w-100 mt-auto rounded-2">View
+                                            Details!</a>
 
+                                        <% if(customer) {%>
+                                            <form action="/customer/<%= product.id %>/cart" method="post" id="cartForm"
+                                                class="w-100">
+                                                <button type="submit"
+                                                    class="btn btn-warning w-100 p-2  mt-auto  rounded-2">Add to
+                                                    cart</button>
+                                            </form>
 
-        cartForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-        })
+                                            <% } %>
 
 
-    </script>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <% } %>
+                </div>
+
+
+
+                <nav aria-label="Page navigation example">
+                    <% if(products.length> 0) {%>
+                        <ul class="pagination justify-content-center d-flex">
+
+                            <% if(currentPage==='1' ) {%>
+                                <li class="page-item disabled">
+                                    <a class="page-link"
+                                        href="/customer/products/search?page=<%= currentPage - 1 %>&productName=<%= productName %>">&#8592;</a>
+                                </li>
+                                <% } else { %>
+                                    <li class="page-item ">
+                                        <a class="page-link"
+                                            href="/customer/products/search?page=<%= currentPage - 1  %>&productName=<%= productName %>">&#8592;</a>
+                                    </li>
+                                    <% } %>
+                                        <% const startPage=Math.max(1, currentPage - 3); %>
+                                            <% const endPage=Math.min(totalPages, startPage + 6); %>
+                                                <% for (let page=startPage; page <=endPage; page++) { %>
+
+                                                    <% if(currentPage==page) {%>
+                                                        <li class="page-item active shadow"><a class="page-link"
+                                                                href="/customer/products/search?page=<%= page %>&productName=<%= productName %>">
+                                                                <%= page %>
+                                                            </a></li>
+                                                        <% } else {%>
+                                                            <li class="page-item"><a class="page-link"
+                                                                    href="/customer/products/search?page=<%= page %>&productName=<%= productName %>">
+                                                                    <%= page %>
+                                                                </a></li>
+                                                            <% } %>
+
+                                                                <% } %>
+                                                                    <% if(currentPage===totalPages.toString() ) {%>
+                                                                        <li class="page-item disabled">
+                                                                            <a class="page-link"
+                                                                                href="/customer/products/search?page=<%= parseInt(currentPage) + 1  %>&productName=<%= productName %>">&#8594;</a>
+                                                                        </li>
+                                                                        <% } else { %>
+                                                                            <li class="page-item">
+                                                                                <a class="page-link"
+                                                                                    href="/customer/products/search?page=<%= parseInt(currentPage) + 1  %>&productName=<%= productName %>">&#8594;</a>
+                                                                            </li>
+                                                                            <% } %>
+                        </ul>
+                        <% } %>
+                </nav>
+            </div>

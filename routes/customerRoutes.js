@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const { isLoggedIn, isAuthor, isReviewAuthor, validateReview } = require('../utils/middleware')
 const customers = require('../controllers/customers')
-const storeReturnTo = require('../utils/storeInfo')
+const storeReturnTo = require('../utils/storeInfo');
+const catchAsync = require('../utils/catchasync')
 
 ///HOME ROUTES
 
@@ -43,8 +44,6 @@ router.route('/:id/cart')
     .delete(customers.deleteProductFromCart)
 
 ///QUERIES ROUTES
-
-router.post('/products/:id/queries',customers.postQuery);
 
 router.route('/products/:id/queries/:queryId')
     .post(customers.postAnswer)

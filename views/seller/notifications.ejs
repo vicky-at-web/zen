@@ -7,34 +7,60 @@
         }
     </style>
     <div class="container">
+        <div id="notifications" class="mb-3">
         <% for(let notification of seller.notifications) {%>
-            <div class="message position-relative" href="/seller/products/<%= notification.productId %>">
-                <b>
-                    <%= notification.header %> from the <%= notification.productName %> Product
-                </b> <br>
-                <%= notification.message %> ?
-                    <div class="position-absolute bottom-0 end-0 pe-2" style="padding-bottom: 20px;"><b>
-                            <%= notification.timestamp.getHours() % 12 || 12 %>:<%= String(
-                                    notification.timestamp.getMinutes()).padStart(2,'0') %>
-                                    <%= (notification.timestamp.getHours()> 12) ? 'PM' : 'AM' %>
-                        </b>
-                        <%= notification.timestamp.getDate() %>/<%= notification.timestamp.getMonth() + 1 %>/<%=
-                                    notification.timestamp.getFullYear() %>
-                    </div>
-            </div> <br>
+      
+                <div class="message position-relative " href="/seller/products/<%= notification.productId %>">
+                    <b>
+                        <%= notification.header %> from the <%= notification.productName %> Product
+                    </b> <br>
+                    <%= notification.message %> ?
+                        <div class="position-absolute bottom-0 end-0 pe-2" style="padding-bottom: 20px;"><b>
+                                <%= notification.timestamp.getHours() % 12 || 12 %>:<%= String(
+                                        notification.timestamp.getMinutes()).padStart(2,'0') %>
+                                        <%= (notification.timestamp.getHours()> 12) ? 'PM' : 'AM' %>
+                            </b>
+                            <%= notification.timestamp.getDate() %>/<%= notification.timestamp.getMonth() + 1 %>/<%=
+                                        notification.timestamp.getFullYear() %>
+                        </div>
+                </div> <br>
+           
             <% } %>
+        </div>
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script>
         const socket = io();
+        const container = document.querySelector('#notifications')
 
-        socket.emit('joinRoom', 'notification');
-
-
-        socket.on('newQuery', (notification) => {
+        socket.on('notify', (notification) => {
             try {
-                // Handle the new query notification
+                const timestamp = new Date(notification.timestamp);
                 console.log('New query received:', notification);
+                const notificationElement = document.createElement('div');
+                notificationElement.setAttribute('class', 'message position-relative' );
+                notificationElement.setAttribute('href', `/seller/products/${notification.productId}`)
+                notificationElement.innerHTML = `
+                    <b>
+                        ${notification.header} from the ${notification.productName} Product
+                    </b> <br>
+                     ${notification.message}?
+                        <div class="position-absolute bottom-0 end-0 pe-2" style="padding-bottom: 20px;"><b>
+                                ${timestamp.getHours() % 12 || 12}:${String(
+                    timestamp.getMinutes()).padStart(2, '0')}
+                                        ${(timestamp.getHours() > 12) ? 'PM' : 'AM'}
+                            </b>
+                            ${timestamp.getDate()}/${timestamp.getMonth() + 1}/${timestamp.getFullYear()}
+                        </div>
+               
+                <br>
+            `;
+            if (container.firstChild) {
+                    container.insertBefore(notificationElement, container.firstChild);
+                } else {
+                    container.appendChild(notificationElement);
+                }
+                console.log(notificationElement)  
             } catch (e) {
                 console.log(e)
             }

@@ -1,6 +1,5 @@
 <% layout('../layout/templates/customer/boilerplate') -%>
 
-
   <div class="container d-flex flex-column">
     <% for(let chat of chats ) {%>
       <div class="container">
@@ -11,9 +10,7 @@
               style="border-radius: 100%; object-fit: cover; height:60px; width: 60px;" class="img-thumbnail m-1"
               alt="">
           </span>
-         
             <%= chat.seller.bussinessName %>
-         
         </h3> </a>
       </div>
       <% } %>

@@ -1,6 +1,5 @@
 <% layout('../layout/templates/seller/boilerplate') -%>
 
-
   <div class="container d-flex flex-column">
     <% for(let chat of chats ) {%>
       <div class="container">
@@ -8,7 +7,6 @@
         <a href="/chat/seller/<%= chat.customer.id %>"
           style="text-decoration: none; color: black;">
           <h4 class="ms-3 p-3 sticky-top d-flex position-relative" style="background-color: rgb(215, 231, 247); border-radius: 10px;">
-
             <span class="">
               <img src="<%= chat.customer.profilePic %>"
                 style="border-radius: 100%; object-fit: cover; height:60px; width: 60px;" class="img-thumbnail m-1"
@@ -16,18 +14,13 @@
             </span>
             <div class="d-flex flex-column ms-2 mt-1">
               <%= chat.customer.username.charAt(0).toUpperCase() + chat.customer.username.slice(1) %>
-
-
                 <h5 class="text-muted w-100 mt-1">
                   <%= chat.messages[chat.messages.length - 1].content %>
-                
                   <span class="position-absolute bottom-0 end-0 mb-4 me-3">
                     <%= chat.messages[chat.messages.length - 1].timestamp.getHours() % 12 || 12 %> : <%= String(chat.messages[chat.messages.length - 1].timestamp.getMinutes()).padStart(2, '0')%> <%= (chat.messages[chat.messages.length - 1].timestamp.getHours() > 12) ? "PM" : "AM" %>
-
                   </span>
                 </h5>
             </div>
-
           </h4>
         </a>
       </div>

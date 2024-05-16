@@ -10,11 +10,13 @@
  Sellers can view their analytics of products by weeks, months, even days, can see the reviews given by the customers, can chat with the customers to resolve the problem. This is my first own idea project.
 
  ## Technologies
+* HTML
 * CSS
 * JAVASCRIPT
 * NODE JS
 * MONGO DB
 * EXPRESS JS
+* EJS FOR templating the files
 * PASSPORT JS for authentication
 * CLOUDINARY for image storage
 * GIT for version control

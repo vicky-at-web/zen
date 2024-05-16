@@ -7,14 +7,11 @@
         }
 
     </style>
-
     <center>
         <h1>Your Favourites</h1>
     </center>   
  <br>
     <div class=" row d-flex justify-content-center w-100">
-
-
         <% for(let product of customer.favourites) { %>
             <div class="card m-3 shadow p-0" style="width: 18rem;">
                 <img src="<%= product.imageUrl[0] %>" class="card-img-top shadow" alt="...">

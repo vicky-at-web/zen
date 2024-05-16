@@ -283,7 +283,6 @@
                                     Please give a title!
                                 </div>
                                 <button class="btn btn-success mt-3">Submit</button>
-
                             </div>
                         </form>
                     </div>
@@ -293,7 +292,6 @@
                     <div class="card mb-3">
                         <div class="card-body  position-relative">
                             <div class="card-subtitle text-muted me-2">
-
                                 <% if(currentUser && review.author.equals(currentUser)) {%>
                                     <h4>
                                         <span>
@@ -338,35 +336,4 @@
             </div>
         </div>
     </div>
-
-    <script src="/socket.io/socket.io.js"></script>
-    <script>
-        const socket = io();
-
-
-        socket.emit('joinRoom', 'notification');
-
-        let username = '<%= currentUser.username %>';
-        let date = new Date;
-        let name = '<%= product.name %>';
-        let productId = '<%= product.id %>'
-        let sellerId = '<%= product.seller.id%>'
-
-        const notification = {
-            header: `new Query from ${username}`,
-            message: message.value,
-            timestamp: date,
-            read: false,
-            productName: name,
-            productId: productId,
-            productSeller: sellerId
-
-        }
-        socket.emit('notify', notification)
-        
-
-
-
-
-    </script>
    

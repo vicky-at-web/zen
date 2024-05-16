@@ -197,34 +197,7 @@ module.exports.deleteProductFromCart = catchAsync(async (req, res) => {
 
 ///QUESTIONS AND ANSWERS ROUTINGS
 
-module.exports.postQuery = catchAsync(async (req, res) => {
-    const { id } = req.params;
-    const product = await Product.findById(id).populate('seller');
-    const currentDate = new Date();
-    const question = new Question(req.body.query);
-    question.author = req.user._id;
-    question.date = currentDate;
-    await question.save();
-    product.queries.push(question);
-    await product.save();
-    const notification = new Notification({
-        header: `New query From ${req.user.username} from the product ${product.name}`,
-        message: question.question,
-        timestamp: Date.now(),
-        read: false,
-        productName: product.name,
-        productId: product.id,
-        productSeller: product.seller.id
-
-    })
-    const seller = await Seller.findById(product.seller.id);
-    await notification.save();
-    seller.notifications.push(notification);
-    await seller.save();
-    req.flash('success', 'The question has been posted Successfully!')
-    res.redirect(`/customer/products/${id}`);
-})
-
+///REAL TIME EVENTS ADDED ROUTES => { POSTQUERY }
 
 module.exports.postAnswer = catchAsync(async (req, res) => {
     const { id, queryId } = req.params;
