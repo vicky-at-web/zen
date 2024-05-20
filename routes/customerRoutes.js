@@ -46,16 +46,15 @@ router.route('/:id/cart')
 ///QUERIES ROUTES
 
 router.route('/products/:id/queries/:queryId')
-    .post(customers.postAnswer)
     .delete(customers.deleteQuery)
 
 ////REVIEW ROUTES 
 
-router.post('/products/:id/reviews', validateReview, customers.postReview)
-
 router.delete('/products/:id/reviews/:reviewId', isReviewAuthor, customers.deleteReview)
 
+///NOTIFICATION ROUTES
 
+router.get('/notifications', isLoggedIn, customers.renderNotificationPage)
 
 
 module.exports = router

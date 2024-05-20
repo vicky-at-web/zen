@@ -1,12 +1,12 @@
-<% layout('../layout/templates/seller/boilerplate') -%>
+<% layout('../layout/templates/customer/boilerplate') -%>
 
     <div class="container">
         <div id="notifications" class=" mb-3">
-            <% for(let notification of seller.notifications) {%>
+            <% for(let notification of customer.notifications) {%>
                 <div class="card">
                     <div class="card-body position-relative ">
                         <b>
-                            <a href="/seller/products/<%= notification.productId %>"
+                            <a href="/customer/products/<%= notification.productId %>"
                                 style="text-decoration: none; color: #212529">
                                 <%= notification.header %> from the <%= notification.productName %> Product
                             </a>
@@ -33,7 +33,7 @@
         const user = '<%= currentUser._id %>';
         const container = document.querySelector('#notifications');
         socket.emit('join', user)
-        socket.on('notifySeller', (notification) => {
+        socket.on('notifyCustomer', (notification) => {
             try {
                 const timestamp = new Date(notification.timestamp);
                 console.log('New query received:', notification);
@@ -42,7 +42,7 @@
                 card.setAttribute('class', 'card mb-4')
                 cardBody.setAttribute('class', 'message card-body position-relative');
                 cardBody.innerHTML = `
-        <a href="/seller/products/${notification.productId}" style='text-decoration: none; color: #212529'> <b>
+        <a href="/customer/products/${notification.productId}" style='text-decoration: none; color: #212529'> <b>
                ${notification.header} from the ${notification.productName} Product
             </b></a> <br>
              ${notification.message}

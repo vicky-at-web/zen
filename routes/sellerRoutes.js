@@ -15,10 +15,7 @@ router.route('/products/:id')
     .get(sellers.viewProduct)
     .delete(sellers.deleteProduct)
 
-router.post('/products/:id/queries', sellers.postQuery);
-
 router.route('/products/:id/queries/:queryId')
-    .post(sellers.postAnswer)
     .delete(sellers.deleteQuery)
 
 router.route('/notifications')

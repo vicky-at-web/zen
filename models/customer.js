@@ -14,10 +14,12 @@ const customerSchema = new Schema({
         default: 'customer'
     },
     cart: [{
-      
-            type: Schema.Types.ObjectId,
-            ref: 'Product'
-      
+        type: Schema.Types.ObjectId,
+        ref: 'Product'
+    }],
+    notifications: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Notification'
     }],
     favourites: [
         {

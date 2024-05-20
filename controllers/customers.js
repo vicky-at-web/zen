@@ -199,17 +199,6 @@ module.exports.deleteProductFromCart = catchAsync(async (req, res) => {
 
 ///REAL TIME EVENTS ADDED ROUTES => { POSTQUERY }
 
-module.exports.postAnswer = catchAsync(async (req, res) => {
-    const { id, queryId } = req.params;
-    const product = await Product.findById(id);
-    const question = await Question.findById(queryId);
-    const currentDate = new Date();
-    question.answers.push({ answer: req.body.answer, author: { username: req.user.username, profile: req.user.profilePic }, date: currentDate, authorRole: req.user.role });
-    await question.save();
-    await product.save();
-    res.redirect(`/customer/products/${id}`);
-})
-
 module.exports.deleteQuery = catchAsync(async (req, res) => {
     const { id, queryId } = req.params;
     await Product.findByIdAndUpdate(id, { $pull: { queries: queryId } })
@@ -218,19 +207,6 @@ module.exports.deleteQuery = catchAsync(async (req, res) => {
 })
 
 ///REVIEW ROUTINGS
-
-module.exports.postReview = catchAsync(async (req, res) => {
-    const { id } = req.params
-    const product = await Product.findById(id);
-    const review = new Review(req.body.review);
-    review.author = req.user._id;
-    const currentDate = new Date();
-    review.date = currentDate;
-    product.reviews.push(review);
-    await review.save();
-    await product.save();
-    res.redirect(`/customer/products/${product.id}`)
-})
 
 module.exports.deleteReview = catchAsync(async (req, res) => {
     const { id, reviewId } = req.params;
@@ -254,4 +230,10 @@ module.exports.updateProfile = catchAsync(async (req, res) => {
     );
     req.session.passport.user = customer.toObject();
     res.redirect('/customer/products?page=1')
+})
+
+
+module.exports.renderNotificationPage = catchAsync(async(req, res) =>{
+    const customer = await Customer.findById(req.user._id).populate('notifications');
+    res.render('../views/customer/notifications.ejs', { customer })
 })

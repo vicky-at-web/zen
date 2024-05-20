@@ -9,7 +9,6 @@ module.exports.renderCustomerChatInterface = catchAsync(async (req, res) => {
     res.render('../views/customer/interface', { chats, customerId })
 })
 
-
 module.exports.renderCustomerChat = catchAsync (async (req, res) => {
     const { sellerId } = req.params;
     const customerId = req.user._id
@@ -29,8 +28,9 @@ module.exports.renderCustomerChat = catchAsync (async (req, res) => {
 
 module.exports.renderSellerChatInterface = catchAsync(async (req, res) => {
     const seller = await Seller.findById(req.user._id);
-    const chats = await Chat.find({ seller: seller }).populate('customer').populate('seller');
-    res.render('../views/seller/interface', { seller, chats })
+    const chats = await Chat.find({ seller: seller }).populate('seller').populate('customer');
+    res.render('../views/seller/sellerInterface', { seller, chats })
+    // res.send(chats)
 })
 
 

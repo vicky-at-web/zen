@@ -1,0 +1,24 @@
+<% layout('../layout/templates/customer/boilerplate') -%>
+
+  <div class="container">
+    <% for(let chat of chats) {%>
+      <div class="card">
+        <div class="card-body row d-flex">
+          <div style="width: fit-content;" class="d-flex align-items-center"> <img src="<%= chat.seller.imageUrl %>"
+              style="border-radius: 100%; object-fit: cover; height:50px; width: 50px;"></div>
+          <div class="col-3 p-0">
+            <a href="/chat/customer/<%= chat.seller.id %>" style="text-decoration: none; color: inherit;">
+              <h4>
+                <%= chat.seller.username %> ~ <small style="font-size: 15px;" class="mb-3">
+                    <%= chat.seller.bussinessName %>
+                  </small>
+              </h4>
+            </a>
+            <%= chat.messages[chat.messages.length - 1].content %>
+          
+          </div>
+          
+        </div>
+      </div>
+      <% } %>
+  </div>

@@ -66,30 +66,6 @@ module.exports.deleteProduct = catchAsync(async(req, res) =>{
     res.redirect('/seller/home')
 })
 
-module.exports.postQuery = catchAsync(async (req, res) => {
-    const { id } = req.params;
-    const product = await Product.findById(id);
-    const currentDate = new Date();
-    const question = new Question(req.body.query);
-    question.author = req.user._id;
-    question.date = currentDate
-    product.queries.push(question);
-    await question.save();
-    await product.save();
-    req.flash('success', 'The question has been posted Successfully!')
-    res.redirect(`/customer/products/${id}`);
-})
-
-module.exports.postAnswer = catchAsync(async (req, res) => {
-    const { id, queryId } = req.params;
-    const product = await Product.findById(id);
-    const question = await Question.findById(queryId);
-    const currentDate = new Date;
-    question.answers.push({ answer: req.body.answer, author: {username: req.user.username, profile: req.user.imageUrl}, date: currentDate.getTime(), authorRole: req.user.role });
-    await question.save();
-    await product.save();
-    res.redirect(`/seller/products/${id}`);
-})
 
 module.exports.deleteQuery = catchAsync(async (req, res) => {
     const { id, queryId } = req.params;
