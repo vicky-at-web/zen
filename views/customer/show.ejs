@@ -204,7 +204,7 @@
                                                                 <% } %>
                                                                     <% } %>
                                                     </div>
-                                                    <% if(!currentUser && query.author.equals(currentUser._id)) {%>
+                                                    <% if(currentUser && !query.author.equals(currentUser._id)) {%>
                                                         <form
                                                             action='/customer/products/<%= product.id %>/queries/<%= query.id %>'
                                                             method="post" class=" d-flex p-2">

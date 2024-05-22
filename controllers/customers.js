@@ -7,7 +7,8 @@ const image = 'https://source.unsplash.com/collection/483251';
 const Customer = require('../models/customer')
 const ITEMS_PER_PAGE = 20;
 const Notification = require('../models/notification');
-const Seller = require('../models/seller')
+const Seller = require('../models/seller');
+const { notifySeller, notifyCustomer } = require('../socket');
 
 module.exports.renderHome = (req, res) => {
     res.render('../views/customer/home', { categories, image })
@@ -199,6 +200,68 @@ module.exports.deleteProductFromCart = catchAsync(async (req, res) => {
 
 ///REAL TIME EVENTS ADDED ROUTES => { POSTQUERY }
 
+module.exports.postQuery = catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const product = await Product.findById(id).populate('seller');
+    const currentDate = new Date();
+    const question = new Question(req.body.query);
+    question.author = req.user._id;
+    question.date = currentDate;
+    await question.save();
+    product.queries.push(question);
+    await product.save();
+    const notification = new Notification({
+        header: `New query From ${req.user.username} from the product ${product.name}`,
+        message: `${question.question} ?`,
+        timestamp: Date.now(),
+        read: false,
+        productName: product.name,
+        productId: product.id,
+        productSeller: product.seller._id
+
+    })
+    const seller = await Seller.findById(product.seller.id);
+    await notification.save();
+    seller.notifications.unshift(notification);
+    await seller.save();
+    try {
+        notifySeller(seller.id, notification);
+    } catch (e) {
+        console.log(e);
+    }
+    req.flash('success', 'The question has been posted Successfully!')
+    res.redirect(`/customer/products/${id}`);
+});
+
+module.exports.postAnswer = catchAsync(async (req, res) => {
+    const { id, queryId } = req.params;
+    const product = await Product.findById(id);
+    const question = await Question.findById(queryId);
+    const currentDate = new Date;
+    question.answers.push({ answer: req.body.answer, author: { username: req.user.username, profile: req.user.profilePic }, date: currentDate.getTime(), authorRole: req.user.role });
+    await question.save();
+    await product.save();
+    const notification = new Notification({
+        header: `New reply From ${req.user.username} ~ (${req.user.role})`,
+        message: `${req.body.answer}`,
+        timestamp: Date.now(),
+        read: false,
+        productName: product.name,
+        productId: product.id,
+        productSeller: product.seller._id
+    });
+    const customer = await Customer.findById(question.author._id);
+    await notification.save();
+    customer.notifications.unshift(notification);
+    await customer.save();
+    res.redirect(`/seller/products/${id}`);
+    try {
+        notifyCustomer(customer.id, notification);
+    } catch (e) {
+        console.log(e);
+    }
+});
+
 module.exports.deleteQuery = catchAsync(async (req, res) => {
     const { id, queryId } = req.params;
     await Product.findByIdAndUpdate(id, { $pull: { queries: queryId } })
@@ -207,6 +270,38 @@ module.exports.deleteQuery = catchAsync(async (req, res) => {
 })
 
 ///REVIEW ROUTINGS
+
+module.exports.postReview = catchAsync(async (req, res) => {
+    const { id } = req.params
+    const product = await Product.findById(id);
+    const review = new Review(req.body.review);
+    review.author = req.user._id;
+    const currentDate = new Date();
+    review.date = currentDate;
+    product.reviews.push(review);
+    await review.save();
+    await product.save();
+    const notification = new Notification({
+        header: `New review From ${req.user.username} `,
+        message: `Reviewed the product ${product.name} at ${review.rating} rating with a message ${review.body}`,
+        timestamp: Date.now(),
+        read: false,
+        productName: product.name,
+        productId: product.id,
+        productSeller: product.seller._id
+    })
+    const seller = await Seller.findById(product.seller._id);
+    await notification.save();
+    seller.notifications.unshift(notification);
+    await seller.save();
+    try {
+        notifySeller(seller.id, notification);
+    } catch (e) {
+        console.log(e);
+    }
+    res.redirect(`/customer/products/${product.id}`)
+
+})
 
 module.exports.deleteReview = catchAsync(async (req, res) => {
     const { id, reviewId } = req.params;
@@ -223,17 +318,27 @@ module.exports.renderProfile = catchAsync(async (req, res) => {
 })
 
 module.exports.updateProfile = catchAsync(async (req, res) => {
-    const customer = await Customer.findOneAndUpdate(
-        { _id: req.user._id },
-        { $set: req.body },
-        { new: true, runValidators: true }
+    const { customer , address} = req.body
+    const updatedCustomer = await Customer.findByIdAndUpdate(req.user._id,     {
+        username: customer.username,
+        profilePic: customer.profilePic,
+        mobile: customer.mobile,
+        address: {
+          street: address.street,
+          city: address.city,
+          state: address.state,
+          country: address.country,
+          pincode: address.pincode
+        }
+      },
+      { new: true }
     );
-    req.session.passport.user = customer.toObject();
-    res.redirect('/customer/products?page=1')
+    req.session.user = updatedCustomer;
+    res.redirect('/customer/profile')
 })
 
 
-module.exports.renderNotificationPage = catchAsync(async(req, res) =>{
+module.exports.renderNotificationPage = catchAsync(async (req, res) => {
     const customer = await Customer.findById(req.user._id).populate('notifications');
     res.render('../views/customer/notifications.ejs', { customer })
 })

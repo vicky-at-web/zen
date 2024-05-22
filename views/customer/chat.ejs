@@ -1,81 +1,170 @@
 <% layout('../layout/templates/customer/boilerplate') -%>
 
     <style>
-        .customer {
-            display: flex;
-            justify-content: end;
-            padding: 10px;
-            background-color: lightcyan;
-            width: fit-content;
-            border-radius: 10px;
-            margin: 10px;
-        } 
-        .seller {
-            display: flex;
-            justify-content: start;
-            padding: 10px;
-            background-color: lightsteelblue;
-            width: fit-content;
-            border-radius: 10px;
-            margin: 10px;
+        body {
+            overflow-y: hidden;
+            transition: 4s
         }
+
+        .sticky-header {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: white;
+        }
+
         #chatMessages {
             height: 700px;
             overflow-y: auto;
         }
+
+        ::-webkit-scrollbar {
+            width: 7px;
+            cursor: pointer;
+        }
+
+        ::-webkit-scrollbar-track {
+
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            background-color: #626262;
+        }
     </style>
-    <br>
-    <section id="chatMessages" class="container">
-        <% if(chat) {%>
-            <h3 class="ms-3 p-3 sticky-top" style="background-color: rgb(215, 231, 247); border-radius: 10px;">
-                <span>
-                    <img src="<%= seller.imageUrl %>"
-                    style="border-radius: 100%; object-fit: cover; height:60px; width: 60px;"
-                        class="img-thumbnail m-1" alt="">
-                </span>
-                <%= seller.bussinessName %> 
-            </h3> <br><br>
-            <% for(let message of chat.messages){ %>
-                <% if(message.sender=='customer' ) {%>
-                    <div style="display: flex; justify-content: end;">
-                        <p style="display: flex; justify-content: end;" class="customer"><strong>
-                               You :&nbsp;&nbsp;
-                            </strong>
-                            <%= message.content %> &nbsp; <%= message.timestamp.getHours() % 12 || 12 %> : <%=
-                                        String(message.timestamp.getMinutes()).padStart(2, '0' ) %> &nbsp; <svg
-                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="blue"
-                                            class="bi bi-check2-all mt-1" viewBox="0 0 16 16">
-                                            <path
-                                                d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0" />
-                                            <path d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708" />
-                                        </svg>
-                        </p>
+
+
+    <div class="container">
+        <div class="card">
+            <div class="card-body " id="chatMessages">
+                <div class="card sticky-top">
+                    <div class="card-body  d-flex">
+                        <img src=" <%= seller.imageUrl %> "
+                            style="border-radius: 100%; object-fit: cover; height:50px; width: 50px;" alt="">
+                        <h5 class="d-flex align-items-center ms-3">
+                            <%= seller.username %> ~ <%= seller.bussinessName %>
+                        </h5>
                     </div>
-                    <% } else { %>
-                        <div>
-                            <p style="display: flex; justify-content: start;" class="seller"><strong>
-                                    <%= seller.bussinessName %>:&nbsp;&nbsp;
-                                </strong>
-                                <%= message.content %> &nbsp; <%= message.timestamp.getHours() % 12 || 12 %> : <%=
-                                            String(message.timestamp.getMinutes()).padStart(2, '0' ) %> &nbsp;
-                                            <% } %>
+                </div><br>
+                <% for(let message of chat.messages) {%>
+                    <% if(message.sender=='customer' ) {%>
+
+                        <div class="d-flex justify-content-end ">
+                            <div class="card mt-2"
+                                style="max-width: 60%; background-color: #ccccff; border-radius: 20px 0px 20px 20px;">
+                                <div class="card-body px-3 py-2">
+                                    <%= message.content %> <br>
+                                        <div class="d-flex justify-content-end pt-2" style="font-size: 10px;">
+                                            <%= String( message.timestamp.getHours() % 12 || 12 ).padStart(2, '0' ) %>:
+                                                <%= String(message.timestamp.getMinutes()).padStart(2, '0' ) %>
+                                                    <%= (message.timestamp.getHours()>= 12)? 'PM' : 'AM' %>
+                                        </div>
+                                </div>
+                            </div>
+
+
+                            <div class="">
+                                <img src="<%= customer.profilePic %>" class="ms-2"
+                                    style="border-radius: 50%; width: 30px; height: 30px; object-fit: cover;" alt="">
+                            </div>
+
                         </div>
-                        <% } %>
-                            <% }else{ %>
-                                <h1>nothing to see here</h1>
+                        <br>
+                        <% }else{ %>
+                            <div class="d-flex justify-content-start">
+                                <div class="">
+                                    <img src="<%= seller.imageUrl %>" class="me-2"
+                                        style="border-radius: 50%; width: 30px; height: 30px; object-fit: cover;"
+                                        alt="">
+                                </div>
+                                <div class="card mt-2"
+                                    style="max-width: 60%; background-color: #bdb5d5; border-radius: 0px 20px 20px 20px;">
+                                    <div class="card-body px-3 py-2">
+                                        <%= message.content %> <br>
+                                            <div class="d-flex justify-content-start pt-2" style="font-size: 10px;">
+                                                <%= String( message.timestamp.getHours() % 12 || 12 ).padStart(2, '0' )
+                                                    %>:<%= String(message.timestamp.getMinutes()).padStart(2, '0' ) %>
+                                                        <%= (message.timestamp.getHours()>= 12)? 'PM' : 'AM' %>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div><br>
+                            <% } %>
                                 <% } %>
-    </section><br>
-    <br>
-    <div class="fixed-bottom container">
-        <form class="d-flex gap-1">
-            <input type="text" class="form-control  m-1" name="message" id="message" style="border: 1px solid black;">
-            <button type="submit" class="btn btn-primary m-1"
-                onclick="sendMessage('<%= customerId  %>','<%= seller._id  %>')"><svg xmlns="http://www.w3.org/2000/svg"
-                    width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
-                    <path
-                        d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z" />
-                </svg></button>
-        </form>
+
+            </div>
+        </div>
+        <div class="fixed-bottom container p-1">
+            <form class="d-flex gap-1" id="msgForm">
+                <input type="text" class="form-control m-1" id="message">
+                <button type="submit" class="btn btn-primary m-1"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                        height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+                        <path
+                            d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z" />
+                    </svg></button>
+            </form>
+        </div>
     </div>
+
+
+    <br>
+    <br>
+
     <script src="/socket.io/socket.io.js"></script>
-    <script src="/javascripts/socketScripts/customerChat.js"></script>
+    <script>
+        const socket = io();
+        const user = '<%= currentUser._id %>';
+        socket.emit('join', user);
+
+        const form = document.querySelector('#msgForm');
+        form.addEventListener('submit', function () {
+            const messageInput = document.querySelector('#message');
+            const messageContent = messageInput.value;
+            const timestamp = new Date()
+            socket.emit('sendMessage', {
+                chatId: '<%= chat.id %>',
+                message: {
+                    sender: 'customer',
+                    content: messageContent,
+                    timestamp: timestamp
+                }
+            });
+            messageInput.value = '';
+        })
+        chatMessages.scrollTo(0, chatMessages.scrollHeight)
+
+
+        socket.on('newMessage', (messageData) => {
+            console.log('got the message!!')
+            const { content, sender, timestamp } = messageData;
+            const timestamp1 = new Date(timestamp)
+            const chatMessages = document.querySelector('#chatMessages');
+            const wholeCard = document.createElement('div')
+            const card = document.createElement('div');
+            const cardBody = document.createElement('div');
+            const imgBody = document.createElement('div');
+            imgBody.innerHTML = `<img src="<%= seller.imageUrl %>" class="me-2"  style="border-radius: 50%; width: 30px; height: 30px; object-fit: cover;" alt="">`        
+            wholeCard.setAttribute('class', (sender == 'customer') ? 'd-flex justify-content-end' : 'd-flex justify-content-start')
+            card.setAttribute('class', 'card');
+            card.style.maxWidth = '60%';
+            card.style.borderRadius = (sender == 'customer') ? '0px 20px 20px 20px' :  '20px 0px 20px 20px'
+            card.style.backgroundColor = (sender == 'customer') ? '#ccccff' : '#bdb5d5';
+            cardBody.setAttribute('class', 'card-body px-3 py-2');
+            cardBody.innerHTML = content + `<br> <div class="d-flex justify-content-start pt-2" style="font-size: 10px;"> ${ String( timestamp1.getHours() % 12 || 12 ).padStart(2, "0")  }:${ String(timestamp1.getMinutes()).padStart(2, "0") } ${ (timestamp1.getHours() >= 12)? "PM" : "AM" } </div>`
+            card.append(cardBody);
+        
+        if (sender === 'customer') {
+            wholeCard.append(card);
+            wholeCard.append(imgBody);
+        } else {
+            wholeCard.append(imgBody);
+            wholeCard.append(card);
+        }
+
+        chatMessages.append(wholeCard);
+            chatMessages.scrollTo(0, chatMessages.scrollHeight)
+        });
+
+    </script>

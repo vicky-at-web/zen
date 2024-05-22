@@ -6,7 +6,7 @@
         <div class="card-body row d-flex">
           <div style="width: fit-content;" class="d-flex align-items-center"> <img src="<%= chat.seller.imageUrl %>"
               style="border-radius: 100%; object-fit: cover; height:50px; width: 50px;"></div>
-          <div class="col-3 p-0">
+          <div class="col p-0 position-relative">
             <a href="/chat/customer/<%= chat.seller.id %>" style="text-decoration: none; color: inherit;">
               <h4>
                 <%= chat.seller.username %> ~ <small style="font-size: 15px;" class="mb-3">
@@ -14,11 +14,14 @@
                   </small>
               </h4>
             </a>
-            <%= chat.messages[chat.messages.length - 1].content %>
-          
+            <%= chat.messages[chat.messages.length - 1].content.substring(0, 50) + '...' %>
+              <div class="position-absolute bottom-0 end-0 pe-2">
+                <%= chat.messages[chat.messages.length - 1 ].timestamp.toLocaleTimeString() %>
+              </div>
           </div>
-          
+
         </div>
       </div>
       <% } %>
   </div>
+  

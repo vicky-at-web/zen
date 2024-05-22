@@ -6,14 +6,13 @@
         <div class="card-body row d-flex">
           <div style="width: fit-content;" class="d-flex align-items-center"> <img src="<%= chat.customer.profilePic %>"
               style="border-radius: 100%; object-fit: cover; height:50px; width: 50px;"></div>
-          <div class="col-3 p-0">
+          <div class="col p-0">
             <a href="/chat/seller/<%= chat.customer.id %>" style="text-decoration: none; color: inherit;">
               <h4>
                 <%= chat.customer.username %> 
               </h4>
             </a>
-            <%= chat.messages[chat.messages.length - 1].content %>
-          
+            <%= chat.messages[chat.messages.length - 1].content.substring(0, 50) + '...' %>
           </div>
           
         </div>

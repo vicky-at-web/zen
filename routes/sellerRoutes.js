@@ -16,9 +16,16 @@ router.route('/products/:id')
     .delete(sellers.deleteProduct)
 
 router.route('/products/:id/queries/:queryId')
+    .post(sellers.postAnswer)
     .delete(sellers.deleteQuery)
 
 router.route('/notifications')
     .get(sellers.showNotifications)
+
+router.route('/profile')
+.get(sellers.renderProfilePage)
+
+router.route('/profile/update')
+.post(sellers.updateSellerProfile)
 
 module.exports = router

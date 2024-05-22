@@ -40,15 +40,22 @@ router.get('/cart', isLoggedIn, customers.showCart)
 router.post('/:id/undocart', customers.addUndoProductToCart);
 
 router.route('/:id/cart')
-    .post(storeReturnTo,isLoggedIn, customers.addToCart)
+    .post(storeReturnTo, isLoggedIn, customers.addToCart)
     .delete(customers.deleteProductFromCart)
 
 ///QUERIES ROUTES
 
+
+router.route('/products/:id/queries')
+    .post(customers.postQuery)
+
 router.route('/products/:id/queries/:queryId')
+.post(customers.postAnswer)
     .delete(customers.deleteQuery)
 
 ////REVIEW ROUTES 
+
+router.post('/products/:id/reviews', validateReview, customers.postReview)
 
 router.delete('/products/:id/reviews/:reviewId', isReviewAuthor, customers.deleteReview)
 
