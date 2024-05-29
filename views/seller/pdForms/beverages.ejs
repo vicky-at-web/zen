@@ -1,0 +1,53 @@
+<% layout('../layout/templates/seller/boilerplate') -%>
+<div class="container col-6 offset-3">
+    <!-- Type -->
+<div class="form-group">
+    <label for="type">Type</label>
+    <input type="text" class="form-control" id="type" name="type" placeholder="Enter beverage type">
+</div>
+
+<!-- Volume -->
+<div class="form-group">
+    <label for="volume">Volume</label>
+    <input type="number" class="form-control" id="volume" name="volume" placeholder="Enter volume">
+</div>
+
+<!-- Flavor -->
+<div class="form-group">
+    <label for="flavor">Flavor</label>
+    <input type="text" class="form-control" id="flavor" name="flavor" placeholder="Enter flavor">
+</div>
+
+<!-- Carbonated -->
+<div class="form-group">
+    <label for="carbonated">Carbonated</label>
+    <select class="form-control" id="carbonated" name="carbonated">
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+    </select>
+</div>
+
+<!-- Caffeinated -->
+<div class="form-group">
+    <label for="caffeinated">Caffeinated</label>
+    <select class="form-control" id="caffeinated" name="caffeinated">
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+    </select>
+</div>
+
+<!-- Dietary Restrictions -->
+<div class="form-group">
+    <label for="dietaryRestrictions">Dietary Restrictions</label>
+    <input type="text" class="form-control" id="dietaryRestrictions" name="dietaryRestrictions" placeholder="Enter dietary restrictions (comma-separated)">
+</div>
+
+<!-- Brand -->
+<div class="form-group">
+    <label for="brand">Brand</label>
+    <input type="text" class="form-control" id="brand" name="brand" placeholder="Enter brand">
+</div>
+
+<button type="submit" class="btn btn-primary">Submit</button>
+
+</div>

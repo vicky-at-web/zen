@@ -59,11 +59,9 @@ const productSchema = new Schema({
 })
 
 productSchema.pre('save', function (next) {
-    this.details = this.details || {};
-    let objName = `${this.category.toLowerCase()}Details`;
-    if (!this.details[objName]) {
-        this.details[objName] = details[objName + 'Schema'];
-    }
+        this.details = this.details || {};
+        const objName = `${this.category.toLowerCase()}Details`;
+        this.details = details[`${objName}Schema`];
     next();
 });
 
@@ -76,11 +74,6 @@ productSchema.post('findOneAndDelete', async function (doc) {
         await Question.deleteMany({ id: { $in: questionIds } });
     }
 });
-
-
-
-
-
 
 
 const Product = mongoose.model('Product', productSchema);

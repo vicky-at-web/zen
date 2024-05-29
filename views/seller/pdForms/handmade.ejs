@@ -1,0 +1,66 @@
+<% layout('../layout/templates/seller/boilerplate') -%>
+<div class="container col-6 offset-3">
+    <!-- Type -->
+<div class="form-group">
+    <label for="type">Type</label>
+    <input type="text" class="form-control" id="type" name="type" placeholder="Enter handmade product type">
+</div>
+
+<!-- Material -->
+<div class="form-group">
+    <label for="material">Material</label>
+    <input type="text" class="form-control" id="material" name="material" placeholder="Enter material">
+</div>
+
+<!-- Made to Order -->
+<div class="form-group">
+    <label for="madeToOrder">Made to Order</label>
+    <select class="form-control" id="madeToOrder" name="madeToOrder">
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+    </select>
+</div>
+
+<!-- Processing Time -->
+<div class="form-group">
+    <label for="processingTime">Processing Time</label>
+    <input type="text" class="form-control" id="processingTime" name="processingTime" placeholder="Enter processing time">
+</div>
+
+<!-- Customizable -->
+<div class="form-group">
+    <label for="customizable">Customizable</label>
+    <select class="form-control" id="customizable" name="customizable">
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+    </select>
+</div>
+
+<!-- Dimensions -->
+<h5>Dimensions</h5>
+<div class="form-group">
+    <label for="dimensionsType">Dimensions Type</label>
+    <input type="text" class="form-control" id="dimensionsType" name="dimensions[type]" placeholder="Enter dimensions type">
+</div>
+<div class="form-group">
+    <label for="dimensionsWidth">Width</label>
+    <input type="number" class="form-control" id="dimensionsWidth" name="dimensions[or][width]" placeholder="Enter width (if applicable)">
+</div>
+<div class="form-group">
+    <label for="dimensionsHeight">Height</label>
+    <input type="number" class="form-control" id="dimensionsHeight" name="dimensions[or][height]" placeholder="Enter height (if applicable)">
+</div>
+<div class="form-group">
+    <label for="dimensionsLength">Length</label>
+    <input type="number" class="form-control" id="dimensionsLength" name="dimensions[or][length]" placeholder="Enter length (if applicable)">
+</div>
+
+<!-- Care Instructions -->
+<div class="form-group">
+    <label for="careInstructions">Care Instructions</label>
+    <input type="text" class="form-control" id="careInstructions" name="careInstructions" placeholder="Enter care instructions">
+</div>
+
+<button type="submit" class="btn btn-primary">Submit</button>
+
+</div>

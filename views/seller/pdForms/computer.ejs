@@ -1,0 +1,139 @@
+<% layout('../layout/templates/seller/boilerplate') -%>
+
+    <div class="container mt-5">
+        <h1 class="mb-4">Computer Details Form</h1>
+        <form id="computerDetailsForm" action="/seller/product/new/details" method="POST">
+            <div class="form-group">
+                <label for="brand">Brand:</label>
+                <input type="text" class="form-control" id="brand" name="brand" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="model">Model:</label>
+                <input type="text" class="form-control" id="model" name="model" required>
+            </div>
+            
+            <fieldset class="border p-3 mb-3">
+                <legend class="w-auto">Processor</legend>
+                <div class="form-group">
+                    <label for="processorBrand">Brand:</label>
+                    <input type="text" class="form-control" id="processorBrand" name="processor[brand]" required>
+                </div>
+                <div class="form-group">
+                    <label for="processorModel">Model:</label>
+                    <input type="text" class="form-control" id="processorModel" name="processor[model]" required>
+                </div>
+            </fieldset>
+
+            <div class="form-group">
+                <label for="ram">RAM:</label>
+                <input type="text" class="form-control" id="ram" name="ram" required>
+            </div>
+
+            <fieldset class="border p-3 mb-3">
+                <legend class="w-auto">Storage</legend>
+                <div class="form-group">
+                    <label for="ssd">SSD:</label>
+                    <input type="text" class="form-control" id="ssd" name="storage[ssd]">
+                </div>
+                <div class="form-group">
+                    <label for="hdd">HDD:</label>
+                    <input type="text" class="form-control" id="hdd" name="storage[hdd]">
+                </div>
+            </fieldset>
+
+            <fieldset class="border p-3 mb-3">
+                <legend class="w-auto">Graphics</legend>
+                <div class="form-group">
+                    <label for="graphicsBrand">Brand:</label>
+                    <input type="text" class="form-control" id="graphicsBrand" name="graphics[brand]">
+                </div>
+                <div class="form-group">
+                    <label for="graphicsModel">Model:</label>
+                    <input type="text" class="form-control" id="graphicsModel" name="graphics[model]">
+                </div>
+                <div class="form-group">
+                    <label for="vram">VRAM (in GB):</label>
+                    <input type="number" class="form-control" id="vram" name="graphics[vram]">
+                </div>
+            </fieldset>
+
+            <div class="form-group">
+                <label for="operatingSystem">Operating System:</label>
+                <input type="text" class="form-control" id="operatingSystem" name="operatingSystem">
+            </div>
+
+            <fieldset class="border p-3 mb-3">
+                <legend class="w-auto">Display</legend>
+                <div class="form-group">
+                    <label for="resolutionHeight">Resolution Height:</label>
+                    <input type="number" class="form-control" id="resolutionHeight" name="display[resolution][height]" required>
+                </div>
+                <div class="form-group">
+                    <label for="resolutionWidth">Resolution Width:</label>
+                    <input type="number" class="form-control" id="resolutionWidth" name="display[resolution][width]" required>
+                </div>
+                <div class="form-group">
+                    <label for="panelType">Panel Type:</label>
+                    <input type="text" class="form-control" id="panelType" name="display[panelType]" required>
+                </div>
+            </fieldset>
+
+            <fieldset class="border p-3 mb-3">
+                <legend class="w-auto">Connectivities</legend>
+                <div class="form-group">
+                    <label for="wifi">WiFi:</label>
+                    <input type="text" class="form-control" id="wifi" name="connectivities[wifi]">
+                </div>
+                <div class="form-group">
+                    <label for="bluetooth">Bluetooth:</label>
+                    <input type="text" class="form-control" id="bluetooth" name="connectivities[bluetooth]">
+                </div>
+                <div class="form-group">
+                    <label for="usb">USB:</label>
+                    <input type="text" class="form-control" id="usb" name="connectivities[usb]">
+                </div>
+                <div class="form-group">
+                    <label for="ethernet">Ethernet:</label>
+                    <input type="text" class="form-control" id="ethernet" name="connectivities[ethernet]">
+                </div>
+            </fieldset>
+
+            <div class="form-group">
+                <label for="battery">Battery:</label>
+                <input type="text" class="form-control" id="battery" name="battery">
+            </div>
+
+            <fieldset class="border p-3 mb-3">
+                <legend class="w-auto">Dimensions</legend>
+                <div class="form-group">
+                    <label for="length">Length (in cm):</label>
+                    <input type="number" class="form-control" id="length" name="dimensions[length]">
+                </div>
+                <div class="form-group">
+                    <label for="width">Width (in cm):</label>
+                    <input type="number" class="form-control" id="width" name="dimensions[width]">
+                </div>
+                <div class="form-group">
+                    <label for="height">Height (in cm):</label>
+                    <input type="number" class="form-control" id="height" name="dimensions[height]">
+                </div>
+                <div class="form-group">
+                    <label for="weight">Weight (in kg):</label>
+                    <input type="number" class="form-control" id="weight" name="dimensions[weight]">
+                </div>
+            </fieldset>
+
+            <div class="form-group">
+                <label for="warranty">Warranty:</label>
+                <input type="text" class="form-control" id="warranty" name="warranty">
+            </div>
+
+            <div class="form-group">
+                <label for="specialFeatures">Special Features:</label>
+                <textarea class="form-control" id="specialFeatures" name="specialFeatures" rows="4"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>

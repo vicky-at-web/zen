@@ -29,7 +29,7 @@
                                 <button class="btn btn-danger mx-2 my-2">Delete Profile</button>
                             </form>
 
-                            <a class="card-link btn btn-info" href="/seller/<%= seller.id %>/product/new">Add
+                            <a class="card-link btn btn-info" href="/seller/product/new/basic">Add
                                 Product</a>
                             <a class="btn btn-primary m-2" href="/chat/seller">View Chats</a>
                         </div>
@@ -64,7 +64,7 @@
                                 </div>
                                 <div class="card-footer">
                                     <a class="card-link btn btn-info text-light mb-3 mx-2"
-                                        href="/seller/products/<%=product.id%>/update">Edit</a>
+                                        href="/seller/products/<%=product.id%>/edit">Edit</a>
                                     <form class="d-inline" action="/seller/products/<%=product._id%>?_method=DELETE"
                                         method="POST">
                                         <button class="btn btn-danger mb-3 ">Delete</button>

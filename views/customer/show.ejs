@@ -7,15 +7,17 @@
                 <div class="container mb-4">
                     <div class="d-flex flex-column justify-content-center container">
                         <div id="carouselExampleFade" class="carousel slide carousel-fade mb-3">
-                            <div class="carousel-inner ">
+                            <div class="carousel-inner">
+                               <center>
                                 <div class="carousel-item active">
-                                    <img src=" <%= product.imageUrl[0] %>" class="img-fluid" alt="...">
+                                    <img src=" <%= product.imageUrl[0] %>" class="img-fluid" style="width: auto; height: 60%" alt="...">
                                 </div>
                                 <% for(let i=1; i<product.imageUrl.length; i++) {%>
                                     <div class="carousel-item">
                                         <img src="<%= product.imageUrl[i] %>" class="img-fluid" alt="...">
                                     </div>
                                     <% } %>
+                               </center>
                             </div>
                         </div>
                         <div class="d-flex justify-content-center container">
@@ -30,7 +32,7 @@
                                 </button>
                                 <% } %>
                                     <div class="mx-4">
-                                        <% for(let i=1; i<product.imageUrl.length; i++) {%>
+                                        <% for(let i=0; i<product.imageUrl.length; i++) {%>
                                             <img src="<%= product.imageUrl[i] %>" class="img-fluid img-thumbnail m-1"
                                                 width="100" height="100" alt="...">
                                             <% } %>
@@ -174,7 +176,8 @@
                                                                                             )
                                                                                     </small>
                                                                                     <% }%>
-                                                                                        <% if(replies.authorRole=='seller'){%>
+                                                                                        <% if(replies.authorRole=='seller'
+                                                                                            ){%>
                                                                                             <span>
                                                                                                 <img src="<%= replies.author.profile %>"
                                                                                                     style="border-radius: 100%; object-fit: cover; width: 40px; height: 40px"
@@ -247,6 +250,9 @@
                                 </li>
                                 <li class="list-group-item ">
                                     <%= product.description%>
+                                </li>
+                                <li class="list-group-item ">
+                                    <%= product.category %>
                                 </li>
                                 <li class="list-group-item ">
                                     <b>By</b> ~ <b><a href="/seller/<%= product.seller.id %>"
@@ -336,4 +342,3 @@
             </div>
         </div>
     </div>
-   

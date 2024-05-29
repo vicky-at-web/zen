@@ -1,0 +1,87 @@
+<% layout('../layout/templates/seller/boilerplate') -%>
+<div class="container col-6 offset-3">
+<!-- Brand -->
+<div class="form-group">
+    <label for="brand">Brand</label>
+    <input type="text" class="form-control" id="brand" name="brand" placeholder="Enter brand">
+</div>
+
+<!-- Model -->
+<div class="form-group">
+    <label for="model">Model</label>
+    <input type="text" class="form-control" id="model" name="model" placeholder="Enter model">
+</div>
+
+<!-- Sensor -->
+<h5>Sensor</h5>
+<div class="form-group">
+    <label for="sensorType">Sensor Type</label>
+    <input type="text" class="form-control" id="sensorType" name="sensor[type]" placeholder="Enter sensor type">
+</div>
+<div class="form-group">
+    <label for="sensorMegapixels">Sensor Megapixels</label>
+    <input type="number" class="form-control" id="sensorMegapixels" name="sensor[megapixels]" placeholder="Enter megapixels">
+</div>
+
+<!-- Lens -->
+<h5>Lens</h5>
+<div class="form-group">
+    <label for="lensMount">Lens Mount</label>
+    <input type="text" class="form-control" id="lensMount" name="lens[mount]" placeholder="Enter lens mount">
+</div>
+<div class="form-group">
+    <label for="lensFocalLength">Lens Focal Length</label>
+    <input type="text" class="form-control" id="lensFocalLength" name="lens[focalLength]" placeholder="Enter focal length">
+</div>
+<div class="form-group">
+    <label for="lensAperture">Lens Aperture</label>
+    <input type="text" class="form-control" id="lensAperture" name="lens[aperture]" placeholder="Enter aperture">
+</div>
+
+<!-- Shooting Modes -->
+<div class="form-group">
+    <label for="shootingModes">Shooting Modes</label>
+    <input type="text" class="form-control" id="shootingModes" name="shootingModes[]" placeholder="Enter shooting modes (comma-separated)">
+</div>
+
+<!-- Video -->
+<h5>Video</h5>
+<div class="form-group">
+    <label for="videoResolution">Video Resolution</label>
+    <input type="text" class="form-control" id="videoResolution" name="video[resolution]" placeholder="Enter video resolution">
+</div>
+<div class="form-group">
+    <label for="videoFPS">Frames Per Second (FPS)</label>
+    <input type="text" class="form-control" id="videoFPS" name="video[fps]" placeholder="Enter FPS">
+</div>
+
+<!-- Display -->
+<h5>Display</h5>
+<div class="form-group">
+    <label for="displayType">Display Type</label>
+    <input type="text" class="form-control" id="displayType" name="display[type]" placeholder="Enter display type">
+</div>
+<div class="form-group">
+    <label for="displaySize">Display Size</label>
+    <input type="number" class="form-control" id="displaySize" name="display[size]" placeholder="Enter display size">
+</div>
+
+<!-- Connectivity -->
+<h5>Connectivity</h5>
+<div class="form-group">
+    <label for="wifi">WiFi</label>
+    <input type="text" class="form-control" id="wifi" name="connectivity[wifi]" placeholder="Enter WiFi connectivity">
+</div>
+<div class="form-group">
+    <label for="bluetooth">Bluetooth</label>
+    <input type="text" class="form-control" id="bluetooth" name="connectivity[bluetooth]" placeholder="Enter Bluetooth connectivity">
+</div>
+
+<!-- Special Features -->
+<div class="form-group">
+    <label for="specialFeatures">Special Features</label>
+    <textarea class="form-control" id="specialFeatures" name="specialFeatures" rows="3" placeholder="Enter special features"></textarea>
+</div>
+
+<button type="submit" class="btn btn-primary">Submit</button>
+</div>

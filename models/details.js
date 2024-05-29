@@ -352,7 +352,7 @@ module.exports.videogamesDetailsSchema = {
     genre: [String],
     releaseDate: Date,
     multiplayer: Boolean,
-    ESRBrating: String, // Combined ESRB rating property without spaces
+    ESRBrating: String, 
     developer: String,
     publisher: String
 }

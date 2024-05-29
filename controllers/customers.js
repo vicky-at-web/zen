@@ -334,6 +334,7 @@ module.exports.updateProfile = catchAsync(async (req, res) => {
       { new: true }
     );
     req.session.user = updatedCustomer;
+    req.user = updatedCustomer;
     res.redirect('/customer/profile')
 })
 

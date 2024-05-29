@@ -1,0 +1,102 @@
+<% layout('../layout/templates/seller/boilerplate') -%>
+
+    <div class="container mt-5">
+        <h2>Mobile Details Form</h2>
+        <form>
+            <!-- Brand -->
+            <div class="form-group">
+                <label for="brand">Brand</label>
+                <input type="text" class="form-control" id="brand" name="brand" placeholder="Enter brand">
+            </div>
+
+            <!-- Model -->
+            <div class="form-group">
+                <label for="model">Model</label>
+                <input type="text" class="form-control" id="model" name="model" placeholder="Enter model">
+            </div>
+
+            <!-- Operating System -->
+            <div class="form-group">
+                <label for="operatingSystem">Operating System</label>
+                <input type="text" class="form-control" id="operatingSystem" name="operatingSystem" placeholder="Enter operating system">
+            </div>
+
+            <!-- Storage -->
+            <h5>Storage</h5>
+            <div class="form-group">
+                <label for="ram">RAM</label>
+                <input type="text" class="form-control" id="ram" name="storage[ram]" placeholder="Enter RAM">
+            </div>
+            <div class="form-group">
+                <label for="storage">Storage</label>
+                <input type="text" class="form-control" id="storage" name="storage[storage]" placeholder="Enter storage">
+            </div>
+
+            <!-- Processor -->
+            <h5>Processor</h5>
+            <div class="form-group">
+                <label for="processorBrand">Processor Brand</label>
+                <input type="text" class="form-control" id="processorBrand" name="processor[brand]" placeholder="Enter processor brand">
+            </div>
+            <div class="form-group">
+                <label for="processorModel">Processor Model</label>
+                <input type="text" class="form-control" id="processorModel" name="processor[model]" placeholder="Enter processor model">
+            </div>
+
+            <!-- Camera -->
+            <h5>Camera</h5>
+            <div class="form-group">
+                <label for="rearCamera">Rear Camera</label>
+                <input type="text" class="form-control" id="rearCamera" name="camera[rear]" placeholder="Enter rear camera specs">
+            </div>
+            <div class="form-group">
+                <label for="frontCamera">Front Camera</label>
+                <input type="text" class="form-control" id="frontCamera" name="camera[front]" placeholder="Enter front camera specs">
+            </div>
+
+            <!-- Battery -->
+            <div class="form-group">
+                <label for="battery">Battery</label>
+                <input type="text" class="form-control" id="battery" name="battery" placeholder="Enter battery specs">
+            </div>
+
+            <!-- Display -->
+            <h5>Display</h5>
+            <div class="form-group">
+                <label for="resolutionHeight">Resolution Height</label>
+                <input type="number" class="form-control" id="resolutionHeight" name="display[resolution][height]" placeholder="Enter resolution height">
+            </div>
+            <div class="form-group">
+                <label for="resolutionWidth">Resolution Width</label>
+                <input type="number" class="form-control" id="resolutionWidth" name="display[resolution][width]" placeholder="Enter resolution width">
+            </div>
+            <div class="form-group">
+                <label for="panelType">Panel Type</label>
+                <input type="text" class="form-control" id="panelType" name="display[panelType]" placeholder="Enter panel type">
+            </div>
+
+            <!-- Connectivity -->
+            <h5>Connectivity</h5>
+            <div class="form-group">
+                <label for="cellular">Cellular</label>
+                <input type="text" class="form-control" id="cellular" name="connectivity[cellular]" placeholder="Enter cellular connectivity">
+            </div>
+            <div class="form-group">
+                <label for="wifi">WiFi</label>
+                <input type="text" class="form-control" id="wifi" name="connectivity[wifi]" placeholder="Enter WiFi connectivity">
+            </div>
+            <div class="form-group">
+                <label for="bluetooth">Bluetooth</label>
+                <input type="text" class="form-control" id="bluetooth" name="connectivity[bluetooth]" placeholder="Enter Bluetooth connectivity">
+            </div>
+
+            <!-- Special Features -->
+            <div class="form-group">
+                <label for="specialFeatures">Special Features</label>
+                <textarea class="form-control" id="specialFeatures" name="specialFeatures" rows="3" placeholder="Enter special features"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+

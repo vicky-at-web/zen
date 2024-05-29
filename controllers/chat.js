@@ -14,13 +14,17 @@ module.exports.renderCustomerChat = catchAsync (async (req, res) => {
     const customerId = req.user._id
     const seller = await Seller.findById(sellerId);
     const customer = await Customer.findById(req.user._id)
-    let chat = await Chat.findOne({ seller: seller, customer: customerId })
+    let chat = await Chat.findOne({ seller: sellerId, customer: customerId })
     if (!chat) {
+        console.log('chat is not found so i am creating')
         chat = new Chat({
             seller: sellerId,
             customer: customerId,
             messages: []
         });
+        chat.save();
+    }else{
+        console.log('chat is available')
     }
     res.render('../views/customer/chat', { chat, seller, customerId, customer })
 })

@@ -1,0 +1,69 @@
+<% layout('../layout/templates/seller/boilerplate') -%>
+<div class="container col-6 offset-3">
+    <!-- Type -->
+<div class="form-group">
+    <label for="type">Type</label>
+    <input type="text" class="form-control" id="type" name="type" placeholder="Enter fitness equipment type">
+</div>
+
+<!-- Muscle Group Targeted -->
+<div class="form-group">
+    <label for="muscleGroupTargeted">Muscle Group Targeted</label>
+    <input type="text" class="form-control" id="muscleGroupTargeted" name="muscleGroupTargeted" placeholder="Enter muscle group targeted (comma-separated)">
+</div>
+
+<!-- Weight Limit -->
+<div class="form-group">
+    <label for="weightLimit">Weight Limit</label>
+    <input type="number" class="form-control" id="weightLimit" name="weightLimit" placeholder="Enter weight limit">
+</div>
+
+<!-- Resistance Levels -->
+<div class="form-group">
+    <label for="resistanceLevels">Resistance Levels</label>
+    <input type="number" class="form-control" id="resistanceLevels" name="resistanceLevels" placeholder="Enter resistance levels">
+</div>
+
+<!-- Dimensions -->
+<h5>Dimensions</h5>
+<div class="form-group">
+    <label for="dimensionsType">Dimensions Type</label>
+    <input type="text" class="form-control" id="dimensionsType" name="dimensions[type]" placeholder="Enter dimensions type">
+</div>
+<div class="form-group">
+    <label for="dimensionsWidth">Width</label>
+    <input type="number" class="form-control" id="dimensionsWidth" name="dimensions[or][width]" placeholder="Enter width (if applicable)">
+</div>
+<div class="form-group">
+    <label for="dimensionsHeight">Height</label>
+    <input type="number" class="form-control" id="dimensionsHeight" name="dimensions[or][height]" placeholder="Enter height (if applicable)">
+</div>
+<div class="form-group">
+    <label for="dimensionsLength">Length</label>
+    <input type="number" class="form-control" id="dimensionsLength" name="dimensions[or][length]" placeholder="Enter length (if applicable)">
+</div>
+
+<!-- Foldable -->
+<div class="form-group">
+    <label for="foldable">Foldable</label>
+    <select class="form-control" id="foldable" name="foldable">
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+    </select>
+</div>
+
+<!-- Features -->
+<div class="form-group">
+    <label for="features">Features</label>
+    <input type="text" class="form-control" id="features" name="features" placeholder="Enter features (comma-separated)">
+</div>
+
+<!-- Brand -->
+<div class="form-group">
+    <label for="brand">Brand</label>
+    <input type="text" class="form-control" id="brand" name="brand" placeholder="Enter brand">
+</div>
+
+<button type="submit" class="btn btn-primary">Submit</button>
+
+</div>

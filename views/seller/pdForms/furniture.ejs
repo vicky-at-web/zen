@@ -1,0 +1,60 @@
+<% layout('../layout/templates/seller/boilerplate') -%>
+<div class="container col-6 offset-3">
+    <!-- Type -->
+<div class="form-group">
+    <label for="type">Type</label>
+    <input type="text" class="form-control" id="type" name="type" placeholder="Enter furniture type">
+</div>
+
+<!-- Material -->
+<div class="form-group">
+    <label for="material">Material</label>
+    <input type="text" class="form-control" id="material" name="material" placeholder="Enter material">
+</div>
+
+<!-- Color -->
+<div class="form-group">
+    <label for="color">Color</label>
+    <input type="text" class="form-control" id="color" name="color" placeholder="Enter color">
+</div>
+
+<!-- Dimensions -->
+<h5>Dimensions</h5>
+<div class="form-group">
+    <label for="dimensionsType">Dimensions Type</label>
+    <input type="text" class="form-control" id="dimensionsType" name="dimensions[type]" placeholder="Enter dimensions type">
+</div>
+<div class="form-group">
+    <label for="dimensionsWidth">Width</label>
+    <input type="number" class="form-control" id="dimensionsWidth" name="dimensions[or][width]" placeholder="Enter width (if applicable)">
+</div>
+<div class="form-group">
+    <label for="dimensionsHeight">Height</label>
+    <input type="number" class="form-control" id="dimensionsHeight" name="dimensions[or][height]" placeholder="Enter height (if applicable)">
+</div>
+<div class="form-group">
+    <label for="dimensionsLength">Length</label>
+    <input type="number" class="form-control" id="dimensionsLength" name="dimensions[or][length]" placeholder="Enter length (if applicable)">
+</div>
+
+<!-- Style -->
+<div class="form-group">
+    <label for="style">Style</label>
+    <input type="text" class="form-control" id="style" name="style" placeholder="Enter style">
+</div>
+
+<!-- Features -->
+<div class="form-group">
+    <label for="features">Features</label>
+    <input type="text" class="form-control" id="features" name="features" placeholder="Enter features (comma-separated)">
+</div>
+
+<!-- Brand -->
+<div class="form-group">
+    <label for="brand">Brand</label>
+    <input type="text" class="form-control" id="brand" name="brand" placeholder="Enter brand">
+</div>
+
+<button type="submit" class="btn btn-primary">Submit</button>
+
+</div>

@@ -148,7 +148,7 @@ app.all('*', (req, res, next) => {
 app.use((err, req, res, next) => {
     const { statusCode = 500 } = err
     if (!err.message) err.message = 'Something Went Wrong';
-    res.status(statusCode).render('error', { err })
+    res.status(statusCode).render('../error', { err })
 })
 
 //PORT CONFIGURATION

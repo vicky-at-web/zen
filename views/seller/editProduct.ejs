@@ -1,17 +1,17 @@
 <% layout('../layout/templates/seller/boilerplate') -%>
 
     <div class="container">
-        <h1 class="text-center ">Add Product</h1>
+        <h1 class="text-center ">Edit Product</h1>
         <div class="row mt-3">
-            <div class="col-6 offset-3 mb-3">
-                <div class="card mb-3">
+            <div class="col-12">
+                <div class="card">
                     <div class="card-body p-5">
-                        <form action="/seller/product/new/basic" method="post" class="mb-3 p-0 formvalid"
+                        <form action="/seller/products/<%= product.id %>/edit?_method=PUT" method="post" class="mb-3 p-0 formvalid"
                             novalidate>
                             <div>
                                 <label class="form-label" for="title">Product Name: </label>
                                 <input class="form-control" required autocomplete="off" type="text" id="title"
-                                    name="product[name]">
+                                    name="product[name]" value="<%= product.name %>">
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
@@ -23,11 +23,11 @@
                             <div>
                                 <label class="form-label" for="image">Image Url:</label>
                                 <input class="form-control mb-1" required autocomplete="off" type="text" id="image"
-                                    name="product[imageUrl]">
+                                    name="product[imageUrl]" value="<%= product.imageUrl[0] %>">
                                 <input class="form-control mb-1" required autocomplete="off" type="text" id="image2"
-                                    name="product[imageUrl]">
+                                    name="product[imageUrl]" value="<%= product.imageUrl[1] %>">
                                 <input class="form-control" required autocomplete="off" type="text" id="image3"
-                                    name="product[imageUrl]">
+                                    name="product[imageUrl]" value="<%= product.imageUrl[2] %>">
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
@@ -42,7 +42,7 @@
 
                                     <span class="input-group-text">$</span>
                                     <input type="text" name="product[price]" autocomplete="off" required id="price"
-                                        class="form-control" placeholder='0.00'>
+                                        class="form-control" placeholder='0.00' value="<%= product.price %>">
                                     <div class="valid-feedback">
                                         Looks good!
                                     </div>
@@ -57,13 +57,13 @@
                                 <label class="form-label" for="category"
                                     placeholder="Open this to select category">Category:</label>
                                 <select class="form-select" id='category' name="product[category]"
-                                    aria-label="Default select example">
+                                    aria-label="Default select example" value="<%= product.category %>">
                                     <option value="Computer">Computers</option>
                                     <option value="Mobile">Mobiles</option>
                                     <option value="Camera">Cameras</option>
                                     <option value="Men">Men's</option>
                                     <option value="Womens">Women's</option>
-                                    <option value="Kids">Kid's</option>
+                                    <option value="Kids">Kids'</option>
                                     <option value="Accessories">Accessories</option>
                                     <option value="Decor">Decor</option>
                                     <option value="Kitchen">Kitchen</option>
@@ -86,7 +86,9 @@
                                     <option value="CarAccessories">Car Accessories</option>
                                     <option value="Maintenance">Maintenance</option>
                                     <option value="MotorcycleGear">Motorcycle Gear</option>
-                                    <option value="ornament">Ornaments</option>
+                                    <option value="Rings">Rings</option>
+                                    <option value="Watches">Watches</option>
+                                    <option value="Necklaces">Necklaces</option>
                                     <option value="Stationery">Stationery</option>
                                     <option value="Furniture">Furniture</option>
                                     <option value="Electronics">Electronics</option>
@@ -101,8 +103,9 @@
                             </div>
                             <br>
                             <div>
-                                <label class="form-label" for="brand">Brand :</label>
-                                <input type="text" name="product[brand]" required id="brand" class="form-control">
+                                <label class="form-label" for="des" >Description:</label>
+                                <textarea name="product[description]" autocomplete="off" required id="des"
+                                    cols="20" rows="3" class="form-control"><%= product.description %></textarea>
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
@@ -111,35 +114,10 @@
                                 </div>
                             </div>
                             <br>
-                            <div>
-                                <label class="form-label" for="headers">Headers :</label>
-                                <textarea name="product[headers]" value="" autocomplete="off" required id="headers"
-                                    cols="20" rows="3" class="form-control"></textarea>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
-                                <div class="invalid-feedback">
-                                    Not important, but a few lines will look better!
-                                </div>
-                            </div>
-                            <br>
-                            <div>
-                                <label class="form-label" for="des">Description:</label>
-                                <textarea name="product[description]" value="" autocomplete="off" required id="des"
-                                    cols="20" rows="3" class="form-control"></textarea>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
-                                <div class="invalid-feedback">
-                                    Not important, but a few lines will look better!
-                                </div>
-                            </div>
-                            <br>
-                            <button class="btn" style="background-color: #bdb5d5;">Next <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
-                              </svg></button>
+                            <button class="btn btn-info" type="submit">Update Product</button>
                             <br><br>
                             <a href="/products" class="">Back To All Products</a>
+                        </form>
                     </div>
                 </div>
             </div>
