@@ -8,6 +8,9 @@ const questionSchema = new Schema({
         type: String,
         required: true
     },
+    tags:[{
+        type: String
+    }],
     author: {
         type: Schema.Types.ObjectId,
         ref: 'Customer'
@@ -20,6 +23,9 @@ const questionSchema = new Schema({
             type: String,
             required: true
         },
+        tags:[{
+            type: String
+        }],
         author: {
            username: String,
            profile: String,

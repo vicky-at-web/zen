@@ -1,0 +1,80 @@
+<% layout('../layout/templates/customer/boilerplate') -%>
+    <div class="container">
+        <div class="row">
+            <div class="col-6 d-flex justify-content-center align-items-center">
+                <div class="card" style="width: 18rem;">
+                    <img src="<%= product.imageUrl[0] %>" class="card-img-top" alt="...">
+
+                    <div class="card-body p-0 mb-0">
+                        <ul class="list-group">
+                            <li class="list-group-item text-muted py-3">
+                                <center>
+                                    <h6 class="card-title">
+                                        <b>A <%= product.brand %> Product</b>
+                                    </h6>
+                                </center>
+                            </li>
+                            <li class="list-group-item"
+                                style="display: flex; align-items: center; justify-content: center;  border: 0px;">
+                                <center>
+                                    <h5 class="card-title  ">
+                                        <%= product.name %>
+
+                                    </h5>
+                                </center>
+                            </li>
+                    </div>
+                    <div class="card-footer p-0">
+                        <ul class="list-group list-group-flush d-flex ">
+                            <li class="list-group-item d-flex justify-content-between ">
+                                <div>
+                                    <b>Price:</b>
+                                </div>
+                                <div>
+                                    &#8377; <%= product.price %>
+                                </div>
+                            </li>
+
+                            <li class="list-group-item d-flex flex-column  ">
+                                <div class="mb-1"><b>Description:</b></div>
+                                <p class="card-text">
+                                    <%= product.headers %>
+                                </p>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-center "
+                                style=" background-color: #F8F6F4; ">
+                                <a href="/customer/products/<%= product.id %>"
+                                    class="btn me-1 p-2 w-100 mt-auto rounded-2"
+                                    style="background-color: #c6b4cc; color: #4b4a4b">View
+                                    Details!</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-6 d-flex justify-content-center">
+                <div class="card 100vh">
+                    <div class="card-body pe-5">
+                        <h4>
+                            Confirm billing address:
+                        </h4>
+                        <div class="card-body px-5" style="line-height: 30px;">
+                            <b class="me-3">Street :</b>
+                            <%= customer.address.street %> <br>
+                                <b class="me-3">City :</b>
+                                <%= customer.address.city %> <br>
+                                    <b class="me-3">State :</b>
+                                    <%= customer.address.state %> <br>
+                                        <b class="me-3">Country :</b>
+                                        <%= customer.address.country %> <br>
+                                            <b class="me-3">Pincode :</b>
+                                            <%= customer.address.pincode %> <br>
+                        </div>
+                        <b>Name</b>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>

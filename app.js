@@ -69,8 +69,8 @@ passport.deserializeUser(function (user, done) {
 
 ///ADDING GLOBAL VARIABLES
 app.use((req, res, next) => {
-    console.log("SESSION  :", req.session);
-    res.locals.currentUser = req.user;
+    // console.log("SESSION  :", req.session);
+    res.locals.currentUser = req.session.user || req.user;
     res.locals.success = req.flash('success')
     res.locals.error = req.flash('error')
     res.locals.info = req.flash('info')

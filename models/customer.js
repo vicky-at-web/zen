@@ -13,18 +13,28 @@ const customerSchema = new Schema({
         type: String,
         default: 'customer'
     },
-    cart: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Product'
-    }],
-    notifications: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Notification'
-    }],
+    cart: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Product'
+        }
+    ],
+    notifications: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Notification'
+        }
+    ],
     favourites: [
         {
             type: Schema.Types.ObjectId,
             ref: 'Product'
+        }
+    ],
+    orders: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Order'
         }
     ],
     profilePic: {
@@ -59,7 +69,7 @@ const customerSchema = new Schema({
     },
     dateofjoin: {
         type: String
-    }
+    },
 })
 
 

@@ -50,7 +50,7 @@ router.route('/products/:id/queries')
     .post(customers.postQuery)
 
 router.route('/products/:id/queries/:queryId')
-.post(customers.postAnswer)
+    .post(customers.postAnswer)
     .delete(customers.deleteQuery)
 
 ////REVIEW ROUTES 
@@ -62,6 +62,21 @@ router.delete('/products/:id/reviews/:reviewId', isReviewAuthor, customers.delet
 ///NOTIFICATION ROUTES
 
 router.get('/notifications', isLoggedIn, customers.renderNotificationPage)
+
+//BUYING ROUTES
+
+router.route('/:id/buynow')
+    .get(customers.renderConfirmOrderPage)
+    .post(customers.placeOrder)
+
+router.get('/orders', customers.renderYourOrders)
+
+router.get('/order/:id/status', customers.renderOrderStatus)
+
+
+/// SEARCHING OVER QUERIES AND REVIEWS
+
+router.get('/product/:id/searchqueries&reviews', customers.searchQueriesAndReviews);
 
 
 module.exports = router

@@ -8,7 +8,50 @@ const Customer = require('../models/customer')
 const ITEMS_PER_PAGE = 20;
 const Notification = require('../models/notification');
 const Seller = require('../models/seller');
+const Order = require('../models/order')
 const { notifySeller, notifyCustomer } = require('../socket');
+const catchasync = require('../utils/catchasync');
+const populateOptions = {
+    'computer': ['processor', 'storage', 'graphics', 'display', 'connectivities'],
+    'mobile': ['storage', 'processor', 'camera', 'display', 'connectivity'],
+    'camera': ['sensor', 'lens', 'video', 'display', 'connectivity'],
+    'men': [],
+    'women': [],
+    'kids': [],
+    'accessories': [],
+    'decor': [],
+    'kitchen': [],
+    'bedding': [],
+    'skincare': [],
+    'haircare': [],
+    'perfumes': [],
+    'books': [],
+    'movies': [],
+    'music': [],
+    'equipment': [],
+    'activewear': [],
+    'camping': [],
+    'kidstoys': [],
+    'boardgames': [],
+    'videogames': [],
+    'medicines': [],
+    'fitnessequipment': [],
+    'monitoringdevices': [],
+    'caraccessories': [],
+    'maintenance': [],
+    'motorcyclegear': [],
+    'ornaments': [],
+    'stationary': [],
+    'furniture': [],
+    'electronics': [],
+    'snacks': [],
+    'groceries': [],
+    'beverages': [],
+    'petfood': [],
+    'careproducts': [],
+    'handmade': []
+};
+
 
 module.exports.renderHome = (req, res) => {
     res.render('../views/customer/home', { categories, image })
@@ -84,7 +127,15 @@ module.exports.showProduct = catchAsync(async (req, res) => {
             ],
         })
 
-    // console.log({ answers:product.queries[0].answers[0].author})
+    for (const category of Object.keys(populateOptions)) {
+        if (product.details.category === category) {
+            for (const field of populateOptions[category]) {
+                await product.populate(`details.${field}`).execPopulate();
+            }
+            break; // No need to continue once populated
+        }
+    }
+
     let sum = 0;
     for (let review of product.reviews) {
         sum += parseInt(review.rating);
@@ -93,7 +144,9 @@ module.exports.showProduct = catchAsync(async (req, res) => {
     const customerId = req.user._id;
     const customer = await Customer.findById(customerId);
     const favoriteProductIds = customer.favourites;
-    res.render('../views/customer/show', { product, favoriteProductIds })
+    const details = product.details
+    console.log(product)
+    res.render('../views/customer/show', { product, favoriteProductIds, details })
 })
 
 module.exports.renderProducts = catchAsync(async (req, res) => {
@@ -205,6 +258,10 @@ module.exports.postQuery = catchAsync(async (req, res) => {
     const product = await Product.findById(id).populate('seller');
     const currentDate = new Date();
     const question = new Question(req.body.query);
+    const tags = req.body.query.tag.split(',');
+    for(let tag of tags){
+        question.tags.push(tag.trim())
+    }
     question.author = req.user._id;
     question.date = currentDate;
     await question.save();
@@ -318,23 +375,22 @@ module.exports.renderProfile = catchAsync(async (req, res) => {
 })
 
 module.exports.updateProfile = catchAsync(async (req, res) => {
-    const { customer , address} = req.body
-    const updatedCustomer = await Customer.findByIdAndUpdate(req.user._id,     {
+    const { customer, address } = req.body
+    const updatedCustomer = await Customer.findByIdAndUpdate(req.user._id, {
         username: customer.username,
         profilePic: customer.profilePic,
         mobile: customer.mobile,
         address: {
-          street: address.street,
-          city: address.city,
-          state: address.state,
-          country: address.country,
-          pincode: address.pincode
+            street: address.street,
+            city: address.city,
+            state: address.state,
+            country: address.country,
+            pincode: address.pincode
         }
-      },
-      { new: true }
+    },
+        { new: true }
     );
     req.session.user = updatedCustomer;
-    req.user = updatedCustomer;
     res.redirect('/customer/profile')
 })
 
@@ -342,4 +398,107 @@ module.exports.updateProfile = catchAsync(async (req, res) => {
 module.exports.renderNotificationPage = catchAsync(async (req, res) => {
     const customer = await Customer.findById(req.user._id).populate('notifications');
     res.render('../views/customer/notifications.ejs', { customer })
+})
+
+
+//// BUYING ROUTINGS
+
+module.exports.renderConfirmOrderPage = catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const customer = await Customer.findById(req.user._id).populate('address');
+    const product = await Product.findById(id);
+    res.render("../views/customer/placeOrder.ejs", { customer, product })
+})
+
+module.exports.placeOrder = catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const customer = await Customer.findById(req.user._id);
+    const product = await Product.findById(id);
+    const order = new Order({ product: product._id, orderDate: Date.now(), orderFrom: product.seller._id, orderTo: req.user._id, billingAddress: customer.address })
+    await order.save();
+    customer.orders.push(order)
+    await customer.save();
+    req.flash("success", "Yaaay, your order has been confirmed will delivered within 3 days!");
+    res.redirect(`/customer/products/${id}`);
+})
+
+
+module.exports.renderYourOrders = catchAsync(async (req, res) => {
+    const customer = await Customer.findById(req.user._id).populate('orders').populate({
+        path: 'orders',
+        populate: {
+            path: 'product',
+            model: 'Product',
+        },
+    })
+    const orders = customer.orders;
+    console.log(orders)
+    res.render('../views/customer/orders.ejs', { customer })
+})
+
+module.exports.renderOrderStatus = catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const order = await Order.findById(id).populate('product');
+    res.render('../views/customer/orderstatus', { order })
+})
+
+
+/// SEARCH QUERIES AND REVIEWS
+
+module.exports.searchQueriesAndReviews = catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const { text } = req.query;
+    const product = await Product.findById(id).populate('reviews').populate('queries').populate({
+        path: 'reviews',
+        populate: {
+            path: 'author',
+            model: 'Customer',
+        },
+    })
+        .populate({
+            path: 'queries',
+            populate: [
+                {
+                    path: 'author',
+                    model: 'Customer'
+                }
+            ],
+        }).populate({
+            path: 'queries',
+            populate: [
+                {
+                    path: 'author',
+                    model: 'Customer'
+                }
+            ],
+        }).populate({
+            path: 'queries.answer',
+            populate: [{
+                path: 'author'
+            }]
+        });
+    let resReviews = []; resQueries = []; resAnswers = []
+    for (let review of product.reviews) {
+        if (review.body.includes(text)) {
+            resReviews.push(review)
+        }
+        console.log(review.body)
+        console.log(text)
+    };
+    for (let query of product.queries) {
+        if (query.question.includes(text)) {
+            resQueries.push(query)
+        }
+        for (let answer of query.answers) {
+            if (answer.answer.includes(text)) {
+                resAnswers.push({ answer, question: query.question })
+            }
+        }
+    };
+    let results = { resReviews, resQueries, resAnswers }
+    if(resReviews.length <= 0 && resQueries.length <= 0 && resAnswers <= 0){
+        res.render('../views/customer/nothingTemplate')
+    }else{
+    res.render('../views/customer/searchResults', { product, results, text })
+    }
 })

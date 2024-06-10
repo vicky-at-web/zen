@@ -1,0 +1,136 @@
+<% layout('../layout/templates/customer/boilerplate') -%>
+
+
+
+<div class="container">
+            <h3>Searched results for the word: '<%= text %>'</h3>
+
+                        <% if(results.resReviews.length> 0) {%>
+                            <h4> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right me-2" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
+                              </svg>From reviews:</h4>
+                            <% for(let review of results.resReviews) {%>
+                                <div class="card mb-3">
+                                    <div class="card-body  position-relative">
+                                        <div class="card-subtitle text-muted me-2">
+                                            <h4>
+                                                <span>
+                                                    <img src="<%= review.author.profilePic %>"
+                                                        style="border-radius: 100%; object-fit: cover; width: 50px; height: 50px"
+                                                        class="img-thumbnail" alt="">
+                                                </span>
+                                                <%= review.author.username %>
+                                            </h4>
+                                        </div>
+                                        <h6 class="ms-2"><b>Rating: &nbsp;</b>
+                                            <% for(let i=1; i <=review.rating; i++) {%>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    fill="currentColor" class="bi bi-star-fill mb-1"
+                                                    viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                                </svg>
+                                                <% } %>
+                                        </h6>
+                                        <h6 class="ms-2"><b>Review: </b>
+                                            <span style="background-color: #fff491; border-radius: 5px;">
+                                                <%= review.body %>
+                                            </span>
+                                        </h6>
+                                        <h6 class="ms-2 mb-1  text-muted">
+                                            <i>Posted on~ &nbsp;&nbsp; <small>
+                                                    <%= review.date.getDay()%>/<%= review.date.getMonth() + 1 %>/<%=
+                                                                review.date.getFullYear() %></i>
+                                            </small>
+                                        </h6>
+
+                                    </div>
+                                </div>
+                                <% } %>
+                                    <% } %>
+                                        <% if(results.resQueries.length> 0 ) {%>
+                                            <h4> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right me-2" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
+                                              </svg>       From Questions:</h4>
+                                            <% for(let query of results.resQueries) {%>
+                                                <div class="card mb-3">
+                                                    <div class="card-body  position-relative">
+                                                        <div class="card-subtitle text-muted me-2">
+                                                            <h4>
+                                                                <span>
+                                                                    <img src="<%= query.author.profilePic %>"
+                                                                        style="border-radius: 100%; object-fit: cover; width: 50px; height: 50px"
+                                                                        class="img-thumbnail" alt="">
+                                                                </span>
+                                                                <%= query.author.username %>
+                                                            </h4>
+                                                        </div>
+                                                        <h6 class="ms-2"><b>Question: </b>
+                                                            <span
+                                                                style="background-color: #fff491; border-radius: 5px;">
+                                                                <%= query.question %>
+                                                            </span>
+                                                        </h6>
+                                                        <h6 class="ms-2 mb-1  text-muted">
+                                                            <i>Posted on~ &nbsp;&nbsp; <small>
+                                                                    <%= query.date.getDay()%>/<%= query.date.getMonth()
+                                                                            + 1 %>/
+                                                                            <%= query.date.getFullYear() %></i>
+                                                            </small>
+                                                        </h6>
+
+                                                    </div>
+                                                </div>
+                                                <% } %>
+                                                    <% } %>
+                                                        <% if(results.resAnswers.length> 0 ) {%>
+                                                            <h4> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right me-2" viewBox="0 0 16 16">
+                                                                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
+                                                              </svg> From Answers:</h4>
+                                                            <% for(let answer of results.resAnswers) {%>
+                                                                <div class="card mb-3">
+                                                                    <div class="card-body  position-relative">
+                                                                        <div class="card-subtitle text-muted me-2">
+                                                                            <h4>
+                                                                                <span>
+                                                                                    <img src="<%= answer.answer.author.profile %>"
+                                                                                        style="border-radius: 100%; object-fit: cover; width: 50px; height: 50px"
+                                                                                        class="img-thumbnail" alt="">
+                                                                                </span>
+                                                                                <%= answer.answer.author.username %> ~
+                                                                                    <small class="text-muted fs-5">
+                                                                                        <%= answer.answer.authorRole %>
+                                                                                    </small>
+                                                                            </h4>
+                                                                        </div>
+                                                                        <h6 class="ms-2"><b>Question: </b>
+                                                                            <span>
+                                                                                <%= answer.question %>
+                                                                            </span>
+                                                                        </h6>
+                                                                        <h6 class="ms-2"><b>Answer: </b>
+                                                                            <span
+                                                                                style="background-color: #fff491; border-radius: 5px;">
+                                                                                <%= answer.answer.answer %>
+                                                                            </span>
+                                                                        </h6>
+                                                                        <h6 class="ms-2 mb-1  text-muted">
+                                                                            <i>Posted on~ &nbsp;&nbsp; <small>
+                                                                                    <%= answer.answer.date.getDay()%>/
+                                                                                        <%= answer.answer.date.getMonth()
+                                                                                            + 1 %>
+                                                                                            /<%= answer.answer.date.getFullYear()
+                                                                                                %></i>
+                                                                            </small>
+                                                                        </h6>
+
+                                                                    </div>
+                                                                </div>
+                                                                <% } %>
+                                                                    <% } %>
+                                                                        <% if(results.resReviews.length <=0 && results.resAnswers.length <=0&&results.resQueries.length <=0 ) {%>
+                                                                            <h3>Nothing matches for the text: <%= text
+                                                                                    %>
+                                                                            </h3>
+                                                                            <% } %>
+</div>

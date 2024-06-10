@@ -60,8 +60,8 @@ const productSchema = new Schema({
 
 productSchema.pre('save', function (next) {
         this.details = this.details || {};
-        const objName = `${this.category.toLowerCase()}Details`;
-        this.details = details[`${objName}Schema`];
+        const objName = `${this.category.replace(/\s+/g, '').toLowerCase()}Details`;
+        this.details = details[`${objName.replace(/\\s+/g, '')}Schema`];
     next();
 });
 
