@@ -152,27 +152,37 @@
                             </div>
                             <div class="modal-body">
 
-                                        
-                                        <form action='/customer/products/<%= product.id %>/queries' method="post"
-                                            id="queryForm" class="p-1">
-                                            <label for="query" class="form-label">Query:</label>
-                                            <input type="text" class="form-control p-2 mb-1 " id="query"
-                                                name="query[question]">
-                                                <label for="querytags" class="form-label">Add Tags: &nbsp; <span class="fs-6">(use commas to separate tags  eg., [nice, cool, good])</span></label>
 
-                                            <input type="text" class="form-control p-2 mb-1 " id="querytags"
-                                                name="query[tag]">
-                                            <button class="btn btn-success mt-1"
-                                                id="queryButton">Post</button>
-                                        </form>
-                                      
+                                <form action='/customer/products/<%= product.id %>/queries' method="post" id="queryForm"
+                                    class="p-1">
+                                    <div class="mb-3">
+                                        <label for="query" class="form-label">Query:</label>
+                                        <input type="text" class="form-control p-2 mb-1 " id="query"
+                                            name="query[question]">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="querytags" class="form-label">Add Tags: &nbsp; <span
+                                                class="fs-6">(use commas to separate tags eg., [nice, cool,
+                                                good])</span></label>
+
+                                        <input type="text" class="form-control p-2 mb-1 " id="querytags"
+                                            name="query[tag]">
+                                    </div>
+                                    <button class="btn btn-success mt-1" id="queryButton">Post</button>
+                                </form>
+
                             </div>
                             <div class="modal-footer mt-3">
-                                <span class="fs-6" style="color: #4e4e4e;">
-                                    Ask questions to get detailed info, personalized advice, and make confident, informed purchases, even get <b> Zen</b> points <br>
-                                <b>**Usages of Tags</b><br>
-                                Tags helps organize questions and answers, making it easier to find detailed info, get personalized advice, and make confident purchases. 
-                                   </span>
+                                <span class="fs-6">
+                                    <b>Note: &nbsp;</b>    
+                                   Ask questions to get detailed info, personalized advice, and make confident,
+                                    informed purchases, even get <b> Zen</b> points </span>
+                            </div>
+                            <div class="modal-footer">
+                                <span><b>Usages of Tags:</b><br>
+                                Tags helps organize questions and answers, making it easier to find detailed info,
+                                get personalized advice, and make confident purchases.
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -241,35 +251,34 @@
                                                                 <div class="d-flex flex-column">
                                                                     <div class="d-flex">
                                                                         <h5 class="m-0">
-                                                                            <% if(replies.authorRole=='customer' ) {%>
+                                                                            <% if(replies.author.customer) {%>
                                                                                 <span>
-                                                                                    <img src="<%= replies.author.profile %>"
+                                                                                    <img src="<%= replies.author.customer.profilePic %>"
                                                                                         style="border-radius: 100%; object-fit: cover; width: 40px; height: 40px"
                                                                                         class="img-thumbnail mx-1 mt-1"
                                                                                         alt="">
                                                                                 </span>
-                                                                                <%= replies.author.username %> <small>(
-                                                                                        <%= replies.authorRole %>
-                                                                                            )
+                                                                                <%= replies.author.customer.username %> <small>
+                                                                                    (<%= replies.author.customer.role %>)
                                                                                     </small>
                                                                                     <% }%>
-                                                                                        <% if(replies.authorRole=='seller'){ %>
+                                                                                        <% if(replies.author.seller){ %>
                                                                                             <span>
-                                                                                                <img src="<%= replies.author.profile %>"
+                                                                                                <img src="<%= replies.author.seller.imageUrl %>"
                                                                                                     style="border-radius: 100%; object-fit: cover; width: 40px; height: 40px"
                                                                                                     class="img-thumbnail mx-1 mt-1"
                                                                                                     alt="">
                                                                                             </span>
-                                                                                            <%=replies.author.username%>
+                                                                                            <%=replies.author.seller.username%>
                                                                                                 <small>(<%=
-                                                                                                        replies.authorRole%>
-                                                                                                        )</small>
+                                                                                                        replies.author.seller.role%>)</small>
                                                                                                 <% } %>
                                                                         </h5>
                                                                         <div class="mt-2 ms-2">
                                                                             <i>~ <small>
                                                                                     <%= replies.date.getDate() %>/
-                                                                                        <%=replies.date.getMonth() + 11 %>/
+                                                                                        <%=replies.date.getMonth() + 1
+                                                                                            %>/
                                                                                             <%=replies.date.getFullYear()%>
                                                                                 </small></i>
                                                                         </div>
@@ -375,10 +384,28 @@
                                                     <div class="invalid-feedback">
                                                         Please give a title!
                                                     </div>
-                                                    <button class="btn btn-success mt-3">Submit</button>
                                                 </div>
+                                                <!-- <div class="mb-3">
+                                                    <label class="form-label" for="body">Tags:&nbsp; <span
+                                                            class="fs-6">(use commas to separate tags eg., [nice, cool,
+                                                            good])</label>
+                                                    <input class="form-control" name="tag" required>
+                                                    <div class="valid-feedback">
+                                                        Looks good!
+                                                    </div>
+                                                    <div class="invalid-feedback">
+                                                        Please give a title!
+                                                    </div>
+                                                </div> -->
+                                                <button class="btn btn-success mt-3">Submit</button>
                                             </form>
                                         </div>
+                                    </div>
+                                    <div class="modal-footer">
+<div class="container">
+  <b>Note: &nbsp;</b>  Product reviews aren't just comments; they're the voices of fellow explorers in the realm of consumerism. They illuminate the path, helping me navigate through the maze of options to find the treasure of satisfaction at the end of my shopping journey.
+
+</div>
                                     </div>
                                 </div>
                             </div>

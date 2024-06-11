@@ -63,7 +63,14 @@ module.exports.postAnswer = catchAsync(async (req, res) => {
     const question = await Question.findById(queryId);
     const seller = await Seller.findById(req.user._id);
     const currentDate = new Date;
-    question.answers.push({ answer: req.body.answer, author: { username: seller.username, profile: seller.imageUrl }, date: currentDate.getTime(), authorRole: seller.role });
+    const answer = {
+        answer: req.body.answer,
+        author:{
+seller:  req.user._id
+        },
+        date: currentDate.getTime()
+    }
+    question.answers.push(answer);
     await question.save();
     await product.save();
     const notification = new Notification({

@@ -78,5 +78,7 @@ router.get('/order/:id/status', customers.renderOrderStatus)
 
 router.get('/product/:id/searchqueries&reviews', customers.searchQueriesAndReviews);
 
+router.get('/zenpoints', customers.renderZenPointsPage)
+
 
 module.exports = router

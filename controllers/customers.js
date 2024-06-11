@@ -2,7 +2,7 @@ const catchAsync = require('../utils/catchasync');
 const Product = require('../models/product');
 const Review = require('../models/review');
 const Question = require('../models/question')
-const categories = ['Computers', 'Mobiles', 'Cameras', 'Men"s', 'Women"s', 'Kids', 'Accessories', 'Decor', 'Kitchen', 'Bedding', 'Skincare', 'Haircare', 'Perfumes', 'Books', 'Movies', 'Music', 'Equipment', 'Activewear', 'Camping', 'Kids Toys', 'Board Games', 'Video Games', 'Vitamins', 'Fitness Equipment', 'Monitoring Devices', 'Car Accessories', 'Maintenance', 'Motorcycle Gear', 'Rings', 'Watches', 'Necklaces', 'Stationery', 'Furniture', 'Electronics', 'Groceries', ' Snacks', 'Beverages', 'Pet Food', 'Accessories', 'Care products', 'Handmade', 'Customized']
+const categories = ['Computers', 'Mobiles', 'Cameras', 'Men"s', 'Women"s', 'Kids', 'Accessories', 'Decor', 'Kitchen', 'Bedding', 'Skincare', 'Haircare', 'Perfumes', 'Books', 'Movies', 'Music', 'Equipment', 'Activewear', 'Camping', 'Kids Toys', 'Board Games', 'Video Games', 'Vitamins', 'Fitness Equipment', 'Monitoring Devices', 'Car Accessories', 'MaparseFloatenance', 'Motorcycle Gear', 'Rings', 'Watches', 'Necklaces', 'Stationery', 'Furniture', 'Electronics', 'Groceries', ' Snacks', 'Beverages', 'Pet Food', 'Accessories', 'Care products', 'Handmade', 'Customized']
 const image = 'https://source.unsplash.com/collection/483251';
 const Customer = require('../models/customer')
 const ITEMS_PER_PAGE = 20;
@@ -38,7 +38,7 @@ const populateOptions = {
     'fitnessequipment': [],
     'monitoringdevices': [],
     'caraccessories': [],
-    'maintenance': [],
+    'maparseFloatenance': [],
     'motorcyclegear': [],
     'ornaments': [],
     'stationary': [],
@@ -125,8 +125,16 @@ module.exports.showProduct = catchAsync(async (req, res) => {
                     model: 'Customer'
                 }
             ],
-        })
-
+        }).populate({
+            path: 'queries',
+            populate: {
+                path: 'answers',
+                populate: [
+                    { path: 'author.customer', model: 'Customer' },
+                    { path: 'author.seller', model: 'Seller' }
+                ]
+            }
+        });
     for (const category of Object.keys(populateOptions)) {
         if (product.details.category === category) {
             for (const field of populateOptions[category]) {
@@ -138,14 +146,13 @@ module.exports.showProduct = catchAsync(async (req, res) => {
 
     let sum = 0;
     for (let review of product.reviews) {
-        sum += parseInt(review.rating);
+        sum += parseFloat(review.rating);
         product.rating = sum / product.reviews.length;
     }
     const customerId = req.user._id;
     const customer = await Customer.findById(customerId);
     const favoriteProductIds = customer.favourites;
     const details = product.details
-    console.log(product)
     res.render('../views/customer/show', { product, favoriteProductIds, details })
 })
 
@@ -259,7 +266,7 @@ module.exports.postQuery = catchAsync(async (req, res) => {
     const currentDate = new Date();
     const question = new Question(req.body.query);
     const tags = req.body.query.tag.split(',');
-    for(let tag of tags){
+    for (let tag of tags) {
         question.tags.push(tag.trim())
     }
     question.author = req.user._id;
@@ -267,6 +274,9 @@ module.exports.postQuery = catchAsync(async (req, res) => {
     await question.save();
     product.queries.push(question);
     await product.save();
+    const customer = await Customer.findById(req.user._id);
+    customer.points = parseFloat(customer.points) + 0.2 
+    await customer.save();
     const notification = new Notification({
         header: `New query From ${req.user.username} from the product ${product.name}`,
         message: `${question.question} ?`,
@@ -295,9 +305,19 @@ module.exports.postAnswer = catchAsync(async (req, res) => {
     const product = await Product.findById(id);
     const question = await Question.findById(queryId);
     const currentDate = new Date;
-    question.answers.push({ answer: req.body.answer, author: { username: req.user.username, profile: req.user.profilePic }, date: currentDate.getTime(), authorRole: req.user.role });
+    const answer = {
+        answer: req.body.answer,
+        author: {
+            customer: req.user._id
+        },
+        date: currentDate.getTime()
+    }
+    question.answers.push(answer);
     await question.save();
     await product.save();
+    const customer = await Customer.findById(req.user._id);
+    customer.points = parseFloat(customer.points) + 0.2 
+    await customer.save();
     const notification = new Notification({
         header: `New reply From ${req.user.username} ~ (${req.user.role})`,
         message: `${req.body.answer}`,
@@ -307,13 +327,12 @@ module.exports.postAnswer = catchAsync(async (req, res) => {
         productId: product.id,
         productSeller: product.seller._id
     });
-    const customer = await Customer.findById(question.author._id);
     await notification.save();
     customer.notifications.unshift(notification);
     await customer.save();
     res.redirect(`/seller/products/${id}`);
     try {
-        notifyCustomer(customer.id, notification);
+        notifyCustomer(question.author._id, notification);
     } catch (e) {
         console.log(e);
     }
@@ -338,6 +357,9 @@ module.exports.postReview = catchAsync(async (req, res) => {
     product.reviews.push(review);
     await review.save();
     await product.save();
+    const customer = await Customer.findById(req.user._id);
+    customer.points = parseFloat(customer.points) + 0.2 
+    await customer.save();
     const notification = new Notification({
         header: `New review From ${req.user.username} `,
         message: `Reviewed the product ${product.name} at ${review.rating} rating with a message ${review.body}`,
@@ -432,7 +454,6 @@ module.exports.renderYourOrders = catchAsync(async (req, res) => {
         },
     })
     const orders = customer.orders;
-    console.log(orders)
     res.render('../views/customer/orders.ejs', { customer })
 })
 
@@ -448,57 +469,56 @@ module.exports.renderOrderStatus = catchAsync(async (req, res) => {
 module.exports.searchQueriesAndReviews = catchAsync(async (req, res) => {
     const { id } = req.params;
     const { text } = req.query;
-    const product = await Product.findById(id).populate('reviews').populate('queries').populate({
-        path: 'reviews',
-        populate: {
-            path: 'author',
-            model: 'Customer',
-        },
-    })
+
+    const product = await Product.findById(id)
+        .populate({
+            path: 'reviews',
+            populate: { path: 'author', model: 'Customer' },
+        })
         .populate({
             path: 'queries',
             populate: [
+                { path: 'author', model: 'Customer' },
                 {
-                    path: 'author',
-                    model: 'Customer'
-                }
+                    path: 'answers',
+                    populate: [
+                        { path: 'author.customer', model: 'Customer' },
+                        { path: 'author.seller', model: 'Seller' },
+                    ],
+                },
             ],
-        }).populate({
-            path: 'queries',
-            populate: [
-                {
-                    path: 'author',
-                    model: 'Customer'
-                }
-            ],
-        }).populate({
-            path: 'queries.answer',
-            populate: [{
-                path: 'author'
-            }]
         });
-    let resReviews = []; resQueries = []; resAnswers = []
-    for (let review of product.reviews) {
+
+    let resReviews = [];
+    let resQueries = [];
+    let resAnswers = [];
+
+    product.reviews.forEach(review => {
         if (review.body.includes(text)) {
-            resReviews.push(review)
+            resReviews.push(review);
         }
-        console.log(review.body)
-        console.log(text)
-    };
-    for (let query of product.queries) {
+    });
+
+    product.queries.forEach(query => {
         if (query.question.includes(text)) {
-            resQueries.push(query)
+            resQueries.push(query);
         }
-        for (let answer of query.answers) {
+        query.answers.forEach(answer => {
             if (answer.answer.includes(text)) {
-                resAnswers.push({ answer, question: query.question })
+                resAnswers.push({ answer, question: query.question });
             }
-        }
-    };
-    let results = { resReviews, resQueries, resAnswers }
-    if(resReviews.length <= 0 && resQueries.length <= 0 && resAnswers <= 0){
-        res.render('../views/customer/nothingTemplate')
-    }else{
-    res.render('../views/customer/searchResults', { product, results, text })
+        });
+    });
+
+    const results = { resReviews, resQueries, resAnswers };
+    if (resReviews.length === 0 && resQueries.length === 0 && resAnswers.length === 0) {
+        return res.render('../views/customer/nothingTemplate');
+    } else {
+        return res.render('../views/customer/searchResults', { product, results, text });
     }
+});
+
+module.exports.renderZenPointsPage = catchAsync(async(req, res) =>{
+    const customer = await Customer.findById(req.user._id);
+    res.send(customer.points)
 })

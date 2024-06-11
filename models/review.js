@@ -16,7 +16,12 @@ const reviewSchema = new Schema({
   },
   date: {
     type: Date,
-  }
+  },
+  tags:[
+    {
+      type: String
+    }
+  ]
 })
 
 

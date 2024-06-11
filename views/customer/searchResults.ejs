@@ -33,9 +33,16 @@
                                                 <% } %>
                                         </h6>
                                         <h6 class="ms-2"><b>Review: </b>
-                                            <span style="background-color: #fff491; border-radius: 5px;">
-                                                <%= review.body %>
-                                            </span>
+                                          
+                                                <% review.body.split(' ').forEach(word => { %>
+                                                    <% if (word.includes(text)) { %>
+                                                        <span style="background-color:  yellow; border-radius: 10px;"  class="p-1"><%= word %></span>
+                                                    <% } else { %>
+                                                        <%= word %>
+                                                    <% } %>
+                                                    <%= ' ' %>
+                                                <% }); %>
+                                            
                                         </h6>
                                         <h6 class="ms-2 mb-1  text-muted">
                                             <i>Posted on~ &nbsp;&nbsp; <small>
@@ -66,10 +73,17 @@
                                                             </h4>
                                                         </div>
                                                         <h6 class="ms-2"><b>Question: </b>
-                                                            <span
-                                                                style="background-color: #fff491; border-radius: 5px;">
-                                                                <%= query.question %>
-                                                            </span>
+                                                           
+                                                                <% const searchedText = 'f'%>
+                                                                <% query.question.split(' ').forEach(word => { %>
+                                                                    <% if (word.includes(text)) { %>
+                                                                        <span style="background-color:  yellow; border-radius: 10px;" class="p-1"><%= word %></span>
+                                                                    <% } else { %>
+                                                                        <%= word %>
+                                                                    <% } %>
+                                                                    <%= ' ' %>
+                                                                <% }); %>
+                                                           
                                                         </h6>
                                                         <h6 class="ms-2 mb-1  text-muted">
                                                             <i>Posted on~ &nbsp;&nbsp; <small>
@@ -91,17 +105,31 @@
                                                                 <div class="card mb-3">
                                                                     <div class="card-body  position-relative">
                                                                         <div class="card-subtitle text-muted me-2">
-                                                                            <h4>
-                                                                                <span>
-                                                                                    <img src="<%= answer.answer.author.profile %>"
-                                                                                        style="border-radius: 100%; object-fit: cover; width: 50px; height: 50px"
-                                                                                        class="img-thumbnail" alt="">
-                                                                                </span>
-                                                                                <%= answer.answer.author.username %> ~
-                                                                                    <small class="text-muted fs-5">
-                                                                                        <%= answer.answer.authorRole %>
-                                                                                    </small>
-                                                                            </h4>
+                                                                            <% if(answer.answer.author.customer) {%>
+                                                                                <h4>
+                                                                                    <span>
+                                                                                        <img src="<%= answer.answer.author.customer.profilePic %>"
+                                                                                            style="border-radius: 100%; object-fit: cover; width: 50px; height: 50px"
+                                                                                            class="img-thumbnail" alt="">
+                                                                                    </span>
+                                                                                    <%= answer.answer.author.customer.username %> ~
+                                                                                        <small class="text-muted fs-5">
+                                                                                            <%= answer.answer.author.customer.role %>
+                                                                                        </small>
+                                                                                </h4>
+                                                                                <% }else { %>
+                                                                                    <h4>
+                                                                                        <span>
+                                                                                            <img src="<%= answer.answer.author.seller.imageUrl %>"
+                                                                                                style="border-radius: 100%; object-fit: cover; width: 50px; height: 50px"
+                                                                                                class="img-thumbnail" alt="">
+                                                                                        </span>
+                                                                                        <%= answer.answer.author.seller.username %> ~
+                                                                                            <small class="text-muted fs-5">
+                                                                                                <%= answer.answer.author.seller.role %>
+                                                                                            </small>
+                                                                                    </h4>
+                                                                                    <% } %>
                                                                         </div>
                                                                         <h6 class="ms-2"><b>Question: </b>
                                                                             <span>
@@ -111,7 +139,14 @@
                                                                         <h6 class="ms-2"><b>Answer: </b>
                                                                             <span
                                                                                 style="background-color: #fff491; border-radius: 5px;">
-                                                                                <%= answer.answer.answer %>
+                                                                                <% answer.answer.answer.split(' ').forEach(word => { %>
+                                                                                    <% if (word.includes(text)) { %>
+                                                                                        <span style="background-color:  yellow; border-radius: 10px;"  class="p-1"><%= word %></span>
+                                                                                    <% } else { %>
+                                                                                        <%= word %>
+                                                                                    <% } %>
+                                                                                    <%= ' ' %>
+                                                                                <% }); %>
                                                                             </span>
                                                                         </h6>
                                                                         <h6 class="ms-2 mb-1  text-muted">

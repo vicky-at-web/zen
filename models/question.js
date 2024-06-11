@@ -8,7 +8,7 @@ const questionSchema = new Schema({
         type: String,
         required: true
     },
-    tags:[{
+    tags: [{
         type: String
     }],
     author: {
@@ -23,17 +23,18 @@ const questionSchema = new Schema({
             type: String,
             required: true
         },
-        tags:[{
+        tags: [{
             type: String
         }],
         author: {
-           username: String,
-           profile: String,
-        },
-        authorRole: {
-            type: String,
-            enum: ['customer', 'seller'],
-            required: true
+            customer: {
+                type: Schema.Types.ObjectId,
+                ref: 'Customer'
+            },
+            seller: {
+                type: Schema.Types.ObjectId,
+                ref: 'Seller'
+            }
         },
         date: {
             type: Date

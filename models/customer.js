@@ -63,6 +63,10 @@ const customerSchema = new Schema({
             default: '53821'
         },
     },
+    points: {
+        type: String,
+        default: 0
+    },
     mobile: {
         type: String,
         default: '1234567890'
