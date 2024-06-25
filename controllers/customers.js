@@ -1,3 +1,5 @@
+///DECLARATIONS
+
 const catchAsync = require('../utils/catchasync');
 const Product = require('../models/product');
 const Review = require('../models/review');
@@ -52,12 +54,29 @@ const populateOptions = {
     'handmade': []
 };
 
+///RENDER HOME ROUTE
 
 module.exports.renderHome = (req, res) => {
     res.render('../views/customer/home', { categories, image })
 }
 
-///PRODUCTS SHOWING ROUTINGS 
+///PRODUCTS FILTER AND RETRIEVING ROUTES
+
+module.exports.renderProducts = catchAsync(async (req, res) => {
+    const { page, productName } = req.query || 1;
+    const skip = (page - 1) * ITEMS_PER_PAGE;
+    const products = await Product.find().skip(skip).limit(ITEMS_PER_PAGE);
+    const totalProducts = await Product.countDocuments();
+    const totalPages = Math.ceil(totalProducts / ITEMS_PER_PAGE);
+    const newProducts = products.filter(product => {
+        const launchDate = new Date(product.launchDate);
+        const today = new Date();
+        const twentyDaysAgo = new Date(today.getTime() - 20 * 24 * 60 * 60 * 1000); // 10 days ago
+        return launchDate > twentyDaysAgo;
+
+    });
+    res.render('../views/customer/index.ejs', { products, currentPage: page, totalPages, productName, newProducts });
+})
 
 module.exports.renderSearchedProducts = catchAsync(async (req, res) => {
     let { productName, page = 1 } = req.query;
@@ -105,6 +124,8 @@ module.exports.renderSortedProducts = catchAsync(async (req, res) => {
     }
 })
 
+///SHOW PRODUCT ROUTE
+
 module.exports.showProduct = catchAsync(async (req, res) => {
     const { id } = req.params;
     const product = await Product.findById(id).populate('reviews')
@@ -116,6 +137,12 @@ module.exports.showProduct = catchAsync(async (req, res) => {
                 path: 'author',
                 model: 'Customer',
             },
+        })
+        .populate({
+            path: 'queries',
+            populate: {
+                path: 'answers'
+            }
         })
         .populate({
             path: 'queries',
@@ -143,6 +170,41 @@ module.exports.showProduct = catchAsync(async (req, res) => {
             break; // No need to continue once populated
         }
     }
+    let rated1 = 0, rated2 = 0, rated3 = 0, rated4 = 0, rated5 = 0;
+    product.reviews.forEach(review => {
+        if (review.rating == 1) {
+            rated1 += 1;
+        } else if (review.rating == 2) {
+            rated2 += 1;
+        } else if (review.rating == 3) {
+            rated3 += 1
+        } else if (review.rating == 4) {
+            rated4 += 1;
+        } else {
+            rated5 += 1
+        }
+    })
+    let allRatingsNumberWise = [
+        rated1, rated2, rated3, rated4, rated5
+    ]
+    let percentages = allRatingsNumberWise.map(rating => ((rating / product.reviews.length) * 100).toFixed(2));
+    const sameCategoryProducts = await Product.find({ category: product.category });
+    const relatedProducts = await Product.find({ brand: product.brand });
+
+    const getRandomSampleIndex = (array, sliceSize) => {
+        if (array.length <= sliceSize) {
+            return 0; // If array length is less than or equal to slice size, start from 0
+        }
+        return Math.floor(Math.random() * (array.length - sliceSize));
+    };
+
+    const sliceSize = 5; // Number of elements to slice
+
+    let sameCategoryProductsStartIndex = getRandomSampleIndex(sameCategoryProducts, sliceSize);
+    let relatedProductsStartIndex = getRandomSampleIndex(relatedProducts, sliceSize);
+
+    const sameCategoryProductsSliced = sameCategoryProducts.slice(sameCategoryProductsStartIndex, sameCategoryProductsStartIndex + sliceSize);
+    const relatedProductsSliced = relatedProducts.slice(relatedProductsStartIndex, relatedProductsStartIndex + sliceSize);
 
     let sum = 0;
     for (let review of product.reviews) {
@@ -153,31 +215,18 @@ module.exports.showProduct = catchAsync(async (req, res) => {
     const customer = await Customer.findById(customerId);
     const favoriteProductIds = customer.favourites;
     const details = product.details
-    res.render('../views/customer/show', { product, favoriteProductIds, details })
+    res.render('../views/customer/show', { product, favoriteProductIds, details, relatedProductsSliced, sameCategoryProductsSliced, percentages })
 })
 
-module.exports.renderProducts = catchAsync(async (req, res) => {
-    const { page, productName } = req.query || 1;
-    const skip = (page - 1) * ITEMS_PER_PAGE;
-    const products = await Product.find().skip(skip).limit(ITEMS_PER_PAGE);
-    const totalProducts = await Product.countDocuments();
-    const totalPages = Math.ceil(totalProducts / ITEMS_PER_PAGE);
-    const newProducts = products.filter(product => {
-        const launchDate = new Date(product.launchDate);
-        const today = new Date();
-        const twentyDaysAgo = new Date(today.getTime() - 20 * 24 * 60 * 60 * 1000); // 10 days ago
-        return launchDate > twentyDaysAgo;
 
-    });
-    res.render('../views/customer/index.ejs', { products, currentPage: page, totalPages, productName, newProducts });
-})
-
-///FAVOURITES ROUTINGS
+///RENDER FAVOURITE ROUTES
 
 module.exports.renderFavourites = catchAsync(async (req, res) => {
     const customer = await Customer.findById(req.user._id).populate('favourites');
     res.render('../views/customer/favourites', { customer })
 })
+
+///FAVOURITES CRUD ADD AND DELETE 
 
 module.exports.addFavourite = catchAsync(async (req, res) => {
     const { productId } = req.params;
@@ -199,7 +248,7 @@ module.exports.deleteFavourite = catchAsync(async (req, res) => {
 })
 
 
-///CART ROUTINGS 
+///SHOW CART ROUTE
 
 module.exports.showCart = catchAsync(async (req, res) => {
     const customer = await Customer.findById(req.user._id).populate('cart');
@@ -211,6 +260,8 @@ module.exports.showCart = catchAsync(async (req, res) => {
     res.render('../views/customer/cart', { customer, undoProduct, sum })
 })
 
+///CART CRUD ADD DELETE UNDO-OPERATION
+
 module.exports.addToCart = catchAsync(async (req, res) => {
     const { id } = req.params;
     const product = await Product.findById(id);
@@ -221,10 +272,10 @@ module.exports.addToCart = catchAsync(async (req, res) => {
     } else {
         customer.cart.push(product);
         await customer.save();
-        req.session.passport.user.cart = customer.cart;
+        req.session.user = customer;
         req.flash('success', 'Product added to the cart!');
     }
-    const redirectUrl = res.locals.returnTo || '/customer/products?page=1';
+    const redirectUrl = res.locals.returnTo || `/customer/products/${product.id}`;
     res.redirect(redirectUrl);
 })
 
@@ -256,9 +307,7 @@ module.exports.deleteProductFromCart = catchAsync(async (req, res) => {
 })
 
 
-///QUESTIONS AND ANSWERS ROUTINGS
-
-///REAL TIME EVENTS ADDED ROUTES => { POSTQUERY }
+///QUERY CRUD ADD AND DELETE
 
 module.exports.postQuery = catchAsync(async (req, res) => {
     const { id } = req.params;
@@ -275,7 +324,7 @@ module.exports.postQuery = catchAsync(async (req, res) => {
     product.queries.push(question);
     await product.save();
     const customer = await Customer.findById(req.user._id);
-    customer.points = parseFloat(customer.points) + 0.2 
+    customer.points = parseFloat(customer.points) + 0.2
     await customer.save();
     const notification = new Notification({
         header: `New query From ${req.user.username} from the product ${product.name}`,
@@ -300,6 +349,17 @@ module.exports.postQuery = catchAsync(async (req, res) => {
     res.redirect(`/customer/products/${id}`);
 });
 
+
+module.exports.deleteQuery = catchAsync(async (req, res) => {
+    const { id, queryId } = req.params;
+    await Product.findByIdAndUpdate(id, { $pull: { queries: queryId } })
+    await Question.findByIdAndDelete(queryId);
+    res.redirect(`/customer/products/${id}`);
+})
+
+///ANSWER CRUD ADD
+
+
 module.exports.postAnswer = catchAsync(async (req, res) => {
     const { id, queryId } = req.params;
     const product = await Product.findById(id);
@@ -316,7 +376,7 @@ module.exports.postAnswer = catchAsync(async (req, res) => {
     await question.save();
     await product.save();
     const customer = await Customer.findById(req.user._id);
-    customer.points = parseFloat(customer.points) + 0.2 
+    customer.points = parseFloat(customer.points) + 0.2
     await customer.save();
     const notification = new Notification({
         header: `New reply From ${req.user.username} ~ (${req.user.role})`,
@@ -330,7 +390,7 @@ module.exports.postAnswer = catchAsync(async (req, res) => {
     await notification.save();
     customer.notifications.unshift(notification);
     await customer.save();
-    res.redirect(`/seller/products/${id}`);
+    res.redirect(`/customer/products/${id}`);
     try {
         notifyCustomer(question.author._id, notification);
     } catch (e) {
@@ -338,14 +398,7 @@ module.exports.postAnswer = catchAsync(async (req, res) => {
     }
 });
 
-module.exports.deleteQuery = catchAsync(async (req, res) => {
-    const { id, queryId } = req.params;
-    await Product.findByIdAndUpdate(id, { $pull: { queries: queryId } })
-    await Question.findByIdAndDelete(queryId);
-    res.redirect(`/customer/products/${id}`);
-})
-
-///REVIEW ROUTINGS
+///REVIEWS CRUD ADD AND DELETE
 
 module.exports.postReview = catchAsync(async (req, res) => {
     const { id } = req.params
@@ -354,11 +407,11 @@ module.exports.postReview = catchAsync(async (req, res) => {
     review.author = req.user._id;
     const currentDate = new Date();
     review.date = currentDate;
-    product.reviews.push(review);
+    product.reviews.unshift(review);
     await review.save();
     await product.save();
     const customer = await Customer.findById(req.user._id);
-    customer.points = parseFloat(customer.points) + 0.2 
+    customer.points = parseFloat(customer.points) + 0.2
     await customer.save();
     const notification = new Notification({
         header: `New review From ${req.user.username} `,
@@ -415,6 +468,8 @@ module.exports.updateProfile = catchAsync(async (req, res) => {
     req.session.user = updatedCustomer;
     res.redirect('/customer/profile')
 })
+
+///NOTIFICATION PAGE RENDER
 
 
 module.exports.renderNotificationPage = catchAsync(async (req, res) => {
@@ -518,7 +573,20 @@ module.exports.searchQueriesAndReviews = catchAsync(async (req, res) => {
     }
 });
 
-module.exports.renderZenPointsPage = catchAsync(async(req, res) =>{
+///ZEN POINTS
+
+module.exports.renderZenPointsPage = catchAsync(async (req, res) => {
     const customer = await Customer.findById(req.user._id);
-    res.send(customer.points)
+    res.send(`Your points are ${customer.points}`)
+})
+
+
+///SHOW MORE ANSWERS FOR PARTICULAR QUESTIONS AND MORE REVIEWS PAGE
+
+module.exports.renderViewAllQAS = catchAsync(async (req, res) => {
+    const { productId, queryId } = req.params;
+    const product = await Product.findById(productId);
+    const query = await Question.findById(queryId);
+    console.log(product)
+    res.render('../views/customer/viewAllQAS', { product, query });
 })

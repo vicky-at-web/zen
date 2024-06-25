@@ -1,7 +1,11 @@
+///DECLARATIONS
+
 const Chat = require('../models/chat')
 const Seller = require('../models/seller');
 const catchAsync = require('../utils/catchasync');
 const Customer = require('../models/customer')
+
+/// CUSTOMER CHAT INTERFACE AND CHAT RENDER
 
 module.exports.renderCustomerChatInterface = catchAsync(async (req, res) => {
     const customerId = req.user._id;
@@ -29,6 +33,8 @@ module.exports.renderCustomerChat = catchAsync (async (req, res) => {
     res.render('../views/customer/chat', { chat, seller, customerId, customer })
 })
 
+
+/// SELLER CHAT INTERFACE AND CHAT RENDER
 
 module.exports.renderSellerChatInterface = catchAsync(async (req, res) => {
     const seller = await Seller.findById(req.user._id);

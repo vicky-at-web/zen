@@ -1,3 +1,5 @@
+///DECLARATIONS
+
 const Seller = require('../models/seller');
 const catchAsync = require('../utils/catchasync');
 const Customer = require('../models/customer')
@@ -16,11 +18,11 @@ module.exports.registerCustomer = catchAsync(async (req, res) => {
         req.login(registeredCustomer, err => {
             if (err) return next(err);
             req.flash('success', `Welcome to Zen!`)
-            res.redirect('/customer/products')
+            res.redirect('/customer/products?page=1')
         })
     } catch (e) {
         req.flash('error', `${e.message}`)
-        res.redirect('/customer/register')
+        res.redirect('/customer/auth/register')
 
         console.log(e)
     }

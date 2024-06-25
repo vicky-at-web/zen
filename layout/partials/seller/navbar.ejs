@@ -74,7 +74,7 @@
             <!-- TO CHECK THE CURRENTUSER IS SELLER AND DISPLAY PROFILE PICTURE -->
             <% if(currentUser) {%>
               <div class="my-1 d-flex flex-column justify-content-center">
-                <a href="/customer/profile"> <img src="<%= currentUser.imageUrl %>" width="60px" height="60px"
+                <a href="/seller/profile"> <img src="<%= currentUser.imageUrl %>" width="60px" height="60px"
                     style="border-radius: 100%; object-fit: cover;" class="me-3" class="m-1" alt=""></a>
               </div>
               <% } %>

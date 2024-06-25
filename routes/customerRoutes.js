@@ -45,7 +45,6 @@ router.route('/:id/cart')
 
 ///QUERIES ROUTES
 
-
 router.route('/products/:id/queries')
     .post(customers.postQuery)
 
@@ -79,6 +78,8 @@ router.get('/order/:id/status', customers.renderOrderStatus)
 router.get('/product/:id/searchqueries&reviews', customers.searchQueriesAndReviews);
 
 router.get('/zenpoints', customers.renderZenPointsPage)
+
+router.get('/product/:productId/QAS/:queryId', customers.renderViewAllQAS)
 
 
 module.exports = router

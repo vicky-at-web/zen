@@ -6,8 +6,7 @@
             <div class="col-6 offset-3 mb-3">
                 <div class="card mb-3">
                     <div class="card-body p-5">
-                        <form action="/seller/product/new/basic" method="post" class="mb-3 p-0 formvalid"
-                            novalidate>
+                        <form action="/seller/product/new/basic" method="post" class="mb-3 p-0 formvalid" novalidate>
                             <div>
                                 <label class="form-label" for="title">Product Name: </label>
                                 <input class="form-control" required autocomplete="off" type="text" id="title"
@@ -58,45 +57,26 @@
                                     placeholder="Open this to select category">Category:</label>
                                 <select class="form-select" id='category' name="product[category]"
                                     aria-label="Default select example">
-                                    <option value="Computer">Computers</option>
-                                    <option value="Mobile">Mobiles</option>
-                                    <option value="Camera">Cameras</option>
-                                    <option value="Men">Men's</option>
-                                    <option value="Womens">Women's</option>
-                                    <option value="Kids">Kid's</option>
-                                    <option value="Accessories">Accessories</option>
-                                    <option value="Decor">Decor</option>
-                                    <option value="Kitchen">Kitchen</option>
-                                    <option value="Bedding">Bedding</option>
-                                    <option value="Skincare">Skincare</option>
-                                    <option value="Haircare">Haircare</option>
-                                    <option value="Perfumes">Perfumes</option>
-                                    <option value="Books">Books</option>
-                                    <option value="Movies">Movies</option>
-                                    <option value="Music">Music</option>
-                                    <option value="Equipment">Equipment</option>
-                                    <option value="Activewear">Activewear</option>
-                                    <option value="Camping">Camping</option>
-                                    <option value="KidsToys">Kid's Toys</option>
-                                    <option value="BoardGames">Board Games</option>
-                                    <option value="VideoGames">Video Games</option>
-                                    <option value="Medicines">Medicines</option>
-                                    <option value="FitnessEquipment">Fitness Equipment</option>
-                                    <option value="MonitoringDevices">Monitoring Devices</option>
-                                    <option value="CarAccessories">Car Accessories</option>
-                                    <option value="Maintenance">Maintenance</option>
-                                    <option value="MotorcycleGear">Motorcycle Gear</option>
-                                    <option value="ornament">Ornaments</option>
-                                    <option value="Stationery">Stationery</option>
-                                    <option value="Furniture">Furniture</option>
-                                    <option value="Electronics">Electronics</option>
-                                    <option value="Groceries">Groceries</option>
-                                    <option value="Snacks">Snacks</option>
-                                    <option value="Beverages">Beverages</option>
-                                    <option value="PetFood">Pet Food</option>
-                                    <option value="Accessories">Accessories</option>
-                                    <option value="CareProducts">Care Products</option>
-                                    <option value="Handmade">Handmade</option>
+                                    <option value="electronics">Electronics</option>
+                                    <option value="fashion">Fashion</option>
+                                    <option value="home_kitchen">Home & Kitchen</option>
+                                    <option value="books">Books</option>
+                                    <option value="beauty_personal_care">Beauty & Personal Care</option>
+                                    <option value="health_wellness">Health & Wellness</option>
+                                    <option value="sports_outdoors">Sports & Outdoors</option>
+                                    <option value="toys_games">Toys & Games</option>
+                                    <option value="automotive">Automotive</option>
+                                    <option value="grocery_gourmet_food">Grocery & Gourmet Food</option>
+                                    <option value="baby_products">Baby Products</option>
+                                    <option value="pet_supplies">Pet Supplies</option>
+                                    <option value="industrial_scientific">Industrial & Scientific</option>
+                                    <option value="office_products">Office Products</option>
+                                    <option value="tools_home_improvement">Tools & Home Improvement</option>
+                                    <option value="musical_instruments">Musical Instruments</option>
+                                    <option value="software">Software</option>
+                                    <option value="arts_crafts_sewing">Arts, Crafts & Sewing</option>
+                                    <option value="movies_tv">Movies & TV</option>
+                                    <option value="video_games">Video Games</option>
                                 </select>
                             </div>
                             <br>
@@ -135,9 +115,54 @@
                                 </div>
                             </div>
                             <br>
-                            <button class="btn" style="background-color: #bdb5d5;">Next <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
-                              </svg></button>
+                            <label for="detailsTable">Details:</label>
+                            <table class="table table-bordered table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">No</th>
+                                        <th scope="col">
+                                            <center>Title</center>
+                                        </th>
+                                        <th scope="col">
+                                            <center>Details</center>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="detailsTable">
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td><input type="text" class="form-control shadow-none" name="keys"></td>
+                                        <td><input type="text" class="form-control shadow-none" name="values"></td>
+
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td><input type="text" class="form-control shadow-none" name="keys"></td>
+                                        <td><input type="text" class="form-control shadow-none" name="values"></td>
+
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td><input type="text" class="form-control shadow-none" name="keys"></td>
+                                        <td><input type="text" class="form-control shadow-none" name="values"></td>
+                                    </tr>
+                                    
+                                </tbody>
+                                <tr>
+
+                                    <td colspan="3"><button class="btn" type="button" id="addRowButton"
+                                            style="background-color: #a3c98e;">Add Row</button></td>
+                                </tr>
+
+                            </table>
+
+
+                            <button class="btn" style="background-color: #bdb5d5;">Next <svg
+                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                        d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8" />
+                                </svg></button>
                             <br><br>
                             <a href="/products" class="">Back To All Products</a>
                     </div>
@@ -145,3 +170,39 @@
             </div>
 
         </div>
+        <script>
+            const addRowbutton = document.querySelector("#addRowButton");
+            const table = document.querySelector("#detailsTable");
+            let count = 4
+
+
+            addRowbutton.addEventListener('click', function () {
+                const trElement = document.createElement('tr');
+                const tdElement1 = document.createElement('td');
+                const tdElement2 = document.createElement('td');
+                const thElement = document.createElement('th');
+
+                const input1 = document.createElement('input');
+                input1.setAttribute('class', 'form-control');
+                input1.setAttribute('type', 'text');
+                input1.setAttribute('required', 'true');
+                input1.setAttribute('name', 'keys')
+
+                const input2 = document.createElement('input');
+                input2.setAttribute('class', 'form-control')
+                input2.setAttribute('type', 'text');
+                input2.setAttribute('name', 'values')
+
+                trElement.append(thElement)
+                tdElement1.append(input1);
+                tdElement2.append(input2);
+                trElement.append(tdElement1, tdElement2);
+                thElement.innerHTML = count;
+                table.append(trElement)
+                console.log('clicked');
+                count += 1;
+
+            })
+
+
+        </script>

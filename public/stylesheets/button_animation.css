@@ -106,7 +106,7 @@ a {
     }
 }
 
-.button {
+.fbutton {
     position: relative;
     padding: 8px 16px;
     border-radius: 6px;
@@ -117,12 +117,12 @@ a {
     transition: all 0.2s ease;
 }
 
-.button:active {
+.fbutton:active {
     transform: scale(0.96);
 }
 
-.button:before,
-.button:after {
+.fbutton:before,
+.fbutton:after {
     position: absolute;
     content: "";
     width: 150%;
@@ -133,7 +133,7 @@ a {
     background-repeat: no-repeat;
 }
 
-.button:hover:before {
+.fbutton:hover:before {
     top: -70%;
     background-image: radial-gradient(circle, #e87da7 20%, transparent 20%),
         radial-gradient(circle, transparent 20%, #e87da7 20%, transparent 30%),
@@ -169,7 +169,7 @@ a {
     }
 }
 
-.button:hover::after {
+.fbutton:hover::after {
     bottom: -70%;
     background-image: radial-gradient(circle, #e87da7 20%, transparent 20%),
         radial-gradient(circle, #e87da7 20%, transparent 20%),

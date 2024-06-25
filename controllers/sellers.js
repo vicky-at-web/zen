@@ -1,3 +1,5 @@
+///DECLARATIONS
+
 const Seller = require('../models/seller')
 const Product = require('../models/product')
 const catchAsync = require('../utils/catchasync');
@@ -7,10 +9,14 @@ const { notifyCustomer } = require('../socket');
 const Notification = require('../models/notification');
 const details = require('../models/details')
 
+///RENDER ALL SELLERS
+
 module.exports.allSellers = catchAsync(async (req, res) => {
     const sellers = await Seller.find({})
     res.render('../views/seller/index.ejs', { sellers })
 })
+
+///SHOW SELLER
 
 module.exports.showSeller = catchAsync(async (req, res) => {
     const seller = await Seller.findById(req.user._id).populate('products');
@@ -18,6 +24,7 @@ module.exports.showSeller = catchAsync(async (req, res) => {
     res.render('../views/seller/home', { seller, products })
 })
 
+///VIEW PRODUCT FROM SELLER SIDE
 
 module.exports.viewProduct = catchAsync(async (req, res) => {
     const { id } = req.params;
@@ -40,7 +47,6 @@ module.exports.viewProduct = catchAsync(async (req, res) => {
                 }
             ],
         }).populate('details')
-    console.log(product.details)
     let sum = 0;
     for (let review of product.reviews) {
         sum += parseInt(review.rating);
@@ -49,13 +55,7 @@ module.exports.viewProduct = catchAsync(async (req, res) => {
     res.render('../views/seller/viewProduct', { product });
 });
 
-
-module.exports.deleteProduct = catchAsync(async (req, res) => {
-    const { id } = req.params;
-    await Product.findByIdAndDelete(id);
-    req.flash('success', 'Successfully deleted the product')
-    res.redirect('/seller/home')
-})
+///POST ANSWER ROUTE FOR QA'S ASKED BY CUSTOMERS
 
 module.exports.postAnswer = catchAsync(async (req, res) => {
     const { id, queryId } = req.params;
@@ -65,8 +65,8 @@ module.exports.postAnswer = catchAsync(async (req, res) => {
     const currentDate = new Date;
     const answer = {
         answer: req.body.answer,
-        author:{
-seller:  req.user._id
+        author: {
+            seller: req.user._id
         },
         date: currentDate.getTime()
     }
@@ -94,17 +94,14 @@ seller:  req.user._id
     }
 });
 
-module.exports.deleteQuery = catchAsync(async (req, res) => {
-    const { id, queryId } = req.params;
-    await Product.findByIdAndUpdate(id, { $pull: { queries: queryId } })
-    await Question.findByIdAndDelete(queryId);
-    res.redirect(`/seller/products/${id}`);
-})
+///SHOW NOTIFICATIONS
 
 module.exports.showNotifications = catchAsync(async (req, res) => {
     const seller = await Seller.findById(req.user._id).populate('notifications')
     res.render('../views/seller/notifications', { seller })
 })
+
+///PROFILE VIEW AND UPDATE 
 
 module.exports.renderProfilePage = catchAsync(async (req, res) => {
     const seller = await Seller.findById(req.user._id);
@@ -113,13 +110,13 @@ module.exports.renderProfilePage = catchAsync(async (req, res) => {
 
 module.exports.updateSellerProfile = catchAsync(async (req, res) => {
     const seller = await Seller.findByIdAndUpdate(req.user._id, { ...req.body.seller })
-    req.session.passport.user = seller;
+    req.session.user = seller;
     res.redirect('/seller/home')
 })
 
 ////PRODUCT RELATED ROUTES
 
-/// PRODUCT RELATED RENDERING ROUTES
+/// PRODUCT CRUD FORMS RENDERS
 
 module.exports.renderNewProductForm = catchAsync(async (req, res) => {
     const seller = await Seller.findById(req.user._id)
@@ -144,27 +141,36 @@ module.exports.renderProductDetailsForm = catchAsync(async (req, res) => {
     }
 })
 
-///PRODUCT RELATED FUNCTIONING ROUTES
+///PRODUCT CRUD OPERATIONS ADD DELETE UPDATE 
 
 module.exports.addProduct = catchAsync(async (req, res) => {
-    const product = req.body.product
-    const sanitizedProductName = product.name.replace(/[^\w\s]/g, '').toLowerCase().split(' ');
-    product.searchTerm = sanitizedProductName.join('');
-    req.session.product = product;
-    res.redirect(`/seller/product/new/details`)
+    const { values, keys } = req.body
+    const product = new Product(req.body.product)
+    product.launchDate = new Date();
+    product.seller = req.user._id;
+    const combinedObject = {};
+    for (let i = 0; i < keys.length; i++) {
+        combinedObject[keys[i]] = values[i];
+    }
+    product.details = combinedObject;
+    // const sanitizedProductName = product.name.replace(/[^\w\s]/g, '').toLowerCase().split(' ');
+    // product.searchTerm = sanitizedProductName.join('');
+    // req.session.product = product;
+    // res.redirect(`/seller/product/new/details`)
+    res.send(product)
 })
 
 module.exports.addProductDetails = catchAsync(async (req, res) => {
-    const productDetails = req.body;
-    const product = new Product(req.session.product);
-    product.launchDate = new Date();
-    product.seller = req.user._id;
-    product.details = productDetails;
-    await product.save();
-    const seller = await Seller.findById(req.user._id);
-    seller.products.push(product._id);
-    await seller.save();
-    res.redirect(`/seller/products/${product.id}`)
+    //     const productDetails = req.body;
+    //     const product = new Product(req.session.product);
+    //     product.launchDate = new Date();
+    //     product.seller = req.user._id;
+    //     product.details = productDetails;
+    //     await product.save();
+    //     const seller = await Seller.findById(req.user._id);
+    //     seller.products.push(product._id);
+    //     await seller.save();
+    //     res.redirect(`/seller/products/${product.id}`)
 })
 
 module.exports.updateProduct = catchAsync(async (req, res) => {
@@ -177,4 +183,11 @@ module.exports.updateProduct = catchAsync(async (req, res) => {
     const updatedProduct = await Product.findByIdAndUpdate(id, { ...product });
     console.log(product)
     res.redirect(`/seller/products/${id}`)
+})
+
+module.exports.deleteProduct = catchAsync(async (req, res) => {
+    const { id } = req.params;
+    await Product.findByIdAndDelete(id);
+    req.flash('success', 'Successfully deleted the product')
+    res.redirect('/seller/home')
 })

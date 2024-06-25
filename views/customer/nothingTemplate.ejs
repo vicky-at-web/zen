@@ -3,3 +3,87 @@
    <center><h1>Nothing Found 404</h1></center>
 
 
+   <!DOCTYPE html>
+   <html lang="en">
+   <head>
+       <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <title>Image Zoom Effect</title>
+<style>
+    /* styles.css */
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+.img-container {
+    position: relative;
+}
+
+#main-img {
+    width: 400px;
+    height: 400px;
+}
+
+#zoom-window {
+    position: absolute;
+    top: 0;
+    left: 420px;
+    width: 400px;
+    height: 400px;
+    border: 1px solid #ddd;
+    overflow: hidden;
+    display: none; /* Initially hidden */
+}
+
+#zoom-window img {
+    position: absolute;
+}
+
+</style>   </head>
+   <body>
+       <div class="img-container">
+           <img id="main-img" src="https://i.pinimg.com/736x/c5/7a/f7/c57af701db7abfb71c97ac12bc529b71.jpg" alt="Main Image">
+           <div id="zoom-window"></div>
+       </div>
+       <script>
+         // script.js
+
+document.addEventListener('DOMContentLoaded', function() {
+    const mainImg = document.getElementById('main-img');
+    const zoomWindow = document.getElementById('zoom-window');
+    const zoomImg = document.createElement('img');
+    zoomImg.src = mainImg.src;
+    zoomWindow.appendChild(zoomImg);
+
+    mainImg.addEventListener('mousemove', function(e) {
+        const rect = mainImg.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const zoomLevel = 2; // Change this for more or less zoom
+        const zoomWidth = rect.width * zoomLevel;
+        const zoomHeight = rect.height * zoomLevel;
+
+        zoomImg.style.width = `${zoomWidth}px`;
+        zoomImg.style.height = `${zoomHeight}px`;
+        zoomImg.style.left = `-${x * zoomLevel - zoomWindow.offsetWidth / 2}px`;
+        zoomImg.style.top = `-${y * zoomLevel - zoomWindow.offsetHeight / 2}px`;
+
+        zoomWindow.style.display = 'block';
+    });
+
+    mainImg.addEventListener('mouseleave', function() {
+        zoomWindow.style.display = 'none';
+    });
+});
+
+       </script>
+   </body>
+   </html>
+   

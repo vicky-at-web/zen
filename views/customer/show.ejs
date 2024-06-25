@@ -1,10 +1,243 @@
 <% layout('../layout/templates/customer/boilerplate') -%>
     <script defer src="/javascripts/validations.js"></script>
+    <style>
+        .CartBtn {
+            width: 140px;
+            height: 40px;
+            border-radius: 10px;
+            border: none;
+            background-color: rgb(255, 208, 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition-duration: .5s;
+            overflow: hidden;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.103);
+            position: relative;
+        }
+
+        .IconContainer {
+            position: absolute;
+            left: -50px;
+            width: 30px;
+            height: 30px;
+            background-color: transparent;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+
+            transition-duration: .5s;
+        }
+
+        .IconContainer2 {
+            position: absolute;
+            left: -50px;
+            width: 30px;
+            height: 30px;
+            background-color: transparent;
+            border-radius: 50%;
+
+            overflow: hidden;
+            z-index: 2;
+            transition-duration: .5s;
+        }
+
+        .icon {
+            border-radius: 1px;
+        }
+
+        .text {
+            height: 100%;
+            width: fit-content;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgb(17, 17, 17);
+
+            transition-duration: .5s;
+            font-size: 1.04em;
+            font-weight: 600;
+        }
+
+        .CartBtn:hover .IconContainer {
+            transform: translateX(58px);
+            border-radius: 40px;
+            transition-duration: .5s;
+        }
+
+        .CartBtn:hover .text {
+            transform: translate(10px, 0px);
+            transition-duration: .5s;
+        }
+
+        .CartBtn:active {
+            transform: scale(0.95);
+            transition-duration: .5s;
+        }
+
+        .buyBtn {
+            width: 140px;
+            height: 40px;
+            border-radius: 10px;
+            border: none;
+            background-color: skyblue;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition-duration: .5s;
+            overflow: hidden;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.103);
+            position: relative;
+        }
+
+        .IconContainer {
+            position: absolute;
+            left: -50px;
+            width: 30px;
+            height: 30px;
+            background-color: transparent;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+
+            transition-duration: .5s;
+        }
+
+        .IconContainer2 {
+            position: absolute;
+            left: -50px;
+            width: 30px;
+            height: 30px;
+            background-color: transparent;
+            border-radius: 50%;
+
+            overflow: hidden;
+            z-index: 2;
+            transition-duration: .5s;
+        }
+
+        .icon {
+            border-radius: 1px;
+        }
+
+        .text {
+            height: 100%;
+            width: fit-content;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgb(17, 17, 17);
+
+            transition-duration: .5s;
+            font-size: 1.04em;
+            font-weight: 600;
+        }
+
+        .buyBtn:hover .IconContainer {
+            transform: translateX(58px);
+            border-radius: 40px;
+            transition-duration: .5s;
+        }
+
+        .buyBtn:hover .text {
+            transform: translate(10px, 0px);
+            transition-duration: .5s;
+        }
+
+        .buyBtn:active {
+            transform: scale(0.95);
+            transition-duration: .5s;
+        }
+
+        .favButton {
+            width: 140px;
+            height: 40px;
+            border-radius: 10px;
+            border: none;
+            background-color: rgb(255, 184, 184);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition-duration: .5s;
+            overflow: hidden;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.103);
+            position: relative;
+        }
+
+        .IconContainer {
+            position: absolute;
+            left: -50px;
+            width: 30px;
+            height: 30px;
+            background-color: transparent;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+
+            transition-duration: .5s;
+        }
+
+        .IconContainer2 {
+            position: absolute;
+            left: -50px;
+            width: 30px;
+            height: 30px;
+            background-color: transparent;
+            border-radius: 50%;
+
+            overflow: hidden;
+            z-index: 2;
+            transition-duration: .5s;
+        }
+
+        .icon {
+            border-radius: 1px;
+        }
+
+        .text {
+            height: 100%;
+            width: fit-content;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgb(17, 17, 17);
+
+            transition-duration: .5s;
+            font-size: 1.04em;
+            font-weight: 600;
+        }
+
+        .favButton:hover .IconContainer {
+            transform: translateX(58px);
+            border-radius: 40px;
+            transition-duration: .5s;
+        }
+
+        .favButton:hover .text {
+            transform: translate(10px, 0px);
+            transition-duration: .5s;
+        }
+
+        .favButton:active {
+            transform: scale(0.95);
+            transition-duration: .5s;
+        }
+    </style>
+
 
 
     <link rel="stylesheet" href="/stylesheets/button_animation.css">
     <div class="container">
-        <div class="row mt-3 p-4">
+        <div class="row mt-3">
             <div class="col-md-6 mt-4">
                 <div class="container mb-4">
                     <div class="d-flex flex-column justify-content-center container">
@@ -12,12 +245,12 @@
                             <div class="carousel-inner">
                                 <center>
                                     <div class="carousel-item active">
-                                        <img src=" <%= product.imageUrl[0] %>" class="img-fluid"
+                                        <img src=" <%= product.imageUrl[0] %>" class="img-fluid main-img"
                                             style="width: auto; height: 60%" alt="...">
                                     </div>
                                     <% for(let i=1; i<product.imageUrl.length; i++) {%>
                                         <div class="carousel-item">
-                                            <img src="<%= product.imageUrl[i] %>" class="img-fluid" alt="...">
+                                            <img src="<%= product.imageUrl[i] %>" class="img-fluid main-img" alt="...">
                                         </div>
                                         <% } %>
                                 </center>
@@ -54,92 +287,173 @@
                     </div>
                 </div>
                 <center>
-                    <div class="card text-muted d-flex flex-row justify-content-around" style="width: fit-content;">
-                        <form action="/customer/<%= product.id %>/cart" method="post">
-                            <button class="btn btn-warning rounded btn-sm  py-2 px-3 m-2">Add To Cart</button>
-                        </form>
-                        <form action="/customer/<%= product.id %>/buynow">
-                            <button class="btn btn-primary rounded py-2 px-3 btn-sm ms-2 my-2 me-1" type="submit">Buy
-                                Now</button>
-                        </form>
-                        <% if(favoriteProductIds.includes(product._id)) {%>
-                            <form action="/customer/<%= product.id %>/products/favourites?_method=DELETE" method="post"
-                                class="m-2">
-                                <button class="rbutton rounded ">
-                                    Remove from Favs &nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                        height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-                                        <path
-                                            d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5" />
-                                    </svg>
-                                </button>
-                            </form>
-                            <% }else{ %>
-                                <form action="/customer/<%= product.id %>/products/favourites" class=" m-2"
-                                    method="post" id="myForm">
-                                    <button class="button rounded ">
-                                        Add to Favs &nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            fill="currentColor" class="bi bi-suit-heart-fill mb-1" viewBox="0 0 16 16">
-                                            <path
-                                                d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1" />
-                                        </svg>
-                                    </button>
-                                </form>
-                                <% } %>
-                    </div>
+
                     <br>
                 </center>
                 <br>
-                <h4>More Details of the <%= product.name %>
-                </h4>
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <% function renderDetails(obj) { %>
-                            <% Object.keys(obj).forEach(key=> { %>
-                                <% if (typeof obj[key]==='object' ) { %>
-                                    <strong>
-                                        <%= key %>:
-                                    </strong><br>
-                                    <% renderDetails(obj[key]); %>
-                                        <% } else { %>
-                                            <%= key + ': ' + obj[key] %><br>
-                                                <% } %>
-                                                    <% }); %>
-                                                        <% } %>
-                                                            <% renderDetails(details); %>
-                    </li>
+            </div>
+            <div class="col-md-6 mt-3">
+                <center>
+                    <div class="img-container">
+                        <div id="zoom-window" class="mb-3"></div>
+                    </div>
 
-                    <!-- <li class="list-group-item">A second item</li>
-                    <li class="list-group-item">A third item</li>
-                    <li class="list-group-item">A fourth item</li>
-                    <li class="list-group-item">And a fifth one</li> -->
-                </ul> <br>
+                </center>
 
-                <div class="card mb-2">
-                    <div class="card-body">
-                        <form action="/customer/product/<%= product.id %>/searchqueries&reviews" class="form-valid"
-                            novalidate>
-                            <label for="text" class="form-label">Search by Text over Queries and Reviews:</label>
-                            <input type="text" name="text" class="form-control mb-2" required>
-                            <div class="valid-feedback">
-                                Looks good!
-                            </div>
-                            <div class="invalid-feedback">
-                                Please give a title!
-                            </div>
-                            <button class="btn btn-primary btn-sm" type="submit">Search</button>
-                        </form>
+                <br>
+
+                <div class="d-flex">
+                    <h1 class="fs-2 p-0 m-0">
+                        <%= product.name %>
+                    </h1>
+                    <div class="ms-auto">
+                        <button class="btn shadow-none" style="border: 0px;" id="shareButton"><svg
+                                xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                                class="bi bi-share-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.5 2.5 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5" />
+                            </svg></button>
                     </div>
                 </div>
+                <div>
+                    <h4>From <a href="#">
+                            <%= product.brand %>
+                        </a></h4>
+                    <h5>Product from <a href="/seller/<%= product.seller.id %>">
+                            <%= product.seller.bussinessName %>
+                        </a></h5>
 
 
-                <div class="card mb-2">
-                    <div class="card-body">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#queryModel">
-                            Ask Your Queries
+                </div>
+                <h6 data-bs-toggle="collapse" style="cursor: pointer;" data-bs-target="#collapseExample"
+                    aria-expanded="false" aria-controls="collapseExample">Rating: <%= parseFloat(product.rating*100 /
+                        100).toFixed(1) %>
+                        based on <%= product.reviews.length %> reviews</h6>
+
+
+                <div class="collapse" id="collapseExample">
+                    <div class="card card-body">
+                        <div class="col-9" id="percentageTab">
+
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <h6>
+                    <%= product.description %>
+                        <%= product.headers %>
+                            <%= product.headers %>
+                                <%= product.headers %>
+                </h6>
+                <hr>
+                <div class="d-flex">
+                    <h2>&#8377; <%= product.price %>
+                    </h2>
+                    <h5 class="fs-4 ms-1 d-flex align-items-center">(inclusive of taxes)</h5>
+                    <h5 class="d-flex align-items-center ms-2">or</h5> <br>
+                </div>
+                <div class="d-flex">
+                    <h6> You can redeem Zen offer cards to purchase this product &nbsp; <a
+                            href="/customer/zenpoints">Check your
+                            Zen Points</a></h6>
+                </div>
+
+                <div class="d-flex">
+
+                    <form action="/customer/<%= product.id %>/cart" method="post">
+                        <button class="CartBtn me-2">
+                            <span class="IconContainer">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-bag-check-fill" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                        d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0m-.646 5.354a.5.5 0 0 0-.708-.708L7.5 10.793 6.354 9.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0z" />
+                                </svg>
+                            </span>
+                            <p class="text m-1">Add to Cart</p>
                         </button>
-                    </div>
+
+                    </form>
+                    <form action="/customer/<%= product.id %>/buynow">
+                        <button class="buyBtn me-2">
+                            <span class="IconContainer">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                        d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8" />
+                                </svg>
+                            </span>
+                            <p class="text m-1">Buy Now</p>
+                        </button>
+                    </form>
+                    <form action="/customer/<%= product.id %>/products/favourites" method="post" id="myForm">
+                        <button class="favButton disabled">
+                            <span class="IconContainer">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-hearts" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                        d="M4.931.481c1.627-1.671 5.692 1.254 0 5.015-5.692-3.76-1.626-6.686 0-5.015m6.84 1.794c1.084-1.114 3.795.836 0 3.343-3.795-2.507-1.084-4.457 0-3.343M7.84 7.642c2.71-2.786 9.486 2.09 0 8.358-9.487-6.268-2.71-11.144 0-8.358" />
+                                </svg>
+                            </span>
+                            <p class="text m-1">Add to Favs</p>
+                        </button>
+                    </form>
+
+
+
+
                 </div>
+
+                <br>
+                <div>
+                    <h6 class="fs-5">
+                        If you order within <span id="deadline">6:15hrs</span>
+                        You can have it in 2 days
+                    </h6>
+                    <h5 class="fs-5 text-muted">
+        Fastest Delivery in 24hrs <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-truck mb-1" viewBox="0 0 16 16">
+            <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5zm1.294 7.456A2 2 0 0 1 4.732 11h5.536a2 2 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456M12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2"/>
+          </svg>
+    </h5>
+                </div>
+
+
+            </div>
+
+
+
+
+        </div>
+
+
+
+        <div class="row mt-3">
+
+            <h4>More Details of the <%= product.name %>
+            </h4>
+            <div class="col-6">
+
+                <table class="table table-hover table-striped-columns">
+                    <thead>
+                        <tr>
+                            <th scope="col">Title</th>
+                            <th scope="col">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for (let key in product.details) { %>
+                            <tr>
+                                <td>
+                                    <%= key.charAt(0).toUpperCase() + key.slice(1); %>
+                                </td>
+                                <td>
+                                    <%= product.details[key] %> <br>
+                                </td>
+                            </tr>
+                            <% } %>
+                    </tbody>
+                </table>
+
+
 
                 <div class="modal fade" id="queryModel" tabindex="-1" aria-labelledby="queryModelLabel"
                     aria-hidden="true">
@@ -153,7 +467,7 @@
                             <div class="modal-body">
 
 
-                                <form action='/customer/products/<%= product.id %>/queries' method="post" id="queryForm"
+                                <form action=' /customer/products/<%=product.id %>/queries' method="post" id="queryForm"
                                     class="p-1">
                                     <div class="mb-3">
                                         <label for="query" class="form-label">Query:</label>
@@ -162,7 +476,8 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="querytags" class="form-label">Add Tags: &nbsp; <span
-                                                class="fs-6">(use commas to separate tags eg., [nice, cool,
+                                                class="fs-6">(use
+                                                commas to separate tags eg., [nice, cool,
                                                 good])</span></label>
 
                                         <input type="text" class="form-control p-2 mb-1 " id="querytags"
@@ -174,296 +489,530 @@
                             </div>
                             <div class="modal-footer mt-3">
                                 <span class="fs-6">
-                                    <b>Note: &nbsp;</b>    
-                                   Ask questions to get detailed info, personalized advice, and make confident,
+                                    <b>Note: &nbsp;</b>
+                                    Ask questions to get detailed info, personalized advice, and make confident,
                                     informed purchases, even get <b> Zen</b> points </span>
                             </div>
                             <div class="modal-footer">
                                 <span><b>Usages of Tags:</b><br>
-                                Tags helps organize questions and answers, making it easier to find detailed info,
-                                get personalized advice, and make confident purchases.
+                                    Tags helps organize questions and answers, making it easier to find detailed
+                                    info,
+                                    get personalized advice, and make confident purchases.
                                 </span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <% if(product.queries.length> 0) {%>
-                    <div class="accordion accordion-flush" id="accordionFlushExample">
-                        <div class="card">
-                            <div class="card-body">
-                                <button class="accordion-button collapsed shadow-none p-0" type="button"
-                                    data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false"
-                                    aria-controls="flush-collapseOne">
-                                    Our Customers Frequently Asks!
-                                </button>
-                            </div>
-                        </div>
-                        <div id="flush-collapseOne" class="accordion-collapse collapse"
-                            aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <% for(let query of product.queries) { %>
-                                            <div class="card mb-3">
-                                                <div class="card-body position-relative p-0">
-                                                    <div class="p-2">
-                                                        <div class="d-flex">
-                                                            <h4 class="">
-                                                                <span>
-                                                                    <img src="<%= query.author.profilePic %>"
-                                                                        style="border-radius: 100%; object-fit: cover; height:60px; width: 60px;"
-                                                                        class="img-thumbnail m-1" alt="">
-                                                                </span>
-                                                                <%= query.author.username %> asks
-                                                            </h4> &nbsp;&nbsp;
-                                                            <h6 class="mt-4 ms-2 text-muted">
-                                                                <i>~ <small>
-                                                                        <%= query.date.getDate() %>/<%=
-                                                                                query.date.getMonth() + 1 %>/<%=
-                                                                                    query.date.getFullYear() %>
-                                                                    </small></i>
-                                                            </h6>
-                                                        </div>
-                                                        <h6 class=" px-4 mb-0">
-                                                            <%= query.question %> ?
-                                                                <button class="btn btn-default" style="border: 0px"
-                                                                    type="button" id="showReplies"
-                                                                    data-bs-toggle="collapse"
-                                                                    data-bs-target="#collapse<%= query.id %>"
-                                                                    aria-expanded="false"
-                                                                    aria-controls="collapse<%= query.id %>">
-                                                                    View Replies
-                                                                </button>
-                                                        </h6>
-                                                        <% if(currentUser && query.author.equals(currentUser._id)) {%>
-                                                            <form
-                                                                action='/customer/products/<%= product.id %>/queries/<%= query.id %>/?_method=DELETE'
-                                                                method="post"
-                                                                class=" position-absolute pe-2 pt-2  top-0 end-0">
-                                                                <button
-                                                                    class="btn btn-sm rounded p-2 btn-outline-danger mt-1">Delete</button>
-                                                            </form>
-                                                            <% } %>
-                                                    </div>
-                                                    <div class="ms-5 mb-2 collapse " id="collapse<%= query.id %>">
-                                                        <% if(query.answers.length> 0) {%>
-                                                            <% for(let replies of query.answers) {%>
-                                                                <div class="d-flex flex-column">
-                                                                    <div class="d-flex">
-                                                                        <h5 class="m-0">
-                                                                            <% if(replies.author.customer) {%>
-                                                                                <span>
-                                                                                    <img src="<%= replies.author.customer.profilePic %>"
-                                                                                        style="border-radius: 100%; object-fit: cover; width: 40px; height: 40px"
-                                                                                        class="img-thumbnail mx-1 mt-1"
-                                                                                        alt="">
-                                                                                </span>
-                                                                                <%= replies.author.customer.username %> <small>
-                                                                                    (<%= replies.author.customer.role %>)
-                                                                                    </small>
-                                                                                    <% }%>
-                                                                                        <% if(replies.author.seller){ %>
-                                                                                            <span>
-                                                                                                <img src="<%= replies.author.seller.imageUrl %>"
-                                                                                                    style="border-radius: 100%; object-fit: cover; width: 40px; height: 40px"
-                                                                                                    class="img-thumbnail mx-1 mt-1"
-                                                                                                    alt="">
-                                                                                            </span>
-                                                                                            <%=replies.author.seller.username%>
-                                                                                                <small>(<%=
-                                                                                                        replies.author.seller.role%>)</small>
-                                                                                                <% } %>
-                                                                        </h5>
-                                                                        <div class="mt-2 ms-2">
-                                                                            <i>~ <small>
-                                                                                    <%= replies.date.getDate() %>/
-                                                                                        <%=replies.date.getMonth() + 1
-                                                                                            %>/
-                                                                                            <%=replies.date.getFullYear()%>
-                                                                                </small></i>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="ms-5">
-                                                                        <%= replies.answer %>&nbsp;
-                                                                    </div>
-                                                                </div>
-                                                                <% } %>
-                                                                    <% } %>
-                                                    </div>
-                                                    <% if(currentUser && !query.author.equals(currentUser._id)) {%>
-                                                        <form
-                                                            action='/customer/products/<%= product.id %>/queries/<%= query.id %>'
-                                                            method="post" class=" d-flex p-2">
-                                                            <input type="text" class="form-control p-2 m-0 " id="query"
-                                                                name="answer">
-                                                            <button
-                                                                class="btn btn-sm btn-success px-3 py-1 ms-2">Post</button>
-                                                        </form>
-                                                        <% } %>
 
-                                                </div>
+            </div>
+            <div class="col-6">
+
+                <table class="table table-hover table-striped-columns">
+                    <thead>
+                        <tr>
+                            <th scope="col">Title</th>
+                            <th scope="col">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for (let key in product.additionalInfos) { %>
+                            <tr>
+                                <td>
+                                    <%= key.charAt(0).toUpperCase() + key.slice(1); %>
+                                </td>
+                                <td>
+                                    <%= product.additionalInfos[key] %> <br>
+                                </td>
+                            </tr>
+                            <% } %>
+                    </tbody>
+                </table>
+
+
+
+                <div class="modal fade" id="reviewModal" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5">Leave a Review</h1>
+                                <button type="button" class="btn-close shadow-none" style="border: 0px"
+                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="card-body">
+                                    <form action="/customer/products/<%=product.id %>/reviews" method="post"
+                                        class="form-valid" novalidate>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="rating">Rate:</label>
+                                            <input type="range" min="1" max="5" name="review[rating]" required
+                                                class="form-range">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="body">Review:</label>
+                                            <textarea class="form-control" name="review[body]" required cols="30"
+                                                rows="3"></textarea>
+                                            <div class="valid-feedback">
+                                                Looks good!
                                             </div>
-                                            <% } %>
-                                    </div>
+                                            <div class="invalid-feedback">
+                                                Please give a title!
+                                            </div>
+                                        </div>
+                                        <!-- <div class="mb-3">
+                                                        <label class="form-label" for="body">Tags:&nbsp; <span
+                                                                class="fs-6">(use commas to separate tags eg., [nice, cool,
+                                                                good])</label>
+                                                        <input class="form-control" name="tag" required>
+                                                        <div class="valid-feedback">
+                                                            Looks good!
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            Please give a title!
+                                                        </div>
+                                                    </div> -->
+                                        <button class="btn btn-success mt-3">Submit</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="container">
+                                    <b>Note: &nbsp;</b> Product reviews aren't just comments; they're the voices
+                                    of fellow explorers in the realm of consumerism. They illuminate the path,
+                                    helping me navigate through the maze of options to find the treasure of
+                                    satisfaction at the end of my shopping journey.
+
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <br>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="container p-0">
+        <h4 class="p-0">
+            Similar <%= product.category %> Products
+        </h4>
+        <div class="row">
+            <div class="col-12 d-flex">
+                <% for(let product of sameCategoryProductsSliced) {%>
+                    <div class="card m-2  shadow-lg p-0 " id="card" style="width: 19rem; ">
+                        <img src="<%= product.imageUrl[Math.floor((Math.random() * 3))] %>" class="card-img-top shadow"
+                            alt="...">
+                        <div class="card-body position-relative">
+                            <h5 class=" fs-6 ">
+                                <%= product.name %>
+                            </h5>
+                            <div class="mb-1">
+                                <b>Price:</b>
+                                &#8377; <span class="text-muted">
+                                    <%= product.price %>
+                            </div>
+                            <div>
+                                <b>Description:</b> <span class="text-muted">
+                                    <%= product.headers %>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a href="/customer/products/<%= product.id %>"
+                                class="btn btn-primary me-1 p-2 mt-auto rounded-2">View Product</a>
+                        </div>
+                    </div>
+
                     <% } %>
             </div>
-            <div class="col-md-6 mt-3">
+        </div>
+    </div>
+    <div class="container">
+        <div class="row my-3">
+            <h4 class="p-0">Reviews:</h4>
+            <div class="col-3">
                 <div class="card">
                     <div class="card-body">
-                        <center>
-                            <h5 class="card-title">
-                                <%= product.name%>
-                            </h5>
-                        </center>
+                        <form action="/customer/product/<%= product.id %>/searchqueries&reviews" class="form-valid"
+                            novalidate>
+                            <label for="text" class="form-label fs-5">Search by Text over Queries and
+                                Reviews:</label>
+                            <input type="text" name="text" class="form-control mb-2" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please give a title!
+                            </div>
+                            <button class="btn btn-primary btn-sm" type="submit">Search</button>
+                        </form>
                     </div>
-                    <ul class="list-group list-group">
-                        <% if(product.reviews.length> 0) {%>
-                            <li class="list-group-item ">
-                                Rating: <b>
-                                    <%= parseFloat(product.rating*100 / 100).toFixed(1) %>
-                                </b> based on <%= product.reviews.length %> reviews
-                            </li>
-                            <% } %>
-                                <li class="list-group-item ">
-                                    Price: &nbsp;&#8377;<%= product.price%>
-                                </li>
-                                <li class="list-group-item ">
-                                    <%= product.description%>
-                                </li>
-                                <li class="list-group-item ">
-                                    <%= product.category %>
-                                </li>
-
-                                <li class="list-group-item ">
-                                    <b>By</b> ~ <b><a href="/seller/<%= product.seller.id %>"
-                                            style="text-decoration: none; ">
-                                            <%= product.seller.username %>
-                                        </a></b>, <i>
-                                        <%= product.seller.bussinessName %>
-                                    </i>
-                                    &nbsp; <a href="/chat/customer/<%= product.seller.id %>">Want to talk with the
-                                        seller?</a>
-                                </li>
-                    </ul>
                 </div>
-                <br>
-                <div class="card">
+
+
+                <div class="card mt-2">
                     <div class="card-body">
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#reviewModal">
                             Create Your Own Review
                         </button>
-                        <div class="modal fade" id="reviewModal" tabindex="-1">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5">Leave a Review</h1>
-                                        <button type="button" class="btn-close shadow-none" style="border: 0px"
-                                            data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="card-body">
-                                            <form action="/customer/products/<%=product.id %>/reviews" method="post"
-                                                class="form-valid" novalidate>
-                                                <div class="mb-3">
-                                                    <label class="form-label" for="rating">Rate:</label>
-                                                    <input type="range" min="1" max="5" name="review[rating]" required
-                                                        class="form-range">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label" for="body">Review:</label>
-                                                    <textarea class="form-control" name="review[body]" required
-                                                        cols="30" rows="3"></textarea>
-                                                    <div class="valid-feedback">
-                                                        Looks good!
-                                                    </div>
-                                                    <div class="invalid-feedback">
-                                                        Please give a title!
-                                                    </div>
-                                                </div>
-                                                <!-- <div class="mb-3">
-                                                    <label class="form-label" for="body">Tags:&nbsp; <span
-                                                            class="fs-6">(use commas to separate tags eg., [nice, cool,
-                                                            good])</label>
-                                                    <input class="form-control" name="tag" required>
-                                                    <div class="valid-feedback">
-                                                        Looks good!
-                                                    </div>
-                                                    <div class="invalid-feedback">
-                                                        Please give a title!
-                                                    </div>
-                                                </div> -->
-                                                <button class="btn btn-success mt-3">Submit</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-<div class="container">
-  <b>Note: &nbsp;</b>  Product reviews aren't just comments; they're the voices of fellow explorers in the realm of consumerism. They illuminate the path, helping me navigate through the maze of options to find the treasure of satisfaction at the end of my shopping journey.
-
-</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
-                <br>
-                <% for(let review of product.reviews) {%>
-                    <div class="card mb-3">
-                        <div class="card-body  position-relative">
-                            <div class="card-subtitle text-muted me-2">
-                                <% if(currentUser && review.author.equals(currentUser)) {%>
-                                    <h4>
-                                        <span>
-                                            <img src="<%= review.author.profilePic %>" width="50px" height="50px"
-                                                style="border-radius: 100%; object-fit: cover; width: 50px; height: 50px"
-                                                class="" alt="">
-                                        </span> You
-                                    </h4>
-                                    <% }else{ %>
-                                        <h4>
-                                            <span>
-                                                <img src="<%= review.author.profilePic %>"
-                                                    style="border-radius: 100%; object-fit: cover; width: 50px; height: 50px"
-                                                    class="img-thumbnail" alt="">
-                                            </span>
-                                            <%= review.author.username %>
-                                        </h4>
+
+            </div>
+
+            <div class="col-9">
+                <% if(product.reviews.length> 0) {%>
+                    <% const fiveReviews=product.reviews.slice(-5) %>
+                        <% for(let review of fiveReviews) {%>
+                            <div class="card mb-3">
+                                <div class="card-body  position-relative">
+                                    <div class="card-subtitle text-muted me-2">
+                                        <% if(currentUser && review.author.equals(currentUser)) {%>
+                                            <h4>
+                                                <span>
+                                                    <img src="<%= review.author.profilePic %>" width="50px"
+                                                        height="50px"
+                                                        style="border-radius: 100%; object-fit: cover; width: 50px; height: 50px"
+                                                        class="" alt="">
+                                                </span> You
+                                            </h4>
+                                            <% }else{ %>
+                                                <h4>
+                                                    <span>
+                                                        <img src="<%= review.author.profilePic %>"
+                                                            style="border-radius: 100%; object-fit: cover; width: 50px; height: 50px"
+                                                            class="img-thumbnail" alt="">
+                                                    </span>
+                                                    <%= review.author.username %>
+                                                </h4>
+                                                <% } %>
+                                    </div>
+                                    <h6 class="ms-2"><b>Rating: &nbsp;</b>
+                                        <% for(let i=1; i <=review.rating; i++) {%>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" class="bi bi-star-fill mb-1" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                            </svg>
+                                            <% } %>
+                                    </h6>
+                                    <h6 class="ms-2"><b>Review: </b>
+                                        <%= review.body %>
+                                    </h6>
+                                    <h6 class="ms-2 mb-1  text-muted">
+                                        <i>Posted on~ &nbsp;&nbsp; <small>
+                                                <%= review.date.getDate()%>/<%= review.date.getMonth() + 1 %>/<%=
+                                                            review.date.getFullYear() %></i>
+                                        </small>
+                                    </h6>
+                                    <% if(currentUser && review.author.equals(currentUser._id)) {%>
+                                        <form
+                                            action='/customer/products/<%= product.id %>/reviews/<%= review.id %>?_method=DELETE'
+                                            method="post" class=" position-absolute pe-3 pt-3  top-0 end-0">
+                                            <button class="btn btn-sm btn-danger">Delete</button>
+                                        </form>
                                         <% } %>
+                                </div>
                             </div>
-                            <h6 class="ms-2"><b>Rating: &nbsp;</b>
-                                <% for(let i=1; i <=review.rating; i++) {%>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                        class="bi bi-star-fill mb-1" viewBox="0 0 16 16">
-                                        <path
-                                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                                    </svg>
+                            <% } %>
+                                <% if(product.reviews.length> 5) {%>
+                                    <a href="#">There are
+                                        <%= product.reviews.length -5 %>
+                                            more <%if(product.reviews.length - 5> 1) {%>
+                                                reviews
+                                                <% }else{ %>
+                                                    review
+                                                    <% } %>, want to see it?
+                                    </a>
                                     <% } %>
-                            </h6>
-                            <h6 class="ms-2"><b>Review: </b>
-                                <%= review.body %>
-                            </h6>
-                            <h6 class="ms-2 mb-1  text-muted">
-                                <i>Posted on~ &nbsp;&nbsp; <small>
-                                        <%= review.date.getDay()%>/<%= review.date.getMonth() + 1 %>/<%=
-                                                    review.date.getFullYear() %></i>
-                                </small>
-                            </h6>
-                            <% if(currentUser && review.author.equals(currentUser._id)) {%>
-                                <form
-                                    action='/customer/products/<%= product.id %>/reviews/<%= review.id %>?_method=DELETE'
-                                    method="post" class=" position-absolute pe-3 pt-3  top-0 end-0">
-                                    <button class="btn btn-sm btn-danger">Delete</button>
-                                </form>
+                                        <% }else{%>
+                                            <div class="card"
+                                                style="height: 100%; width: 100%; display: flex; flex-direction: row; justify-content: center; align-items: center;">
+                                                <div class="card-body">
+                                                    <center>
+                                                        <h5 class="fs-4">There aren't any reviews posted yet...</h5>
+                                                    </center>
+                                                    <center>
+                                                        Want to post a review?
+                                                        <a href="#" data-bs-toggle="modal"
+                                                            data-bs-target="#reviewModal">
+                                                            Click Here
+                                                        </a>
+                                                    </center>
+                                                </div>
+                                            </div>
+                                            <% } %>
+            </div>
+        </div>
+        <div class="row my-3">
+            <h4 class="p-0">Q and A 's</h4>
+            <div class="col-3">
+                <div class="card">
+                    <div class="card-body">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#queryModel">
+                            Ask Your Queries
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-9">
+                <% if(product.queries.length> 0) {%>
+
+                    <% for(let query of product.queries) { %>
+                        <div class="card mb-2">
+                            <div class="card-body position-relative">
+                                <% if(currentUser && query.author.equals(currentUser._id)) {%>
+                                    <form
+                                        action='/customer/products/<%= product.id %>/queries/<%= query.id %>/?_method=DELETE'
+                                        method="post" class=" position-absolute pe-2 pt-2  top-0 end-0">
+                                        <button class="btn btn-sm rounded  btn-danger mt-1">Delete</button>
+                                    </form>
+                                    <% } %>
+                                        <div><span>
+                                                <img src="<%= query.author.profilePic %>"
+                                                    style="border-radius: 100%; object-fit: cover; height:40px; width: 40px;"
+                                                    class="m-1" alt="">
+                                            </span>
+                                            <span class="fs-5">
+                                                <%= query.author.username %> <small class="text-muted"
+                                                        style="font-size: 13px;">
+                                                        on <%= query.date.getDate() %>/<%= query.date.getMonth() + 1 %>/
+                                                                <%= query.date.getFullYear() %>
+                                                    </small>
+                                            </span>
+                                        </div>
+                                        <b>Q:&nbsp;</b>
+                                        <%= query.question %> ?<br>
+                                            <% if(query.answers.length> 0) {%>
+                                                <b>A:&nbsp;</b>
+                                                <%= query.answers[query.answers.length - 1].answer %>
+                                                    <% }else { %>
+                                                        <b style="color: #787977">Still No one answered Yet</b>
+                                                        <% } %>
+
+
+                                                            <div>
+                                                                <% if(query.answers.length> 0) {%>
+                                                                    <a
+                                                                        href="/customer/product/<%= product.id %>/QAS/<%= query.id %>">There
+                                                                        are more <%= query.answers.length - 1%> answers,
+                                                                            want to
+                                                                            see?</a>
+                                                                    <% } %>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-9">
+                                                                    <%if(currentUser&&!query.author.equals(currentUser._id)){%>
+                                                                        <form
+                                                                            action='/customer/products/<%= product.id %>/queries/<%= query.id %>'
+                                                                            method="post" class="">
+                                                                            <label for="query" class="form-label">
+                                                                                You can post your own answer:
+                                                                            </label>
+
+                                                                            <input type="text" class="form-control"
+                                                                                id="answer" name="answer">
+                                                                            <button
+                                                                                class="btn btn-sm btn-success mt-2 ms-2">Post</button>
+                                                                        </form>
+                                                                        <% } %>
+                                                                </div>
+                                                            </div>
+                            </div>
+                        </div>
+                        <% } %>
+                            <% } else{%>
+                                <div class="card"
+                                    style="height: 100%; width: 100%; display: flex; flex-direction: row; justify-content: center; align-items: center;">
+                                    <div class="card-body">
+                                        <center>
+                                            <h5 class="fs-4">There aren't any Q A 's posted yet...</h5>
+                                        </center>
+                                        <center>
+                                            Want to ask any questions?
+                                            <a href="#" data-bs-toggle="modal" data-bs-target="#queryModel">
+                                                Click Here
+                                            </a>
+                                        </center>
+                                    </div>
+                                </div>
                                 <% } %>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container p-0">
+        <h4 class="p-0">
+            More <%= product.brand %> Products
+        </h4>
+        <div class="row">
+            <div class="col-12 d-flex">
+                <% for(let product of relatedProductsSliced) {%>
+                    <div class="card m-2  shadow-lg p-0 " id="card" style="width: 19rem; ">
+                        <img src="<%= product.imageUrl[Math.floor((Math.random() * 3))] %>" class="card-img-top shadow"
+                            alt="...">
+                        <div class="card-body position-relative">
+                            <h5 class=" fs-6 ">
+                                <%= product.name %>
+                            </h5>
+                            <div class="mb-1">
+                                <b>Price:</b>
+                                &#8377; <span class="text-muted">
+                                    <%= product.price %>
+                            </div>
+                            <div>
+                                <b>Description:</b> <span class="text-muted">
+                                    <%= product.headers %>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a href="/customer/products/<%= product.id %>"
+                                class="btn btn-primary me-1 p-2 mt-auto rounded-2">View Product</a>
                         </div>
                     </div>
+
                     <% } %>
             </div>
         </div>
     </div>
+    <div class="footer p-5">
+        <center>
+            &copy;<span style="font-family: 'DM Serif Display', serif;" class=""
+                style="background-color: rgba(255, 255, 255, 0.75)">
+                &nbsp;Z&nbsp;&nbsp;E&nbsp;&nbsp;N</span> &nbsp;&nbsp;Developed by <a
+                href="https://github.com/vicky-at-web" class="icon-link icon-link-hover">Vicky<svg class="bi"
+                    aria-hidden="true">
+                    <use xlink:href="#arrow-right"></use>
+                </svg></a>
+        </center>
+    </div>
+
+
+
+    <style>
+        .img-container {
+            position: relative;
+        }
+
+        .main-img {
+            width: 400px;
+            height: 400px;
+        }
+
+        #zoom-window {
+            position: absolute;
+            top: 0;
+            width: 600px;
+            height: 600px;
+            border: 1px solid black;
+            border-radius: 10px;
+            overflow: hidden;
+            display: none;
+            z-index: 1;
+            /* Initially hidden */
+        }
+
+        #zoom-window img {
+            position: absolute;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const mainImgs = document.querySelectorAll('.main-img');
+            const zoomWindow = document.getElementById('zoom-window');
+            const zoomImg = document.createElement('img');
+            zoomWindow.appendChild(zoomImg);
+            console.log(mainImgs)
+
+            mainImgs.forEach(mainImg => {
+
+                mainImg.addEventListener('mousemove', function (e) {
+                    zoomImg.src = mainImg.src;
+                    const rect = mainImg.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+
+                    const zoomLevel = 2; // Change this for more or less zoom
+                    const zoomWidth = rect.width * zoomLevel;
+                    const zoomHeight = rect.height * zoomLevel;
+
+                    zoomImg.style.width = `${zoomWidth}px`;
+                    zoomImg.style.height = `${zoomHeight}px`;
+                    zoomImg.style.left = `-${x * zoomLevel - zoomWindow.offsetWidth / 2}px`;
+                    zoomImg.style.top = `-${y * zoomLevel - zoomWindow.offsetHeight / 2}px`;
+
+                    zoomWindow.style.display = 'block';
+                });
+
+                mainImg.addEventListener('mouseleave', function () {
+                    zoomWindow.style.display = 'none';
+                });
+
+            });
+        })
+
+
+    </script>
+
+    <script>
+        const productName = '<%= product.name %> Product From Zen'
+        const shareData = {
+            title: productName,
+            text: "Shared Product from Zen",
+            url: window.location.href,
+        };
+
+        const btn = document.querySelector("#shareButton");
+        const resultPara = document.querySelector(".result");
+
+        // Share must be triggered by "user activation"
+        btn.addEventListener("click", async () => {
+            try {
+                await navigator.share(shareData);
+
+            } catch (err) {
+                console.log(err)
+            }
+        });
+    </script>
+
+    <script>
+        let splitedPercentages = '<%= percentages %>'.split(',')
+        const percentages = splitedPercentages
+        const percentageTab = document.querySelector('#percentageTab');
+
+        for (let percent of percentages) {
+            let percentage = parseInt(percent)
+            const eachPercent = `
+           <div class="row">
+    <div class="col-10 pe-0 d-flex align-items-center">
+        <progress class='mt-1 p-0' value="${percentage}" max="100"> 32% </progress>
+    </div>
+    <div class="col-2 p-0">
+        ${percentage} 
+    </div>
+</div><br>
+                
+        `;
+            percentageTab.innerHTML += eachPercent;
+        };
+    </script>
+
+    <script>
+        const span = document.querySelector('#deadline')
+        function timings() {
+            const timeline = new Date();
+            const selectedHours = (timeline.getHours() + 7) % 24;
+            const selectedMinutes = String((timeline.getMinutes() + 30) % 60).padStart(2, '0');
+            const selectedSeconds = timeline.getSeconds()
+            span.innerHTML = `${selectedHours}:${selectedMinutes}:${selectedSeconds}`
+
+        }
+        setInterval(timings, 1000)
+    </script>

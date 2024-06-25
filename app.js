@@ -1,4 +1,4 @@
-// DECLARATIONS OF VARIABLES
+// DECLARATIONS
 
 const express = require('express');
 const app = express();
@@ -17,14 +17,7 @@ const LocalStrategy = require('passport-local');
 const Seller = require('./models/seller')
 const Customer = require('./models/customer')
 const chatRoutes = require('./routes/chatRoutes')
-const Chat = require('./models/chat');
-const Notification = require('./models/notification')
-const Question = require('./models/question');
-const { validateReview } = require('./utils/middleware');
-const Product = require('./models/product');
-const catchAsync = require('./utils/catchasync');
-const Review = require('./models/review');
-const {initializeSocket, notifyCustomer, notifySeller} = require('./socket.js')
+const {initializeSocket} = require('./socket.js')
 
 //EJS ENGINE CONNECTIONS
 
@@ -125,19 +118,6 @@ app.get('/', (req, res) => {
 
 const server = require('http').createServer(app);
 initializeSocket(server);
-
-
-///ROUTES FOR REAL TIME EVENTS AND DATABASE OPERATIONS FOR SELLERS
-
-
-
-
-
-///ROUTES FOR REAL TIME EVENTS AND DATABASE OPERATIONS FOR SELLERS
-
-
-
-
 
 // ERROR MIDDLEWARES 
 

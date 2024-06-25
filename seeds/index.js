@@ -3,7 +3,28 @@ mongoose.connect('mongodb://127.0.0.1:27017/zen26');
 const Product = require('../models/product.js');
 const { features, types } = require('./productNames.js');
 const details = require('./details.js')
-const categories = ['Computer', 'Mobile', 'Camera', 'Mens', 'Womens', 'Kids', 'Accessories', 'Decor', 'Kitchen', 'Bedding', 'Skincare', 'Haircare', 'Perfumes', 'Books', 'Movies', 'Music', 'Equipment', 'Activewear', 'Camping', 'Kids Toys', 'Board Games', 'VideoGames', 'Medicines', 'FitnessEquipment', 'MonitoringDevices', 'CarAccessories', 'Maintenance', 'MotorcycleGear', 'Ornaments', 'Stationery', 'Furniture', 'Electronics', 'Groceries', ' Snacks', 'Beverages', 'PetFood', 'Careproducts', 'Handmade']
+const categories = [
+    "electronics",
+    "fashion",
+    "home_kitchen",
+    "books",
+    "beauty_personal_care",
+    "health_wellness",
+    "sports_outdoors",
+    "toys_games",
+    "automotive",
+    "grocery_gourmet_food",
+    "baby_products",
+    "pet_supplies",
+    "industrial_scientific",
+    "office_products",
+    "tools_home_improvement",
+    "musical_instruments",
+    "software",
+    "arts_crafts_sewing",
+    "movies_tv",
+    "video_games"
+];
 const db = mongoose.connection;
 const Seller = require('../models/seller.js')
 
@@ -41,7 +62,7 @@ const seedDb = async () => {
         const product = new Product({
             name: productName,
             searchTerm: searchName2,
-            imageUrl: ['https://source.unsplash.com/collection/483251', 'https://source.unsplash.com/collection/483251', 'https://source.unsplash.com/collection/483251', 'https://source.unsplash.com/collection/483251'],
+            imageUrl: ['https://i.pinimg.com/736x/c5/7a/f7/c57af701db7abfb71c97ac12bc529b71.jpg', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzTTwRtcKqcCHB7PU0hIwKhkj497sCJ_q2hg&s', 'https://w0.peakpx.com/wallpaper/909/368/HD-wallpaper-monkey-d-luffy-anime-white-hair-one-piece-sun-god-nika-gear-5th-resolution.jpg'],
             description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
             price: price,
             category: category,
@@ -51,12 +72,38 @@ const seedDb = async () => {
             launchDate: randomLaunchDate,
             seller: '66448f3704100ff5e7bae60b'
         });
-        const objName = `${category.toLowerCase()}Details`;
-        await product.save();
-        product.details = details[objName] || {};
+        product.details = {
+            brand: "MegaCorp",
+            model: "SuperNova X500",
+            processor: "Novacore i9-12900K",  // Duplicate key (different value)
+            memory: "32GB DDR5 RAM",
+            storage: "1TB PCIe NVMe SSD",
+            graphicsCard: "MegaCorp RTX 4080",
+            processor: "Novacore i7-12700K",  // Duplicate key
+            display: "1440p 240Hz IPS Panel",
+            operatingSystem: "Windows 11 Pro",
+            ports: ["USB-A 3.2 Gen 2", "USB-C Thunderbolt 4", "HDMI 2.1", "Ethernet"],
+            warranty: "1 Year Standard"
+          };
+        product.additionalInfos = {
+            weight: "3.5 kg",  // Approximate weight
+            length: 38,         // Dimensions in centimeters
+            width: 20,
+            height: 15,
+            cooling: "Liquid cooling",
+            wirelessConnectivity: "Wi-Fi 6E, Bluetooth 5.2",  // Comma-separated string
+            audio: "Integrated 7.1 channel sound card",
+            includedSoftware: ["Windows 11 Pro", "MegaCorp Control Center"],
+            warranty: "1 Year Standard (extendable to 3 years)",
+            awards: [            // Array of strings
+              "Best Gaming PC 2024 - TechCrunch",
+              "Editor's Choice - PC Gamer Magazine"
+            ]
+          };
         await product.save();
         await seller.products.push(product)
         await seller.save();
+        console.log(`${i} product is saved`)
     }
 };
 

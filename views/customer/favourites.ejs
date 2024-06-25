@@ -47,10 +47,14 @@
                                 <%= product.headers %>
                             </p>
                         </li>
-                        <li class="list-group-item d-flex justify-content-start">
-                            <a href="/customer/products/<%= product.id %>" class="btn btn-primary me-1">View
-                                Details!</a>
-
+                        <li class="list-group-item d-flex justify-content-around">
+                            <a href="/customer/products/<%= product.id %>" class="btn btn-primary me-1 btn-sm p-2">View
+                                Product</a>
+                                <form action="/customer/<%= product.id %>/products/favourites?_method=DELETE" method="post">
+                                    <button class="btn btn-danger btn-sm p-2">
+                                        Remove Product
+                                    </button>
+                                </form>
                         </li>
                     </ul>
                 </div>

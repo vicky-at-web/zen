@@ -4,6 +4,9 @@ const Chat = require('./models/chat')
 let io;
 const userMap = new Map();
 
+
+///SOCKET INITIALIZATION
+
 function initializeSocket(server) {
     io = socketIO(server);
 
@@ -46,6 +49,8 @@ function initializeSocket(server) {
     });
 }
 
+///SEND MESSAGE FUNCTIONS FOR BOTH CUSTOMERS AND SELLERS
+
 function sendMessage(user, message){
     console.log({ user: user, message: message });
     console.log({ userMap: userMap });
@@ -58,6 +63,7 @@ function sendMessage(user, message){
     }
 }
 
+///FUNCTIONS FOR NOTIFICATIONS FOR SELLERS AND CUSTOMERS
 
 
 function notifyCustomer(user, message) {
@@ -83,5 +89,7 @@ function notifySeller(user, message) {
         }
     }
 }
+
+///EXPORTATIONS
 
 module.exports = { initializeSocket, notifyCustomer, notifySeller };
