@@ -1,26 +1,45 @@
-# ZEN - A ECOMMERCE WEBSITE 
+# Zen - An E-commerce Website
 
-## Table of contents
-* [General Info](#general-info)
-* [Technologies](#technologies)
-* [To visit](#to-visit)
+## Table of Contents
+- [General Info](#general-info)
+- [Technologies](#technologies)
+- [To Visit](#to-visit)
 
 ## General Info
-   Zen is a e-commerce website where customer can view products, review and rate products, can add products to their cart, buy products, even chat personally with the particular seller. The customers can also become a seller which they can sell products, a person can toggle between customer and a seller.
- Sellers can view their analytics of products by weeks, months, even days, can see the reviews given by the customers, can chat with the customers to resolve the problem. This is my first own idea project.
+Zen is an e-commerce website that offers a comprehensive platform for customers and sellers. Customers can:
+- View products
+- Review and rate products
+- Add products to their cart
+- Purchase products
+- Chat directly with sellers
 
- ## Technologies
-* HTML
-* CSS
-* JAVASCRIPT
-* NODE JS
-* MONGO DB
-* EXPRESS JS
-* EJS FOR templating the files
-* PASSPORT JS for authentication
-* CLOUDINARY for image storage
-* GIT for version control
-* WEBSOCKET for chatting between customers and sellers
+Customers can also become sellers, allowing them to:
+- Toggle between customer and seller roles
+- View product analytics by day, week, or month
+- Respond to customer reviews
+- Chat with customers to resolve issues
 
-## To visit
- The project is currently in progress, once its completed, I will post this web app link
+This project is my first original idea, and I am excited to bring it to life.
+
+## Technologies
+Zen is built using the following technologies:
+- **Frontend:**
+  - HTML
+  - CSS
+  - JavaScript
+  - EJS (for templating)
+- **Backend:**
+  - Node.js
+  - Express.js
+- **Database:**
+  - MongoDB
+- **Authentication:**
+  - Passport.js
+- **Other Tools:**
+  - Cloudinary (for image storage)
+  - Git (for version control)
+  - WebSocket (for real-time chat between customers and sellers)
+
+## To Visit
+The project is currently in progress. Once completed, I will update this section with the web app link. Stay tuned!
+
